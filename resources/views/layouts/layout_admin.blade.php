@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>DA Admin</title>
 
@@ -27,7 +28,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script src="https://cdn.tiny.cloud/1/3wq0pcqdh73wjxfqtk7kcr41rvbjs6196573culoiqf56dtm/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
-
 </head>
 
 <body id="page-top">
@@ -483,6 +483,7 @@
 
 <script src="{{ url('public/js/treeview.js') }}"></script>
 <script src="{{ url('public/js/backend.js') }}"></script>
+
 
 @yield('scripts')
 </body>

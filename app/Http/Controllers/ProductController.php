@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Psy\Util\Str;
 
 class ProductController extends Controller
 {
@@ -46,11 +47,11 @@ class ProductController extends Controller
             // Get just ext
             $extension = $request->file('thumbnail')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename.'.'.$extension;
+            $fileNameToStore = $filename.'-'.self::quickRandom().'.'.$extension;
             // Upload Image
             $path = $request->file('thumbnail')->storeAs('public/uploads', $fileNameToStore);
             //move
-            $request->file('thumbnail')->move(public_path('uploads'),$filenameWithExt);
+            $request->file('thumbnail')->move(public_path('uploads'),$fileNameToStore);
         }
 
         $product = new Product();
@@ -58,12 +59,13 @@ class ProductController extends Controller
         $product->desc = $data['desc']?$data['desc']:"";
         $product->content = $data['content']?$data['content']:"";
         $product->thumbnail = $path;
-        $product->images = $data['images']?$data['images']:"";
+//        $product->images = $data['images']?$data['images']:"";
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
         $product->category_id = $data['category_id']?$data['category_id']:0;
         $product->price = $data['price']?$data['price']:0;
         $product->save();
-        return back();
+//        return back();
+        return redirect()->route('admin.product.edit', ['id' => $product->id]);
     }
 
     public function edit ($id) {
@@ -94,8 +96,6 @@ class ProductController extends Controller
         $data = $request->input();
         $product = Product::query()->find($id);
 
-        $thumbnail_old = $product->thumbnail; //cbi xóa thumbnail cũ
-
         $product->title = $data['title']?$data['title']:"";
         $product->desc = $data['desc']?$data['desc']:"";
         $product->content = $data['content']?$data['content']:"";
@@ -109,25 +109,29 @@ class ProductController extends Controller
             // Get just ext
             $extension = $request->file('thumbnail')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename.'.'.$extension;
+            $fileNameToStore = $filename.'-'.self::quickRandom().'.'.$extension;
             // Upload Image
             $path = $request->file('thumbnail')->storeAs('public/uploads', $fileNameToStore);
             //move
-            $request->file('thumbnail')->move(public_path('uploads'),$filenameWithExt);
+            $request->file('thumbnail')->move(public_path('uploads'),$fileNameToStore);
+
+            //xóa thumbnail cũ
+            $thumbnail_old = $product->thumbnail; //cbi xóa thumbnail cũ
+            if ($thumbnail_old) {
+                $thumbnail_old = str_replace('public', '', $thumbnail_old);
+                if(file_exists(public_path($thumbnail_old))){
+                    unlink(public_path($thumbnail_old));
+                }
+            }
         }
 
-        if (isset($path) && $path) $product->thumbnail = $path;
+        if (isset($path) && $path) {
+            $product->thumbnail = $path;
+        }
         $product->price = $data['price']?$data['price']:0;
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
         $product->category_id = $data['category_id'];
         $product->save();
-
-        if ($thumbnail_old) {
-            $thumbnail_old = str_replace('public', '', $thumbnail_old);
-            if(file_exists(public_path($thumbnail_old))){
-                unlink(public_path($thumbnail_old));
-            }
-        }
 
         return back()->with('success_product', 'Cập nhật thành công');
     }
@@ -139,5 +143,73 @@ class ProductController extends Controller
             return back();
         }
         return back();
+    }
+
+    public function uploadImageDZ(Request $request) {
+        $res = ['success' => false];
+        $data_request = $request->input();
+
+        $product = Product::query()->find($data_request['id']);
+        if($request->file('file')){
+            //Storage::delete('/public/avatars/'.$user->avatar);
+            // Get filename with the extension
+            $filenameWithExt = $request->file('file')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('file')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $filename.'-sticky-'.self::quickRandom().'.'.$extension;
+            // Upload Image
+            $path = $request->file('file')->storeAs('public/uploads', $fileNameToStore);
+            //move
+            $request->file('file')->move(public_path('uploads'),$fileNameToStore);
+
+            $arr_image = [];
+            if ($product && $product->images) {
+                $arr_image = json_decode($product->images, true);
+            }
+            $arr_image[] = $path;
+            $product->images = json_encode($arr_image);
+            $product->save();
+
+            $res['success'] = true;
+            $res['path_image'] = $path;
+            return response()->json($res);
+        }
+    }
+
+    public function removeImageSingle(Request $request) {
+        $res= ['success' => false];
+        $data = $request->input();
+        $product = Product::query()->find($data['product_id']);
+        if ($product) {
+            if ($product->images) {
+                $arr_image = json_decode($product->images, true);
+                $key_image_in_arr = array_search($data['path'], $arr_image);
+                $real_path_image = $arr_image[$key_image_in_arr];
+
+                //bỏ đi phần tử image muốn xóa và save lại
+                unset($arr_image[$key_image_in_arr]);
+                $product->images = json_encode($arr_image);
+                $product->save();
+
+                //xóa ảnh trong bộ nhớ
+                $path_remove = str_replace('public', '', $real_path_image);
+                if(file_exists(public_path($path_remove))){
+                    unlink(public_path($path_remove));
+                }
+
+                $res['success'] = true;
+                return response()->json($res);
+            }
+        }
+    }
+
+    public static function quickRandom($length = 16)
+    {
+        $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
     }
 }

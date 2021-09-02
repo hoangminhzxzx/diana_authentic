@@ -8,8 +8,8 @@ function imagePreview(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $("#uploadProduct + img").remove();
-            $("#uploadProduct #thumbnail").after('<img class="img-thumbnail" id="image" src="'+e.target.result+'" style="margin-top: 1rem; max-width: 300px;"/>' );
+            $("#image_preview").remove();
+            $("#thumbnail").after('<img class="img-thumbnail" id="image_preview" src="'+e.target.result+'" style="margin-top: 1rem; max-width: 300px;"/>' );
         };
 
         reader.readAsDataURL(input.files[0]);
@@ -48,3 +48,31 @@ function changeThumbnail(e) {
     //     },
     // });
 }
+
+function deleteImageSingle(e) {
+    let ele = $(e);
+    let path = ele.attr('data-path'),
+        product_id = $("input[name='product_id']").val();
+
+    let data = {
+        path: path,
+        product_id: product_id,
+    };
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: 'http://localhost/diana_authentic_shop/admin/remove-image-single',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                let item_parent = ele.closest('.item-image-single');
+                item_parent.remove();
+            }
+        },
+    });
+}
+
+

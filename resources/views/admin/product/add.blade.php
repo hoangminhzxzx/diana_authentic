@@ -1,4 +1,7 @@
 @extends('layouts.layout_admin')
+@section('styles')
+<link rel="stylesheet" href="{{ url('public/plugins/dropzone-5.7.0/dist/dropzone.css') }}">
+@endsection
 @section('content')
 <div class="card mx-4">
     <div class="card-header">
@@ -16,7 +19,6 @@
             </div>
             <div class="form-group">
                 <lable>Desc</lable>
-{{--                <input type="text" name="desc" class="form-control">--}}
                 <textarea name="desc" class="form-control" id="desc" cols="30" rows="3"></textarea>
                 @error('desc')
                 <small class="text-danger">{{$message}}</small>
@@ -24,20 +26,20 @@
             </div>
             <div class="form-group">
                 <lable>Content</lable>
-{{--                <input type="text" name="content" class="form-control">--}}
                 <textarea name="content" class="form-control" id="content" cols="30" rows="5"></textarea>
             </div>
-            <div class="form-group d-none">
-                <lable>Images</lable>
-                <input type="text" name="images" class="form-control">
-            </div>
+{{--            <div class="form-group">--}}
+{{--                <form action="{{ route('admin.upload.images.dz') }}" class="dropzone">--}}
+{{--                    @csrf--}}
+{{--                    <div class="fallback">--}}
+{{--                        <input name="file" type="file" multiple />--}}
+{{--                    </div>--}}
+{{--                </form>--}}
+{{--            </div>--}}
             <div class="form-group">
                 <lable>Thumbnail</lable>
                 <input type="file" name="thumbnail" id="thumbnail">
             </div>
-{{--            <div class="dz-default dz-message">--}}
-{{--                <span>Upload Thumbnail</span>--}}
-{{--            </div>--}}
             <div class="form-group">
                 <lable>Is publish</lable>
                 <select name="is_publish" id="" class="form-control">
@@ -70,47 +72,5 @@
 </div>
 @endsection
 @section('scripts')
-{{--    <script>--}}
-    {{--    Dropzone.options.dropzone =--}}
-    {{--        {--}}
-    {{--            maxFilesize: 1,--}}
-    {{--            renameFile: function(file) {--}}
-    {{--                var dt = new Date();--}}
-    {{--                var time = dt.getTime();--}}
-    {{--                return time+file.name;--}}
-    {{--            },--}}
-    {{--            acceptedFiles: ".jpeg,.jpg,.png,.gif",--}}
-    {{--            addRemoveLinks: true,--}}
-    {{--            timeout: 50000,--}}
-    {{--            removedfile: function(file)--}}
-    {{--            {--}}
-    {{--                var name = file.upload.filename;--}}
-    {{--                $.ajax({--}}
-    {{--                    headers: {--}}
-    {{--                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')--}}
-    {{--                    },--}}
-    {{--                    type: 'POST',--}}
-    {{--                    url: '{{ url("image/delete") }}',--}}
-    {{--                    data: {filename: name},--}}
-    {{--                    success: function (data){--}}
-    {{--                        console.log("File has been successfully removed!!");--}}
-    {{--                    },--}}
-    {{--                    error: function(e) {--}}
-    {{--                        console.log(e);--}}
-    {{--                    }});--}}
-    {{--                var fileRef;--}}
-    {{--                return (fileRef = file.previewElement) != null ?--}}
-    {{--                    fileRef.parentNode.removeChild(file.previewElement) : void 0;--}}
-    {{--            },--}}
-
-    {{--            success: function(file, response)--}}
-    {{--            {--}}
-    {{--                console.log(response);--}}
-    {{--            },--}}
-    {{--            error: function(file, response)--}}
-    {{--            {--}}
-    {{--                return false;--}}
-    {{--            }--}}
-    {{--        };--}}
-    {{--</script>--}}
+    <script src="{{ url('public/plugins/dropzone-5.7.0/dist/dropzone.js') }}"></script>
 @endsection

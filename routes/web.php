@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/product/list', 'ProductController@index')->name('admin.product.list');
         Route::get('/product/add', 'ProductController@add')->name('admin.product.add');
+        Route::post('/upload-images-dz', 'ProductController@uploadImageDZ')->name('admin.upload.images.dz');
+        Route::post('/remove-image-single', 'ProductController@removeImageSingle')->name('admin.remove.image.single');
         Route::post('/product/store', 'ProductController@store')->name('admin.product.store');
         Route::get('/product/edit/{id}', 'ProductController@edit')->name('admin.product.edit');
         Route::post('/product/update/{id}', 'ProductController@update')->name('admin.product.update');
