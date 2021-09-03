@@ -59,12 +59,13 @@ Route::group(['middleware' => 'auth'], function () {
 //Client
 Route::get('/', 'Front\HomeController@index')->name('homeFront');
 Route::get('/product/detail/{id}', 'Front\ProductController@detailProduct')->name('client.product.detail');
+Route::post('/choose-size', 'Front\ProductController@chooseSize')->name('client.choose.size');
 //Route::get('/product/step-1/{id}', 'Front\ProductController@detailStep1')->name('client.product.detail.step1');
 //Route::get('/product/step-choose-color/{id}', 'Front\ProductController@chooseColor')->name('client.product.chooseColor');
 //Route::get('/product/step-2/{id}/{size_id}', 'Front\ProductController@detailStep2')->name('client.product.detail.step2');
 Route::post('/product/add-to-cart', 'Front\ProductController@addToCart')->name('client.product.add_to_cart');
 Route::get('/gio-hang', 'Front\ProductController@renderCartInfo')->name('client.cart');
-Route::post('/product/remove-to-cart/{rowId}', 'Front\ProductController@removeProduct')->name('client.product.remove');
+Route::post('/product/remove-to-cart', 'Front\ProductController@removeProduct')->name('client.product.remove');
 Route::post('/product/updateQtyAjax/{rowId}', 'Front\ProductController@updateQty')->name('client.updateQty');
 Route::get('/dat-hang', 'Front\ProductController@checkOutGet')->name('client.checkout');
 Route::post('/thanh-toan', 'Front\OrderController@insertOrder')->name('client.insert.order');

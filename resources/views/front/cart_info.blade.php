@@ -13,17 +13,18 @@
             </tr>
             @if(Cart::count() > 0)
                 @foreach(Cart::content() as $item)
-            <tr>
+            <tr class="item-cart-single">
                 <td>
                     <div class="cart-info">
                         <a href="#"><img src="{{ url($item->options->thumbnail) }}" alt=""></a>
                         <div>
                             <p>{{ $item->name }}</p>
                             <small>Giá: {{ $item->price }}</small>
-                            <a href="#" onclick="confirmDelete('#form_remove_item_cart_{{ $item->id }}');return false;">Remove</a>
-                            <form id="form_remove_item_cart_{{ $item->id }}" method="POST" action="{{ route('client.product.remove', $item->rowId) }}" style="display: none;">
-                                @csrf
-                            </form>
+{{--                            <a href="#" onclick="confirmDelete('#form_remove_item_cart_{{ $item->id }}');return false;">Remove</a>--}}
+                            <a href="#" onclick="removeItemCart(this)" data-rowId="{{ $item->rowId }}">Remove</a>
+{{--                            <form id="form_remove_item_cart_{{ $item->id }}" method="POST" action="{{ route('client.product.remove', $item->rowId) }}" style="display: none;">--}}
+{{--                                @csrf--}}
+{{--                            </form>--}}
                         </div>
                     </div>
                 </td>

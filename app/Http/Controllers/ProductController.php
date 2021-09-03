@@ -54,12 +54,15 @@ class ProductController extends Controller
             $request->file('thumbnail')->move(public_path('uploads'),$fileNameToStore);
         }
 
+        $arr_image = [];
+        $arr_image[] = $path;
+
         $product = new Product();
         $product->title = $data['title']?$data['title']:"";
         $product->desc = $data['desc']?$data['desc']:"";
         $product->content = $data['content']?$data['content']:"";
         $product->thumbnail = $path;
-//        $product->images = $data['images']?$data['images']:"";
+        $product->images = json_encode($arr_image);
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
         $product->category_id = $data['category_id']?$data['category_id']:0;
         $product->price = $data['price']?$data['price']:0;
@@ -127,6 +130,15 @@ class ProductController extends Controller
 
         if (isset($path) && $path) {
             $product->thumbnail = $path;
+
+//            $arr_image = [];
+//            if ($product->images) {
+//                $arr_image = json_decode($product->images);
+//            }
+//            unset($arr_image[0]);
+//            array_unshift($arr_image, $path);
+//
+//            $product->images = json_encode($arr_image);
         }
         $product->price = $data['price']?$data['price']:0;
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;

@@ -349,7 +349,7 @@ input:focus{
 }
 .small-img-row{
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
 }
 .small-img-col{
     flex-basis: 24%;
@@ -502,9 +502,7 @@ form a{
     transition: transform .5s;
 }
 
-
-
-
-
-
-
+/*new style*/
+.active-preview-thumb {
+    border: 1px solid #ccc;
+}
