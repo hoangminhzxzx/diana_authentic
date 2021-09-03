@@ -506,3 +506,24 @@ form a{
 .active-preview-thumb {
     border: 1px solid #ccc;
 }
+
+.count_item_cart {
+    position: absolute;
+    left: 35px;
+    top: 7px;
+    color: red;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.select_checkout {
+    border: 1px solid #ccc;
+    /*margin: 10px 0px 20px 0px;*/
+    height: 30px;
+    padding: 0px 8px;
+    margin-bottom: 10px;
+}
+
+.error_required_order {
+    border: 1px solid red;
+}

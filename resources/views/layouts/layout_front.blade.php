@@ -28,7 +28,10 @@
                     <li><a href="">Tài khoản</a></li>
                 </ul>
             </nav>
-            <a href="{{ route('client.cart') }}"><img src="{{url('public/images/cart_1.png')}}" width="30px" height="30px" alt=""></a>
+            <a href="{{ route('client.cart') }}"  style="position: relative;">
+                <img src="{{url('public/images/cart_1.png')}}" width="30px" height="30px" alt="">
+                <div class="count_item_cart">{{ (\Gloudemans\Shoppingcart\Facades\Cart::count() > 0 && \Gloudemans\Shoppingcart\Facades\Cart::count()) ? \Gloudemans\Shoppingcart\Facades\Cart::count() : null }}</div>
+            </a>
             <img src="{{url('public/images/menu.png')}}" onclick="menutoggle()" class="menu-icon" alt="">
         </div>
         @yield('poster')

@@ -219,3 +219,109 @@ function removeItemCart(e) {
         });
     }
 }
+
+function selectProvince(e) {
+    let valueProvince = $(e).val();
+    let province_name = $("select[name='province'] option:selected").text();
+    let inputAddress = $("input#address_client");
+    let data = {
+        province: valueProvince
+    };
+
+    // let arr_address = [];
+    // arr_address.push(province_name);
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source+'/select-province',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                //gán địa chỉ tỉnh/thành phố vào input hidden
+                // inputAddress.val(JSON.stringify(arr_address));
+
+                //check xem có tồn tại select của chọn quận/huyện chưa, nếu có r thì xóa đi, render cái mới
+                let checkIssetSelectDistrict = $("select[name='district']");
+                if (checkIssetSelectDistrict) {
+                    checkIssetSelectDistrict.remove();
+                }
+
+                let checkIssetSelectWard = $("select[name='wards']");
+                if (checkIssetSelectWard) {
+                    checkIssetSelectWard.remove();
+                }
+                $(e).after(res.html);
+            }
+        },
+    });
+}
+
+function selectDistrict(e) {
+    let valueDistrict = $(e).val();
+    let district_name = $("select[name='district'] option:selected").text();
+    let inputAddress = $("input#address_client");
+    let data = {
+        district: valueDistrict
+    };
+
+    //lấy giá trị tỉnh/thành phố ra để khi success thì nối quận/huyện vào, rồi gán vào lại input address
+    // let address_current = JSON.parse(inputAddress.val());
+    // console.log(address_current);
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source+'/select-district',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                //gán địa chỉ mới vào input hidden
+                // let address_new = address_current + ', ' + district_name;
+                // inputAddress.val(address_new);
+
+                let checkIssetSelectWard = $("select[name='wards']");
+                if (checkIssetSelectWard) {
+                    checkIssetSelectWard.remove();
+                }
+
+                $(e).after(res.html);
+            }
+        },
+    });
+}
+
+function orderSubmit(e) {
+    let form_data_pending_order = $('form#form-pending-order').serialize();
+    let ele_error_required_orders = $(".error_required_order");
+    $.each(ele_error_required_orders, function (index, item) {
+        if (item.value) {
+            item.classList.remove('error_required_order');
+        }
+    })
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source+'/thanh-toan',
+        type: 'POST',
+        data: form_data_pending_order,
+        dataType: 'json',
+        success: function (res) {
+            if (res.mess_error) {
+                let obj = res.mess_error;
+                $.each(obj, function(key, value) {
+                    let eleInput = $("#"+key);
+                    if (eleInput) {
+                        eleInput.addClass('error_required_order');
+                    }
+                });
+            }
+        },
+    });
+}

@@ -8,6 +8,8 @@ use App\Model\ProductOption;
 use App\Model\ProductVariant;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 //use function GuzzleHttp\Promise\all;
 
 class ProductController extends Controller
@@ -152,6 +154,40 @@ class ProductController extends Controller
     }
 
     public function checkOutGet() {
-        return view('front.checkout');
+        $provinces = DB::table('provinces')->get();
+        $data = [
+            'provinces' => $provinces,
+        ];
+        return view('front.checkout', $data);
+    }
+
+    public function selectProvince(Request $request) {
+        $response = ['success' => false];
+        $province_id = $request->input('province');
+        $districts = DB::table('districts')->where('province_id', '=', $province_id)->get();
+        if (count($districts) > 0) {
+            $response['success'] = true;
+            $response['html'] = view('front.ajax_render.render_districts', [
+                'districts' => $districts
+            ])->toHtml();
+            return response()->json($response);
+        } else {
+            $response['mes'] = 'Kiểm tra lại dữ liệu';
+        }
+    }
+
+    public function selectDistrict(Request $request) {
+        $response = ['success' => false];
+        $district_id = $request->input('district');
+        $wards = DB::table('wards')->where('district_id', '=', $district_id)->get();
+        if (count($wards) > 0) {
+            $response['success'] = true;
+            $response['html'] = view('front.ajax_render.render_wards', [
+                'wards' => $wards
+            ])->toHtml();
+            return response()->json($response);
+        } else {
+            $response['mes'] = 'Kiểm tra lại dữ liệu';
+        }
     }
 }

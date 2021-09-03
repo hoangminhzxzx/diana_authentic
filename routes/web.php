@@ -67,5 +67,8 @@ Route::post('/product/add-to-cart', 'Front\ProductController@addToCart')->name('
 Route::get('/gio-hang', 'Front\ProductController@renderCartInfo')->name('client.cart');
 Route::post('/product/remove-to-cart', 'Front\ProductController@removeProduct')->name('client.product.remove');
 Route::post('/product/updateQtyAjax/{rowId}', 'Front\ProductController@updateQty')->name('client.updateQty');
+Route::post('/select-province', 'Front\ProductController@selectProvince')->name('client.select.province');
+Route::post('/select-district', 'Front\ProductController@selectDistrict')->name('client.select.district');
 Route::get('/dat-hang', 'Front\ProductController@checkOutGet')->name('client.checkout');
+
 Route::post('/thanh-toan', 'Front\OrderController@insertOrder')->name('client.insert.order');

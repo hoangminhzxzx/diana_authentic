@@ -20,11 +20,7 @@
                         <div>
                             <p>{{ $item->name }}</p>
                             <small>Giá: {{ $item->price }}</small>
-{{--                            <a href="#" onclick="confirmDelete('#form_remove_item_cart_{{ $item->id }}');return false;">Remove</a>--}}
                             <a href="#" onclick="removeItemCart(this)" data-rowId="{{ $item->rowId }}">Remove</a>
-{{--                            <form id="form_remove_item_cart_{{ $item->id }}" method="POST" action="{{ route('client.product.remove', $item->rowId) }}" style="display: none;">--}}
-{{--                                @csrf--}}
-{{--                            </form>--}}
                         </div>
                     </div>
                 </td>
@@ -43,16 +39,9 @@
                     <td>Tổng giá trị đơn hàng</td>
                     <td id="totalCart">{{ Cart::total() }} VND</td>
                 </tr>
-{{--                <tr>--}}
-{{--                    <td>Total</td>--}}
-{{--                    <td>$150.00</td>--}}
-{{--                </tr>--}}
             </table>
         </div>
     </div>
-{{--<form action="" style="text-align: center;">--}}
-{{--    <input id="btn-checkout" type="submit" name="checkout" value="Checkout" class="btn">--}}
-{{--</form>--}}
 @if(Cart::count() > 0)
     <div style="text-align: center;">
         <a href="{{ route('client.checkout') }}" id="btn-checkout" class="btn">Checkout</a>
