@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => '5ae520fb65f42344366f7a748c69c88186baee1e',
+    'reference' => '2e301c06c29045d352b54e628b7ab66a0ae7c868',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -114,6 +114,15 @@
       array (
       ),
       'reference' => '0dbf5d78455d4d6a41d186da50adc1122ec066f4',
+    ),
+    'ezyang/htmlpurifier' => 
+    array (
+      'pretty_version' => 'v4.13.0',
+      'version' => '4.13.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '08e27c97e4c6ed02f37c5b2b20488046c8d90d75',
     ),
     'facade/flare-client-php' => 
     array (
@@ -435,6 +444,15 @@
       ),
       'reference' => 'abbf18d5ab8367f96b3205ca3c89fb2fa598c69e',
     ),
+    'kjmtrue/vietnam-zone' => 
+    array (
+      'pretty_version' => 'v1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '23cb83150760ef44f55612bb1afd022d5e488fe1',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -453,12 +471,12 @@
     ),
     'laravel/laravel' => 
     array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => '5ae520fb65f42344366f7a748c69c88186baee1e',
+      'reference' => '2e301c06c29045d352b54e628b7ab66a0ae7c868',
     ),
     'laravel/tinker' => 
     array (
@@ -523,6 +541,42 @@
       ),
       'reference' => '3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
     ),
+    'maatwebsite/excel' => 
+    array (
+      'pretty_version' => '3.1.33',
+      'version' => '3.1.33.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b2de5ba92c5c1ad9415f0eb7c72838fb3eaaa5b8',
+    ),
+    'maennchen/zipstream-php' => 
+    array (
+      'pretty_version' => '2.1.0',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c4c5803cc1f93df3d2448478ef79394a5981cc58',
+    ),
+    'markbaker/complex' => 
+    array (
+      'pretty_version' => '2.0.3',
+      'version' => '2.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '6f724d7e04606fd8adaa4e3bb381c3e9db09c946',
+    ),
+    'markbaker/matrix' => 
+    array (
+      'pretty_version' => '2.1.3',
+      'version' => '2.1.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '174395a901b5ba0925f1d790fa91bab531074b61',
+    ),
     'mockery/mockery' => 
     array (
       'pretty_version' => '1.4.3',
@@ -562,6 +616,15 @@
       array (
         0 => '1.10.2',
       ),
+    ),
+    'myclabs/php-enum' => 
+    array (
+      'pretty_version' => '1.8.3',
+      'version' => '1.8.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'b942d263c641ddb5190929ff840c68f78713e937',
     ),
     'nesbot/carbon' => 
     array (
@@ -643,6 +706,15 @@
       array (
       ),
       'reference' => '6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0',
+    ),
+    'phpoffice/phpspreadsheet' => 
+    array (
+      'pretty_version' => '1.18.0',
+      'version' => '1.18.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '418cd304e8e6b417ea79c3b29126a25dc4b1170c',
     ),
     'phpoption/phpoption' => 
     array (
@@ -765,6 +837,24 @@
       array (
         0 => '1.0',
       ),
+    ),
+    'psr/http-client' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2dfb5f6c5eff0e91e20e913f8c5452ed95b86621',
+    ),
+    'psr/http-factory' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '12ac7fcd07e5b077433f5f2bee95b3a771bf61be',
     ),
     'psr/http-message' => 
     array (
