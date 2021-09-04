@@ -55,22 +55,6 @@ class ProductController extends Controller
         $response['success'] = true;
         return response()->json($response);
     }
-//    public function detailStep1 ($id) {
-//        $product = Product::query()->find($id);
-//        $productVariants = ProductVariant::query()->where('product_id', '=', $id)->get();
-//        $list_variants = [];
-//        foreach ($productVariants as $productVariant) {
-//            $list_variants['colors'][] = $productVariant->color;
-//            $list_variants['sizes'][] = $productVariant->size;
-//        }
-//
-//        return view('front.product_detail_step_1',
-//            [
-//                'product' => $product,
-//                'list_variants' => $list_variants
-//            ]
-//        );
-//    }
 
     public function chooseColor(Request $request, $id) {
         $data = $request->input();
@@ -86,23 +70,6 @@ class ProductController extends Controller
             ]
         );
     }
-
-//    public function detailStep2($id, $size_id) {
-//        $product = Product::query()->find($id);
-//        $variants = ProductVariant::query()->where('size_id', '=', $size_id)->get();
-//        $option_colors = [];
-//        foreach ($variants as $variant) {
-//            $option_colors[] = $variant->color;
-//        }
-//        $size_name_choose = ProductOption::query()->find($size_id);
-//        return view('front.product_detail_step_2',
-//            [
-//                'product'=>$product,
-//                'option_colors'=>$option_colors,
-//                'size_name_choose' => $size_name_choose
-//            ]
-//        );
-//    }
 
     public function addToCart(Request $request) {
         $data = $request->input();

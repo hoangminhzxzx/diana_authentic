@@ -11,48 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-//    public function insertOrder(Request $request) {
-//        $request->validate(
-//            [
-//                'name' => 'required',
-//                'phone' => 'required',
-//                'address' => 'required',
-//                'email' => 'required',
-//            ],
-//            [],
-//            [
-//                'name' => 'Họ tên',
-//                'phone' => 'Số điện thoại',
-//                'address' => 'Địa chỉ',
-//                'email' => 'Email'
-//            ]
-//        );
-//        $data = $request->input();
-//
-//        $cart_total = Cart::total();
-//        dd(is_integer($cart_total));
-//        //save data into order_master table
-//        $modelOrderMaster = new OrderMaster();
-//        $modelOrderMaster->customer_name = $data['name'];
-//        $modelOrderMaster->customer_phone = $data['phone'];
-//        $modelOrderMaster->email = $data['email'];
-//        $modelOrderMaster->address = $data['address'];
-//        $modelOrderMaster->note = $data['note'];
-//        if ($cart_total) {
-//            $modelOrderMaster->total_price = $cart_total;
-//        }
-//        $modelOrderMaster->save();
-//
-//        //save data info order_detail table
-//        $modelOrderDetail = new OrderDetail();
-//        $cart_info = Cart::content();
-//        if ($cart_info) {
-//            foreach ($cart_info as $item) {
-////                $modelOrderDetail
-//            }
-//        }
-//    }
-
     public function insertOrder(Request $request) {
         $response = ['success' => false];
         $data = $request->input();
@@ -90,12 +48,12 @@ class OrderController extends Controller
                 $order_detail->order_id = $order_master->id;
                 $order_detail->product_id = $item->id;
                 $order_detail->qty = $item->qty;
-                $order_detail->color = (isset($item->options->color) && $item->options->color) ? $item->options->color : '';
-                $order_detail->size = (isset($item->options->size) && $item->options->size) ? $item->options->size : '';
+                $order_detail->color = $item->options->color ? $item->options->color : '';
+                $order_detail->size = $item->options->size ? $item->options->size : '';
                 $order_detail->price = $item->qty * $item->price;
                 $order_detail->save();
             }
-
+//            die();
             Cart::destroy();
             $response['success'] = true;
             $response['redirect'] = route('client.thank.you');
