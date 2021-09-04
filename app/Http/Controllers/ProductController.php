@@ -54,15 +54,15 @@ class ProductController extends Controller
             $request->file('thumbnail')->move(public_path('uploads'),$fileNameToStore);
         }
 
-        $arr_image = [];
-        $arr_image[] = $path;
+//        $arr_image = [];
+//        $arr_image[] = $path;
 
         $product = new Product();
         $product->title = $data['title']?$data['title']:"";
         $product->desc = $data['desc']?$data['desc']:"";
         $product->content = $data['content']?$data['content']:"";
         $product->thumbnail = $path;
-        $product->images = json_encode($arr_image);
+//        $product->images = json_encode($arr_image);
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
         $product->category_id = $data['category_id']?$data['category_id']:0;
         $product->price = $data['price']?$data['price']:0;
@@ -151,6 +151,19 @@ class ProductController extends Controller
     public function delete ($id) {
         $product = Product::query()->find($id);
         if ($product) {
+            //xóa các file ảnh
+            if ($product->images) {
+                $path_images = json_decode($product->images);
+                if ($path_images) {
+                    foreach ($path_images as $path_image) {
+                        $path_image = str_replace('public', '', $path_image);
+                        if (file_exists(public_path($path_image))) {
+                            unlink(public_path($path_image));
+                        }
+                    }
+                }
+            }
+
             $product->delete();
             return back();
         }
@@ -223,5 +236,9 @@ class ProductController extends Controller
         $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+    }
+
+    public function uploadImageTinymce(Request $request) {
+        dd($request->input());
     }
 }

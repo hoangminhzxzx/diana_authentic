@@ -3,7 +3,7 @@
     Giỏ hàng
 @endsection
 @section('content')
-{{--    {{ Cart::content() }}--}}
+{{--    {{ dd(Cart::content()) }}--}}
     <div class="small-container cart-page">
         <table>
             <tr>

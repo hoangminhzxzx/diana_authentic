@@ -16,20 +16,25 @@ class ProductController extends Controller
 {
     public function detailProduct($id) {
         $product = Product::query()->find($id);
+        $is_accessory = $product->category->is_accessory;
+
+        $data_response = [
+            'product' => $product,
+            'is_accessory' => $is_accessory
+        ];
+
         $productVariants = ProductVariant::query()->where('product_id', '=', $id)->get();
         $list_variants = [];
-        foreach ($productVariants as $productVariant) {
-//            $list_variants['colors'][] = $productVariant->color;
-            $list_variants['sizes'][] = $productVariant->size;
+        if (count($productVariants) > 0 && $productVariants) {
+            foreach ($productVariants as $productVariant) {
+                $list_variants['sizes'][] = $productVariant->size;
+            }
+            $data_response['sizes'] = array_unique($list_variants['sizes']);
         }
-//        dd(array_unique($list_variants['sizes']));
+//        dd($data_response);
+//                Cart::destroy();
         if ($product) {
-            return view('front.product.detail',
-                [
-                    'product' => $product,
-                    'sizes' => array_unique($list_variants['sizes'])
-                ]
-            );
+            return view('front.product.detail', $data_response);
         }
     }
 
@@ -101,16 +106,25 @@ class ProductController extends Controller
 
     public function addToCart(Request $request) {
         $data = $request->input();
-        $variantProduct = ProductVariant::query()->where('size_id', '=', $data['size_id'])->where('color_id', '=', $data["color_id"])->first();
-        $color = ProductOption::query()->find($data['color_id']);
-        $size = ProductOption::query()->find($data['size_id']);
-        $product = $variantProduct->product;
-        $options = [
-            'size' => $size->name,
-            'color' => $color->name,
-            'thumbnail' => $product->thumbnail
-        ];
-        $addToCart = Cart::add($product->id, $product->title, $data['qty'], $product->price, 0, $options);
+        if (intval($data['is_accessory']) == 1) { //kiểu phụ kiện
+            $product = Product::query()->find($data['product_id']);
+            $options = [
+                'thumbnail' => $product->thumbnail
+            ];
+            $addToCart = Cart::add($product->id, $product->title, $data['qty'], $product->price, 0, $options);
+        } else { //kiểu sản phẩm có màu, size
+            $variantProduct = ProductVariant::query()->where('size_id', '=', $data['size_id'])->where('color_id', '=', $data["color_id"])->first();
+            $color = ProductOption::query()->find($data['color_id']);
+            $size = ProductOption::query()->find($data['size_id']);
+            $product = $variantProduct->product;
+            $options = [
+                'size' => $size->name,
+                'color' => $color->name,
+                'thumbnail' => $product->thumbnail
+            ];
+            $addToCart = Cart::add($product->id, $product->title, $data['qty'], $product->price, 0, $options);
+        }
+
         if ($addToCart) {
             $response['success'] = true;
             $response['redirect'] = route('client.cart');

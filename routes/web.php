@@ -50,6 +50,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/user/edit/{id}', 'UserController@edit')->name('admin.user.edit')->middleware('CheckRole');
         Route::post('/user/update/{id}', "UserController@update")->name('admin.user.update')->middleware('CheckRole');
         Route::post('/user/delete/{id}', 'UserController@delete')->name('admin.user.delete')->middleware('CheckRole');
+
+        Route::post('/upload-image-tinymce', 'ProductController@uploadImageTinymce')->name('admin.upload.file.tinymce');
     });
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
@@ -72,3 +74,4 @@ Route::post('/select-district', 'Front\ProductController@selectDistrict')->name(
 Route::get('/dat-hang', 'Front\ProductController@checkOutGet')->name('client.checkout');
 
 Route::post('/thanh-toan', 'Front\OrderController@insertOrder')->name('client.insert.order');
+Route::get('/thank-you', 'Front\OrderController@thankYou')->name('client.thank.you');

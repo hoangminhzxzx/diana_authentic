@@ -159,21 +159,36 @@ function addToCart(e) {
     let size_id = $("#chooseSize").val(),
         color_id = $('#valueColor').val(),
         qty = $("input[name = 'qty']").val();
+    let product_type = $("#is_accessory").val();
 
     let checkRequired = true;
-    if (!size_id || !color_id || !qty) {
-        alert('Vui lòng kiểm tra lại size, màu, số lượng');
-        checkRequired = false;
+    if (product_type == 0) { //kiểu phụ kiện
+        if (!size_id || !color_id || !qty) {
+            alert('Vui lòng kiểm tra lại size, màu, số lượng');
+            checkRequired = false;
+        }
+        console.log('size_id: ' + size_id);
+        console.log('color_id: ' + color_id);
+        console.log('qty: ' + qty);
+        var data = {
+            size_id: size_id,
+            color_id: color_id,
+            qty: qty,
+            is_accessory: product_type
+        };
+    } else { //kiểu sản phẩm có màu,size
+        // if (!size_id) {
+        //     alert('Vui lòng kiểm tra lại size');
+        //     checkRequired = false;
+        // }
+        let product_id = $("input#product_id").val();
+        var data = {
+            qty: qty,
+            product_id : product_id,
+            is_accessory: product_type
+        };
     }
-    console.log('size_id: ' + size_id);
-    console.log('color_id: ' + color_id);
-    console.log('qty: ' + qty);
 
-    let data = {
-        size_id: size_id,
-        color_id: color_id,
-        qty: qty
-    };
     if (checkRequired) {
         $.ajax({
             headers: {
@@ -321,6 +336,13 @@ function orderSubmit(e) {
                         eleInput.addClass('error_required_order');
                     }
                 });
+            }
+
+            if (res.success) {
+                window.location.href = res.redirect;
+                setTimeout(function () {
+                    window.location.href = res.redirect_home;
+                }, 5000)
             }
         },
     });

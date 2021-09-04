@@ -10,18 +10,21 @@
     </style>
     <!-- -------------- single product --------------------->
     <div class="small-container single-product">
-        <div class="row">
+        <input type="hidden" value="@php if (isset($is_accessory) && $is_accessory == 1) { echo $is_accessory; } else echo 0; @endphp" name="is_accessory" id="is_accessory">
+        <div class="row" style="align-items: unset;">
             <div class="col-2">
                 <img src="{{ url($product->thumbnail) }}" id="ProductImg">
                 <div class="small-img-row">
                     <div class="small-img-col">
                         <img src="{{ url($product->thumbnail) }}" width="100%" class="small-img" onclick="changeImagePreview(this)" style="height: 96%;">
                     </div>
+                    @if($product->images)
                     @foreach(json_decode($product->images) as $image)
                     <div class="small-img-col">
                         <img src="{{ url($image) }}" width="100%" class="small-img" onclick="changeImagePreview(this)">
                     </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
             <div class="col-2">
@@ -31,21 +34,26 @@
                 <p>Trang chủ / {{ $product->category->title }}</p>
                 <h1>{{ $product->title }}</h1>
                 <h4>$50.00</h4>
+                @if($is_accessory == 0)
                 <input type="hidden" value="" id="valueSize" name="size">
                 <select id="chooseSize" onchange="chooseSize(this)">
                     <option value="">Select size</option>
+                    @if(isset($sizes) && $sizes)
                     @foreach($sizes as $size)
                         <option value="{{ $size->id }}">{{ $size->name }}</option>
                     @endforeach
+                    @endif
                 </select>
+                @endif
                 @error('size')
                 <small style="color: indianred;">{{$message}}</small>
                 @enderror
-                <input type="number" value="1" min="1" name="qty" style="margin-top: 1rem;">
+                <input type="number" value="1" min="1" name="qty" style="margin-top: 1rem; border: 1px solid #000;">
                 <input type="button" onclick="addToCart(this)" class="btn" value="Thêm vào giỏ hàng" id="" style="width: 100%;">
                 <h3>Chi tiết sản phẩm <i class="fa fa-indent"></i></h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae nesciunt odit beatae veniam autem
-                    iste id est possimus laborum iusto.</p>
+{{--                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae nesciunt odit beatae veniam autem--}}
+{{--                    iste id est possimus laborum iusto.</p>--}}
+                <div>{!! $product->content !!}</div>
                 {{--                </form>--}}
             </div>
         </div>

@@ -43,9 +43,14 @@
                                 </select>
                                 @if ($errors->has('parent_id'))
                                     <span class="text-red" role="alert">
-                                <strong>{{ $errors->first('parent_id') }}</strong>
-                            </span>
+                                        <strong>{{ $errors->first('parent_id') }}</strong>
+                                    </span>
                                 @endif
+                            </div>
+
+                            <div class="form-group">
+                                <lable>Phụ kiện</lable>
+                                <input type="checkbox" name="is_accessory">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success">Add New</button>

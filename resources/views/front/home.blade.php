@@ -35,7 +35,7 @@
     <!-- featured products -->
     <div class="small-container">
         <h2 class="title">Featued Products</h2>
-        <div class="row">
+        <div class="row" style="justify-content: center;">
             @foreach($list_products as $item)
             <div class="col-4">
                 <a href="{{ route('client.product.detail', ['id'=>$item->id]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>

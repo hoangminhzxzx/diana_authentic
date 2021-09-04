@@ -21,9 +21,16 @@ class CategoryController extends Controller
         $this->validate($request, [
             'title' => 'required',
         ]);
-        $input = $request->all();
-        $input['parent_id'] = empty($input['parent_id']) ? 0 : $input['parent_id'];
-        Category::create($input);
+        $data = $request->all();
+//        $input['parent_id'] = empty($input['parent_id']) ? 0 : $input['parent_id'];
+//        if (isset($input['is_accessory']) && $input['is_accessory'] == 'on') {
+//            $input['is_accessory'] = 1;
+//        }
+        $category = new Category();
+        $category->title = $data['title'];
+        $category->parent_id = $data['parent_id'];
+        $category->is_accessory = (isset($data['is_accessory']) && $data['is_accessory'] == 'on') ? 1 : 0;
+        $category->save();
         return back()->with('success', 'New Category added successfully.');
     }
 
