@@ -104,6 +104,13 @@ function changeImagePreview(e) {
     let ProductImg = $('#ProductImg');
     let SmallImg = $(e);
     ProductImg.attr('src', SmallImg.attr('src'));
+
+    let activeThumbPreview = $('.active_thumb_preview');
+    if (activeThumbPreview) {
+        activeThumbPreview.removeClass('active_thumb_preview');
+    }
+
+    $(e).addClass('active_thumb_preview');
 }
 
 function chooseSize(e) {
@@ -264,7 +271,7 @@ function selectProvince(e) {
                     checkIssetSelectDistrict.remove();
                 }
 
-                let checkIssetSelectWard = $("select[name='wards']");
+                let checkIssetSelectWard = $("select[name='ward']");
                 if (checkIssetSelectWard) {
                     checkIssetSelectWard.remove();
                 }

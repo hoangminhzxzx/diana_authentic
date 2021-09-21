@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3>List Category</h3>
+            <h3>Danh sách danh mục</h3>
             @if (session('status-delete'))
                 <div class="alert alert-success" role="alert">{{session('status-delete')}}</div>
             @endif
@@ -17,8 +17,8 @@
                     <th>
                         <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>
                     </th>
-                    <th class=""><span>Title</span></th>
-                    <th><span>Actions</span></th>
+                    <th class=""><span>Tên danh mục</span></th>
+                    <th><span>Hành động</span></th>
                 </tr>
                 </thead>
                 <tbody>

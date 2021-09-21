@@ -522,8 +522,14 @@ form a{
     height: 30px;
     padding: 0px 8px;
     margin-bottom: 10px;
+    display: block;
+    width: 100%;
 }
 
 .error_required_order {
     border: 1px solid red;
+}
+
+.active_thumb_preview {
+    border: 1px solid #ccc;
 }

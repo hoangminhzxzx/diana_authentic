@@ -80,6 +80,14 @@
                                         @if(isset($product->category->id) && $product->category->id == $category_accessory->id) selected @endif>{{ $category_accessory->title }}</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <lable>Phân loại thường - hot - hot header</lable>
+                            <select name="is_hot" id="" class="form-control">
+                                <option value="0" @if($product->is_hot == 0) selected @endif>Thường</option>
+                                <option value="1" @if($product->is_hot == 1) selected @endif>Hot</option>
+                                <option value="2" @if($product->is_hot == 2) selected @endif>Hot header</option>
+                            </select>
+                        </div>
                         <div class="form-group text-center">
                             <input type="submit" class="btn btn-outline-success w-25" value="Save">
                         </div>
@@ -88,6 +96,7 @@
             </div>
         </div>
         <div class="col-md-6">
+            @if($product->category->is_accessory != 1)
             <div class="card mx-4">
                 <div class="card-header">
                     @if (session('success_variant'))
@@ -201,6 +210,7 @@
                     </table>
                 </div>
             </div>
+            @endif
             <div class="card mx-4 mt-5">
                 <div class="card-header">
                     <h4>Cài đặt ảnh nhỏ hiển thị</h4>

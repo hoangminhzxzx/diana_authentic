@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\createSlugCategory' => $baseDir . '/app/Console/Commands/createSlugCategory.php',
+    'App\\Console\\Commands\\createSlugProduct' => $baseDir . '/app/Console/Commands/createSlugProduct.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -17,6 +19,7 @@ return array(
     'App\\Http\\Controllers\\CategoryController' => $baseDir . '/app/Http/Controllers/CategoryController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DashboardController' => $baseDir . '/app/Http/Controllers/DashboardController.php',
+    'App\\Http\\Controllers\\Front\\CategoryController' => $baseDir . '/app/Http/Controllers/Front/CategoryController.php',
     'App\\Http\\Controllers\\Front\\HomeController' => $baseDir . '/app/Http/Controllers/Front/HomeController.php',
     'App\\Http\\Controllers\\Front\\OrderController' => $baseDir . '/app/Http/Controllers/Front/OrderController.php',
     'App\\Http\\Controllers\\Front\\ProductController' => $baseDir . '/app/Http/Controllers/Front/ProductController.php',

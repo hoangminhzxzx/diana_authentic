@@ -6,7 +6,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <h3>Category List</h3>
+                        <h3>Danh sách danh mục</h3>
                         <ul id="tree1">
                             @foreach($categories as $category)
                                 <li>
@@ -19,12 +19,12 @@
                         </ul>
                     </div>
                     <div class="col-md-4">
-                        <h3>Add New Category</h3>
+                        <h3>Tạo danh mục mới</h3>
                         <form role="form" id="category" method="POST" action="{{ route('add.category') }}"
                               enctype="multipart/form-data">
                             @csrf
                             <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                                <label>Title:</label>
+                                <label>Tên:</label>
                                 <input type="text" id="title" name="title" value="" class="form-control"
                                        placeholder="Enter Title">
                                 @if ($errors->has('title'))
@@ -34,7 +34,7 @@
                                 @endif
                             </div>
                             <div class="form-group {{ $errors->has('parent_id') ? 'has-error' : '' }}">
-                                <label>Category:</label>
+                                <label>Danh mục cha:</label>
                                 <select id="parent_id" name="parent_id" class="form-control">
                                     <option value="0">Select</option>
                                     @foreach($allCategories as $rows)
@@ -53,7 +53,7 @@
                                 <input type="checkbox" name="is_accessory">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success">Add New</button>
+                                <button type="submit" class="btn btn-success">Lưu</button>
                             </div>
                         </form>
                     </div>

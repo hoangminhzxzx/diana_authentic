@@ -5,27 +5,27 @@
 @section('content')
 <div class="card mx-4">
     <div class="card-header">
-        <h3>Create Product</h3>
+        <h3>Tạo sản phẩm</h3>
     </div>
     <div class="card-body">
         <form action="{{route('admin.product.store')}}" method="POST" enctype="multipart/form-data" id="uploadProduct" class="">
             @csrf
             <div class="form-group">
-                <lable>Title</lable>
+                <lable>Tên sản phẩm</lable>
                 <input type="text" name="title" value="{{ old('title') }}" class="form-control">
                 @error('title')
                 <small class="text-danger">{{$message}}</small>
                 @enderror
             </div>
             <div class="form-group">
-                <lable>Desc</lable>
+                <lable>Mô tả ngắn</lable>
                 <textarea name="desc" class="form-control" id="desc" cols="30" rows="3"></textarea>
                 @error('desc')
                 <small class="text-danger">{{$message}}</small>
                 @enderror
             </div>
             <div class="form-group">
-                <lable>Content</lable>
+                <lable>Chi tiết sản phẩm</lable>
                 <textarea name="content" class="form-control" id="content" cols="30" rows="5"></textarea>
             </div>
 {{--            <div class="form-group">--}}
@@ -37,11 +37,11 @@
 {{--                </form>--}}
 {{--            </div>--}}
             <div class="form-group">
-                <lable>Thumbnail</lable>
+                <lable>Ảnh đại diện</lable>
                 <input type="file" name="thumbnail" id="thumbnail">
             </div>
             <div class="form-group">
-                <lable>Is publish</lable>
+                <lable>Kích hoạt</lable>
                 <select name="is_publish" id="" class="form-control">
                     <option value="0">Choose</option>
                     <option value="1">Publish</option>
@@ -56,7 +56,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <lable>Categories</lable>
+                <lable>Danh mục cha</lable>
                 <select name="category_id" id="" class="form-control">
                     <option value="0">Choose</option>
                     @foreach($categories as $item)

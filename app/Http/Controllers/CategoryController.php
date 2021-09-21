@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Category;
 use Illuminate\Http\Request;
+use Psy\Util\Str;
 
 class CategoryController extends Controller
 {
@@ -30,6 +31,7 @@ class CategoryController extends Controller
         $category->title = $data['title'];
         $category->parent_id = $data['parent_id'];
         $category->is_accessory = (isset($data['is_accessory']) && $data['is_accessory'] == 'on') ? 1 : 0;
+        $category->slug = \Illuminate\Support\Str::slug($data['title']);
         $category->save();
         return back()->with('success', 'New Category added successfully.');
     }
@@ -63,6 +65,8 @@ class CategoryController extends Controller
         $category = Category::query()->find($id);
         $category->title = $data['title'];
         $category->parent_id = $data['parent_id'];
+        $category->is_accessory = (isset($data['is_accessory']) && $data['is_accessory'] == 'on') ? 1 : 0;
+        $category->slug = \Illuminate\Support\Str::slug($data['title']);
         $category->save();
         return redirect()->route('category-tree-view');
     }

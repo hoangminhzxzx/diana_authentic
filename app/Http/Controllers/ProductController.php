@@ -73,19 +73,20 @@ class ProductController extends Controller
 
     public function edit ($id) {
         $product = Product::query()->find($id);
-        $categories = Category::query()->where('parent_id', "!=", 0)->get(['id','title']);
-        $category_accessory = Category::query()->where('title', 'LIKE', "%Phu kien%")->first();
-        return view('admin.product.edit',
-            [
-                'product' => $product,
-                'categories' => $categories,
-                'category_accessory' => $category_accessory
-            ]
-        );
+        if ($product) {
+            $categories = Category::query()->where('parent_id', "!=", 0)->get(['id','title']);
+            $category_accessory = Category::query()->where('title', 'LIKE', "%Phu kien%")->first();
+            return view('admin.product.edit',
+                [
+                    'product' => $product,
+                    'categories' => $categories,
+                    'category_accessory' => $category_accessory
+                ]
+            );
+        }
     }
 
     public function update (Request $request, $id) {
-//        dd($request->file('thumbnail'));
         $request -> validate(
             [
                 'title' => "required",
@@ -130,19 +131,19 @@ class ProductController extends Controller
 
         if (isset($path) && $path) {
             $product->thumbnail = $path;
-
-//            $arr_image = [];
-//            if ($product->images) {
-//                $arr_image = json_decode($product->images);
-//            }
-//            unset($arr_image[0]);
-//            array_unshift($arr_image, $path);
-//
-//            $product->images = json_encode($arr_image);
         }
+
+        //xử lý nếu is_hot == 2 thì sẽ chỉ có sản phẩm này bằng 2 thôi, sản phẩm khác đã là 2 thì chuyển về 1
+        $product_hot_current = Product::query()->where('is_hot', '=', 2)->first();
+        if ($product_hot_current) {
+            $product_hot_current->is_hot = 1;
+            $product_hot_current->save();
+        }
+
         $product->price = $data['price']?$data['price']:0;
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
         $product->category_id = $data['category_id'];
+        $product->is_hot = $data['is_hot'];
         $product->save();
 
         return back()->with('success_product', 'Cập nhật thành công');

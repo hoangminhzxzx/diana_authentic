@@ -14,26 +14,25 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function detailProduct($id) {
-        $product = Product::query()->find($id);
+    public function detailProduct($slug) {
+        $product = Product::query()->where('slug', '=', $slug)->first();
         $is_accessory = $product->category->is_accessory;
 
         $data_response = [
             'product' => $product,
             'is_accessory' => $is_accessory
         ];
-
-        $productVariants = ProductVariant::query()->where('product_id', '=', $id)->get();
-        $list_variants = [];
-        if (count($productVariants) > 0 && $productVariants) {
-            foreach ($productVariants as $productVariant) {
-                $list_variants['sizes'][] = $productVariant->size;
+        if ($product) {
+            $productVariants = ProductVariant::query()->where('product_id', '=', $product->id)->get();
+            $list_variants = [];
+            if (count($productVariants) > 0 && $productVariants) {
+                foreach ($productVariants as $productVariant) {
+                    $list_variants['sizes'][] = $productVariant->size;
+                }
+                $data_response['sizes'] = array_unique($list_variants['sizes']);
             }
-            $data_response['sizes'] = array_unique($list_variants['sizes']);
-        }
 //        dd($data_response);
 //                Cart::destroy();
-        if ($product) {
             return view('front.product.detail', $data_response);
         }
     }
@@ -76,7 +75,8 @@ class ProductController extends Controller
         if (intval($data['is_accessory']) == 1) { //kiểu phụ kiện
             $product = Product::query()->find($data['product_id']);
             $options = [
-                'thumbnail' => $product->thumbnail
+                'thumbnail' => $product->thumbnail,
+                'slug' => $product->slug
             ];
             $addToCart = Cart::add($product->id, $product->title, $data['qty'], $product->price, 0, $options);
         } else { //kiểu sản phẩm có màu, size
@@ -87,7 +87,8 @@ class ProductController extends Controller
             $options = [
                 'size' => $size->name,
                 'color' => $color->name,
-                'thumbnail' => $product->thumbnail
+                'thumbnail' => $product->thumbnail,
+                'slug' => $product->slug
             ];
             $addToCart = Cart::add($product->id, $product->title, $data['qty'], $product->price, 0, $options);
         }

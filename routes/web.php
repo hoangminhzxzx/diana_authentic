@@ -60,7 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 //Client
 Route::get('/', 'Front\HomeController@index')->name('homeFront');
-Route::get('/product/detail/{id}', 'Front\ProductController@detailProduct')->name('client.product.detail');
+Route::get('/product/detail/{slug}', 'Front\ProductController@detailProduct')->name('client.product.detail');
 Route::post('/choose-size', 'Front\ProductController@chooseSize')->name('client.choose.size');
 Route::post('/product/add-to-cart', 'Front\ProductController@addToCart')->name('client.product.add_to_cart');
 Route::get('/gio-hang', 'Front\ProductController@renderCartInfo')->name('client.cart');
@@ -72,3 +72,5 @@ Route::get('/dat-hang', 'Front\ProductController@checkOutGet')->name('client.che
 
 Route::post('/thanh-toan', 'Front\OrderController@insertOrder')->name('client.insert.order');
 Route::get('/thank-you', 'Front\OrderController@thankYou')->name('client.thank.you');
+
+Route::get('/category/{slug}', 'Front\CategoryController@listProductFollowCategory')->name('client.category.list.product');

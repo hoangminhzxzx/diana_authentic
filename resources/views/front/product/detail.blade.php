@@ -33,11 +33,11 @@
                 <input type="hidden" id="product_id" value="{{ $product->id }}">
                 <p>Trang chủ / {{ $product->category->title }}</p>
                 <h1>{{ $product->title }}</h1>
-                <h4>$50.00</h4>
+                <h4>{{ number_format($product->price, 0, '.', '.') }} VNĐ</h4>
                 @if($is_accessory == 0)
                 <input type="hidden" value="" id="valueSize" name="size">
-                <select id="chooseSize" onchange="chooseSize(this)">
-                    <option value="">Select size</option>
+                <select id="chooseSize" onchange="chooseSize(this)" style="border: 1px solid #ccc;">
+                    <option value="">Chọn size</option>
                     @if(isset($sizes) && $sizes)
                     @foreach($sizes as $size)
                         <option value="{{ $size->id }}">{{ $size->name }}</option>
@@ -48,7 +48,7 @@
                 @error('size')
                 <small style="color: indianred;">{{$message}}</small>
                 @enderror
-                <input type="number" value="1" min="1" name="qty" style="margin-top: 1rem; border: 1px solid #000;">
+                <input type="number" value="1" min="1" name="qty" style="margin-top: 1rem; border: 1px solid #000; border: 1px solid #ccc;">
                 <input type="button" onclick="addToCart(this)" class="btn" value="Thêm vào giỏ hàng" id="" style="width: 100%;">
                 <h3>Chi tiết sản phẩm <i class="fa fa-indent"></i></h3>
 {{--                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae nesciunt odit beatae veniam autem--}}
@@ -62,8 +62,8 @@
     <!-- ---------------title------------- -->
     <div class="small-container">
         <div class="row row-2">
-            <h2>Related Products</h2>
-            <p>View More</p>
+            <h2>Sản phẩm liên quan</h2>
+            <a href="">Xem thêm</a>
         </div>
     </div>
 

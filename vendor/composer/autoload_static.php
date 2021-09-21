@@ -669,6 +669,8 @@ class ComposerStaticInit9bda30dc54f08ba0e8e96e266324cbe4
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\createSlugCategory' => __DIR__ . '/../..' . '/app/Console/Commands/createSlugCategory.php',
+        'App\\Console\\Commands\\createSlugProduct' => __DIR__ . '/../..' . '/app/Console/Commands/createSlugProduct.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -680,6 +682,7 @@ class ComposerStaticInit9bda30dc54f08ba0e8e96e266324cbe4
         'App\\Http\\Controllers\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/CategoryController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
+        'App\\Http\\Controllers\\Front\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/CategoryController.php',
         'App\\Http\\Controllers\\Front\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/HomeController.php',
         'App\\Http\\Controllers\\Front\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/OrderController.php',
         'App\\Http\\Controllers\\Front\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/ProductController.php',

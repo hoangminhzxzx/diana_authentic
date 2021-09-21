@@ -40,6 +40,10 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <lable>Phụ kiện</lable>
+                                <input type="checkbox" name="is_accessory" @if($category->is_accessory == 1) checked @endif>
+                            </div>
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-success">Save</button>
                             </div>
                         </form>

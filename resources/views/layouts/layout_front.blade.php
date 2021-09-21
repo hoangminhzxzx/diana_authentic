@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+@php
+    $categories = \App\Model\Category::query()->where('parent_id', '=', 0)->get();
+@endphp
 <div class="header">
     <div class="container">
         <div class="navbar">
@@ -19,13 +22,16 @@
             <nav>
                 <ul id="MenuItems">
                     <li><a href="{{ route('homeFront') }}">Trang chủ</a></li>
-                    <li><a href="">Áo</a></li>
-                    <li><a href="">Quần</a></li>
-                    <li><a href="">Giày</a></li>
-                    <li><a href="">Túi xách</a></li>
+                    @foreach($categories as $category)
+                        <li><a href="{{ route('client.category.list.product', $category->slug) }}">{{ $category->title }}</a></li>
+                    @endforeach
+{{--                    <li><a href="">Áo</a></li>--}}
+{{--                    <li><a href="">Quần</a></li>--}}
+{{--                    <li><a href="">Giày</a></li>--}}
+{{--                    <li><a href="">Túi xách</a></li>--}}
                     <li><a href="">Giới thiệu</a></li>
                     <li><a href="">Liên hệ</a></li>
-                    <li><a href="">Tài khoản</a></li>
+{{--                    <li><a href="">Tài khoản</a></li>--}}
                 </ul>
             </nav>
             <a href="{{ route('client.cart') }}"  style="position: relative;">

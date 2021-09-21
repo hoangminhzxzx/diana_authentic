@@ -9,11 +9,11 @@
                 <table class="table" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>Title</th>
+                        <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
-                        <th>Thumbnail</th>
-                        <th>Publish</th>
-                        <th>Action</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Trạng thái kích hoạt</th>
+                        <th>Hành động</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -24,10 +24,10 @@
                         <td><img src="{{ url($product->thumbnail) }}" alt="" class="img-thumbnail" width="120"></td>
                         <td>
                             @if($product->is_publish == 1)
-                                Publish
+                                Kích hoạt
                             @endif
                             @if($product->is_publish == 2)
-                                Unpublish
+                                Không kích hoạt
                             @endif
                         </td>
                         <td>

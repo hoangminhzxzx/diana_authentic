@@ -55,23 +55,23 @@
                     <div class="col-3">
                         <h3>Thông tin đơn hàng</h3>
                         <div class="total-price">
-                            <table>
+                            <table style="font-size: 13px;">
                                 <tr>
                                     <td style="font-weight: bold;">Sản phẩm</td>
                                     <td style="font-weight: bold;">Màu - Size</td>
-                                    <td style="font-weight: bold;">Tổng</td>
+                                    <td style="font-weight: bold;">Tổng (VNĐ)</td>
                                 </tr>
                                 @foreach(Cart::content() as $item)
                                 <tr>
                                     <td>{{ $item->name }} x {{ $item ->qty }}</td>
                                     <td>{{ $item->options->color }} - {{ $item->options->size }}</td>
-                                    <td>{{ number_format($item->subtotal, 0, '.', '.') }} VND</td>
+                                    <td>{{ number_format($item->subtotal, 0, '.', '.') }}</td>
                                 </tr>
                                 @endforeach
                                 <tr>
                                     <td>Tổng đơn hàng</td>
                                     <td></td>
-                                    <td>{{ Cart::total() }} VND</td>
+                                    <td>{{ Cart::total() }}</td>
                                 </tr>
                             </table>
                         </div>
