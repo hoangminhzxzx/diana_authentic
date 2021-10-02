@@ -307,7 +307,7 @@ function selectDistrict(e) {
                 // let address_new = address_current + ', ' + district_name;
                 // inputAddress.val(address_new);
 
-                let checkIssetSelectWard = $("select[name='wards']");
+                let checkIssetSelectWard = $("select[name='ward']");
                 if (checkIssetSelectWard) {
                     checkIssetSelectWard.remove();
                 }
