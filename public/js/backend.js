@@ -1,4 +1,4 @@
-const url_source = 'http://localhost/diana_authentic_shop/admin';
+const url_source = 'http://localhost/diana_authentic/admin';
 
 function confirmDelete(form_id) {
     if (confirm('Are you sure?')) {
