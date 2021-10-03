@@ -1,50 +1,49 @@
-@extends('layouts.layout_admin')
-@section('styles')
+<?php $__env->startSection('styles'); ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
-    <link rel="stylesheet" href="{{ url('public/plugins/custom/dropzone-5.7.0/dist/min/dropzone.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(url('public/plugins/custom/dropzone-5.7.0/dist/min/dropzone.min.css')); ?>">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css" rel="stylesheet">
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="row">
         <div class="col-md-6">
             <div class="card mx-4">
                 <div class="card-header">
-                    @if (session('success_product'))
-                        <div class="alert alert-success mt-3" role="alert">{{session('success_product')}}</div>
-                    @endif
-                    @if (session('status_update_variant'))
-                        <div class="alert alert-success mt-3" role="alert">{{session('status_update_variant')}}</div>
-                    @endif
-                    @if (session('status_delete_variant'))
-                        <div class="alert alert-success mt-3" role="alert">{{session('status_delete_variant')}}</div>
-                    @endif
+                    <?php if(session('success_product')): ?>
+                        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('success_product')); ?></div>
+                    <?php endif; ?>
+                    <?php if(session('status_update_variant')): ?>
+                        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('status_update_variant')); ?></div>
+                    <?php endif; ?>
+                    <?php if(session('status_delete_variant')): ?>
+                        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('status_delete_variant')); ?></div>
+                    <?php endif; ?>
                     <h3>Update Product</h3>
                 </div>
-                {{--                <img class="img-thumbnail" id="image" src="{{ asset($product->thumbnail) }}" style="margin-top: 1rem; max-width: 200px;" /> Ảnh sản phẩm đại diện ( Khi muốn thay đổi cần liên hệ với Bang Chủ hoặc xóa đi nhập liệu lại)--}}
+                
                 <div class="card-body">
-                    <form action="{{route('admin.product.update', $product->id)}}" method="POST" id="uploadProduct" enctype="multipart/form-data">
-                        @csrf
+                    <form action="<?php echo e(route('admin.product.update', $product->id)); ?>" method="POST" id="uploadProduct" enctype="multipart/form-data">
+                        <?php echo csrf_field(); ?>
                         <div class="form-group">
                             <lable>Title</lable>
-                            <input type="text" name="title" value="{{ $product->title }}" class="form-control">
+                            <input type="text" name="title" value="<?php echo e($product->title); ?>" class="form-control">
                         </div>
                         <div class="form-group">
                             <lable>Desc</lable>
                             <textarea name="desc" class="form-control" id="desc" cols="30"
-                                      rows="3">{{ $product->desc }}</textarea>
+                                      rows="3"><?php echo e($product->desc); ?></textarea>
                         </div>
                         <div class="form-group">
                             <lable>Content</lable>
                             <textarea name="content" class="form-control" id="content" cols="30"
-                                      rows="5">{{ $product->content }}</textarea>
+                                      rows="5"><?php echo e($product->content); ?></textarea>
                         </div>
                         <div class="form-group">
                             <lable>Images</lable>
                         </div>
                         <div class="form-group">
                             <div id="thumbnail">
-                                <img class="img-thumbnail" id="image" src="{{ asset($product->thumbnail) }}"
+                                <img class="img-thumbnail" id="image" src="<?php echo e(asset($product->thumbnail)); ?>"
                                      style="margin-top: 1rem; max-width: 300px;"/>
                             </div>
                             <label for="inputUpload" id="btn_upload"
@@ -52,42 +51,42 @@
                                 <i class="spinner spinner-success d-none mr-5"></i>
                                 <span>Đổi ảnh</span>
                             </label>
-                            {{--                            <form action="" method="POST" id="change-thumbnail" class="d-none" enctype="multipart/form-data">--}}
-                            {{--                                @csrf--}}
+                            
+                            
                             <input type="file" class="d-none" id="inputUpload" name="thumbnail" value=""
                                    onchange="changeThumbnail(this)">
-                            {{--                            </form>--}}
+                            
                         </div>
                         <div class="form-group">
                             <lable>Is publish</lable>
                             <select name="is_publish" id="" class="form-control">
                                 <option value="0">Choose</option>
-                                <option value="1" @if($product->is_publish == 1) selected @endif>Publish</option>
-                                <option value="2" @if($product->is_publish == 2) selected @endif>Unpublish</option>
+                                <option value="1" <?php if($product->is_publish == 1): ?> selected <?php endif; ?>>Publish</option>
+                                <option value="2" <?php if($product->is_publish == 2): ?> selected <?php endif; ?>>Unpublish</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <lable>Giá sản phẩm</lable>
-                            <input type="text" name="price" value="{{ $product->price }}" class="form-control">
+                            <input type="text" name="price" value="<?php echo e($product->price); ?>" class="form-control">
                         </div>
                         <div class="form-group">
                             <lable>Categories</lable>
                             <select name="category_id" id="" class="form-control">
                                 <option value="0">Choose</option>
-                                @foreach($categories as $item)
-                                    <option value="{{$item->id}}"
-                                            @if($product->category_id == $item->id) selected @endif>{{$item->title}}</option>
-                                @endforeach
-                                <option value="{{ $category_accessory->id }}"
-                                        @if(isset($product->category->id) && $product->category->id == $category_accessory->id) selected @endif>{{ $category_accessory->title }}</option>
+                                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($item->id); ?>"
+                                            <?php if($product->category_id == $item->id): ?> selected <?php endif; ?>><?php echo e($item->title); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($category_accessory->id); ?>"
+                                        <?php if(isset($product->category->id) && $product->category->id == $category_accessory->id): ?> selected <?php endif; ?>><?php echo e($category_accessory->title); ?></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <lable>Phân loại thường - hot - hot header</lable>
                             <select name="is_hot" id="" class="form-control">
-                                <option value="0" @if($product->is_hot == 0) selected @endif>Thường</option>
-                                <option value="1" @if($product->is_hot == 1) selected @endif>Hot</option>
-                                <option value="2" @if($product->is_hot == 2) selected @endif>Hot header</option>
+                                <option value="0" <?php if($product->is_hot == 0): ?> selected <?php endif; ?>>Thường</option>
+                                <option value="1" <?php if($product->is_hot == 1): ?> selected <?php endif; ?>>Hot</option>
+                                <option value="2" <?php if($product->is_hot == 2): ?> selected <?php endif; ?>>Hot header</option>
                             </select>
                         </div>
                         <div class="form-group text-center">
@@ -98,59 +97,80 @@
             </div>
         </div>
         <div class="col-md-6">
-            @if($product->category->is_accessory != 1)
+            <?php if($product->category->is_accessory != 1): ?>
             <div class="card mx-4">
                 <div class="card-header">
-                    @if (session('success_variant'))
-                        <div class="alert alert-success mt-3" role="alert">{{session('success_variant')}}</div>
-                    @endif
+                    <?php if(session('success_variant')): ?>
+                        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('success_variant')); ?></div>
+                    <?php endif; ?>
                     <h3>Variants</h3>
                 </div>
                 <div class="card-body">
-                    @if(isset($product->category->id) && $product->category->id != 12)
-                        <form action="{{ route('admin.product.variant.store') }}" method="POST">
-                            @csrf
-                            <input type="hidden" value="{{ $product->id }}" name="product_id">
+                    <?php if(isset($product->category->id) && $product->category->id != 12): ?>
+                        <form action="<?php echo e(route('admin.product.variant.store')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <input type="hidden" value="<?php echo e($product->id); ?>" name="product_id">
                             <div class="form-group color_hex">
                                 <lable>Color Hex</lable>
                                 <input type="text" name="color_hex" id="colorpicker_variant"
-                                       value="{{ old('color_hex') }}" class="form-control">
-                                @error('color_hex')
-                                <small class="text-danger">{{$message}}</small>
-                                @enderror
+                                       value="<?php echo e(old('color_hex')); ?>" class="form-control">
+                                <?php $__errorArgs = ['color_hex'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <small class="text-danger"><?php echo e($message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="form-group color_name">
                                 <lable>Color Name</lable>
-                                <input type="text" name="color_name" value="{{ old('color_name') }}"
+                                <input type="text" name="color_name" value="<?php echo e(old('color_name')); ?>"
                                        class="form-control">
-                                @error('color_name')
-                                <small class="text-danger">{{$message}}</small>
-                                @enderror
+                                <?php $__errorArgs = ['color_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <small class="text-danger"><?php echo e($message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="form-group size">
                                 <lable>Size</lable>
-                                <input type="text" name="size" value="{{ old('size') }}" class="form-control">
-                                @error('size')
-                                <small class="text-danger">{{$message}}</small>
-                                @enderror
+                                <input type="text" name="size" value="<?php echo e(old('size')); ?>" class="form-control">
+                                <?php $__errorArgs = ['size'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <small class="text-danger"><?php echo e($message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
-                            {{--                            <div class="form-group">--}}
-                            {{--                                <lable>Price</lable>--}}
-                            {{--                                <input type="text" name="price" value="{{ old('price') }}" class="form-control">--}}
-                            {{--                                @error('price')--}}
-                            {{--                                <small class="text-danger">{{$message}}</small>--}}
-                            {{--                                @enderror--}}
-                            {{--                            </div>--}}
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-outline-success w-25" value="Thêm">
                             </div>
                         </form>
-                    @endif
+                    <?php endif; ?>
 
-                    @if(isset($product->category->id) && $product->category->id == 12)
-                        <form action="{{ route('admin.product.variant_ass.store') }}" method="POST">
-                            @csrf
-                            <input type="hidden" value="{{ $product->id }}" name="product_id">
+                    <?php if(isset($product->category->id) && $product->category->id == 12): ?>
+                        <form action="<?php echo e(route('admin.product.variant_ass.store')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <input type="hidden" value="<?php echo e($product->id); ?>" name="product_id">
                             <div class="form-group">
                                 <lable>Giá phụ kiện</lable>
                                 <input type="number" name="price" class="form-control">
@@ -159,7 +179,7 @@
                                 <input type="submit" class="btn btn-outline-success">
                             </div>
                         </form>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="card mx-4 mt-5">
@@ -181,38 +201,38 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {{--                        {{$product->ProductVariants}}--}}
-                        @foreach($product->ProductVariants as $item)
+                        
+                        <?php $__currentLoopData = $product->ProductVariants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><span><label class="checkbox checkbox-single"><input type="checkbox"
                                                                                          value="1">&nbsp;<span></span></label></span>
                                 </td>
-                                <td><span>{{ ($item->color)?$item->color->value:"" }}</span></td>
-                                <td><span>{{ ($item->color)?$item->color->name:"" }}</span></td>
-                                <td><span>{{ ($item->size)?$item->size->value:"" }}</span></td>
-                                <td><span>{{$item->price?$item->price:""}}</span></td>
+                                <td><span><?php echo e(($item->color)?$item->color->value:""); ?></span></td>
+                                <td><span><?php echo e(($item->color)?$item->color->name:""); ?></span></td>
+                                <td><span><?php echo e(($item->size)?$item->size->value:""); ?></span></td>
+                                <td><span><?php echo e($item->price?$item->price:""); ?></span></td>
                                 <td>
-                                    <a href="{{ route('admin.product.variant.edit', ['id'=>$item->id]) }}"
+                                    <a href="<?php echo e(route('admin.product.variant.edit', ['id'=>$item->id])); ?>"
                                        class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
                                         <i class="fas fa-pen-alt"></i>
                                     </a>
                                     <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
-                                       onclick="confirmDelete('#delete-variant-{{ $item->id }}');return false;">
+                                       onclick="confirmDelete('#delete-variant-<?php echo e($item->id); ?>');return false;">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
-                                    <form method="POST" id="delete-variant-{{ $item->id }}"
-                                          action="{{ route('admin.product.variant.delete', ['id'=>$item->id]) }}"
+                                    <form method="POST" id="delete-variant-<?php echo e($item->id); ?>"
+                                          action="<?php echo e(route('admin.product.variant.delete', ['id'=>$item->id])); ?>"
                                           style="display: none;">
-                                        @csrf
+                                        <?php echo csrf_field(); ?>
                                     </form>
                                 </td>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-            @endif
+            <?php endif; ?>
             <div class="card mx-4 mt-5">
                 <div class="card-header">
                     <h4>Cài đặt ảnh nhỏ hiển thị</h4>
@@ -226,14 +246,14 @@
                                     <i class="glyphicon glyphicon-plus"></i>
                                     <span>Add files...</span>
                                 </span>
-{{--                                <button type="submit" class="btn btn-primary start">--}}
-{{--                                    <i class="glyphicon glyphicon-upload"></i>--}}
-{{--                                    <span>Start upload</span>--}}
-{{--                                </button>--}}
-{{--                                <button type="reset" class="btn btn-warning cancel">--}}
-{{--                                    <i class="glyphicon glyphicon-ban-circle"></i>--}}
-{{--                                    <span>Cancel upload</span>--}}
-{{--                                </button>--}}
+
+
+
+
+
+
+
+
                             </div>
 
                             <div class="col-lg-5">
@@ -280,13 +300,13 @@
                                     </button>
                                 </div>
                             </div>
-                            @if($product->images)
-                                @foreach(json_decode($product->images) as $image)
+                            <?php if($product->images): ?>
+                                <?php $__currentLoopData = json_decode($product->images); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div id="" class="file-row d-flex justify-content-between item-image-single">
                                 <!-- This is used as the file preview template -->
                                 <div class="">
                                     <div>
-                                        <span class="preview"><img data-dz-thumbnail="" width="80" height="80" alt="" src="{{ asset($image) }}"/></span>
+                                        <span class="preview"><img data-dz-thumbnail="" width="80" height="80" alt="" src="<?php echo e(asset($image)); ?>"/></span>
                                     </div>
                                     <div>
                                         <p class="name" data-dz-name></p>
@@ -300,30 +320,30 @@
                                     </div>
                                 </div>
                                 <div>
-{{--                                    <button class="btn btn-primary start">--}}
-{{--                                        <i class="glyphicon glyphicon-upload"></i>--}}
-{{--                                        <span>Start</span>--}}
-{{--                                    </button>--}}
-{{--                                    <button data-dz-remove class="btn btn-warning cancel">--}}
-{{--                                        <i class="glyphicon glyphicon-ban-circle"></i>--}}
-{{--                                        <span>Cancel</span>--}}
-{{--                                    </button>--}}
-                                    <button class="btn btn-danger" onclick="deleteImageSingle(this)" data-path="{{ $image }}">
+
+
+
+
+
+
+
+
+                                    <button class="btn btn-danger" onclick="deleteImageSingle(this)" data-path="<?php echo e($image); ?>">
                                         <i class="glyphicon glyphicon-trash"></i>
                                         <span>Delete</span>
                                     </button>
                                 </div>
                             </div>
-                                @endforeach
-                            @endif
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
-@section('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('scripts'); ?>
     <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
     <script type="text/javascript">
@@ -376,7 +396,7 @@
 
             // formData.append('idea_id', dropzone_idea_id);
             formData.append('id', product_id);
-            formData.append("_token", "{{ csrf_token() }}");
+            formData.append("_token", "<?php echo e(csrf_token()); ?>");
         });
         myDropzone.on("complete", function (progress) {
             var obj = jQuery.parseJSON(progress.xhr.response);
@@ -406,4 +426,6 @@
         };
 
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.layout_admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xamp\htdocs\diana_authentic\resources\views/admin/product/edit.blade.php ENDPATH**/ ?>

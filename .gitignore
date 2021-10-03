@@ -50,4 +50,4 @@ Thumbs.db
 
 # upload
 public/storage
-public/uploads
+uploads/*

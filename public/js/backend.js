@@ -72,6 +72,14 @@ function deleteImageSingle(e) {
             if (res.success) {
                 let item_parent = ele.closest('.item-image-single');
                 item_parent.remove();
+
+                Swal.fire({
+                    // position: 'top-end',
+                    icon: 'success',
+                    title: 'Đã xóa',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         },
     });
