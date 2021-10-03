@@ -39,13 +39,13 @@
                                 <small class="text-danger">{{$message}}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <lable>Price</lable>
-                                <input type="text" name="price" value="{{ $variant->price?$variant->price:"" }}" class="form-control">
-                                @error('price')
-                                <small class="text-danger">{{$message}}</small>
-                                @enderror
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <lable>Price</lable>--}}
+{{--                                <input type="text" name="price" value="{{ $variant->price?$variant->price:"" }}" class="form-control">--}}
+{{--                                @error('price')--}}
+{{--                                <small class="text-danger">{{$message}}</small>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-outline-success w-25" value="Save">
                             </div>

@@ -325,9 +325,9 @@
     <script src="{{ url('public/plugins/custom/dropzone-5.7.0/dist/min/dropzone.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"
             type="text/javascript"></script>
-    <script>
+    <script type="text/javascript">
         $("#colorpicker_variant").spectrum();
-        var url_source = 'http://localhost/diana_authentic_shop/';
+        // var url_source = 'http://localhost/diana_authentic_shop/';
 
         // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
         var previewNode = document.querySelector("#template");

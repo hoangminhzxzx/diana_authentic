@@ -1,3 +1,5 @@
+const url_source = 'http://localhost/diana_authentic_shop/admin';
+
 function confirmDelete(form_id) {
     if (confirm('Are you sure?')) {
         $(form_id).submit();
@@ -62,7 +64,7 @@ function deleteImageSingle(e) {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        url: 'http://localhost/diana_authentic_shop/admin/remove-image-single',
+        url: url_source + '/remove-image-single',
         type: 'POST',
         data: data,
         dataType: 'json',
@@ -75,4 +77,24 @@ function deleteImageSingle(e) {
     });
 }
 
+function selectProductBanner(e) {
+    let product_id = $(e).val();
+    let data = {
+        product_id: product_id
+    };
 
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source + '/config-banner-store',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                console.log('abcd');
+            }
+        },
+    });
+}

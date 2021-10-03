@@ -28,6 +28,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script src="https://cdn.tiny.cloud/1/3wq0pcqdh73wjxfqtk7kcr41rvbjs6196573culoiqf56dtm/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <link rel="stylesheet" href="{{ url('/public/plugins/custom/sweetalert2/dist/sweetalert2.css') }}">
+    <link rel="stylesheet" href="{{url('public/css/style_backend.css')}}">
 </head>
 
 <body id="page-top">
@@ -149,6 +152,33 @@
             </div>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders"
+               aria-expanded="true" aria-controls="collapseOrders">
+                <i class="fas fa-users"></i>
+                <span>Đơn hàng</span>
+            </a>
+            <div id="collapseOrders" class="collapse" aria-labelledby="headingOrders"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('admin.order.list') }}">Danh sách</a>
+                </div>
+            </div>
+        </li>
+
+{{--        <li class="nav-item">--}}
+{{--            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBanner"--}}
+{{--               aria-expanded="true" aria-controls="collapseBanner">--}}
+{{--                <i class="fas fa-users"></i>--}}
+{{--                <span>Cấu hình banner</span>--}}
+{{--            </a>--}}
+{{--            <div id="collapseBanner" class="collapse" aria-labelledby="headingBanner"--}}
+{{--                 data-parent="#accordionSidebar">--}}
+{{--                <div class="bg-white py-2 collapse-inner rounded">--}}
+{{--                    <a class="collapse-item" href="{{ route('admin.product.config_banner.detail') }}">Chi tiết</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </li>--}}
         <!-- Divider -->
         <hr class="sidebar-divider">
 
@@ -475,15 +505,16 @@
 <script src="{{url('public/js/sb-admin-2.min.js')}}"></script>
 
 <!-- Page level plugins -->
-<script src="{{url('public/vendor/chart.js/Chart.min.js')}}"></script>
+{{--<script src="{{url('public/vendor/chart.js/Chart.min.js')}}"></script>--}}
 
 <!-- Page level custom scripts -->
-<script src="{{url('public/js/demo/chart-area-demo.js')}}"></script>
-<script src="{{url('js/demo/chart-pie-demo.js')}}"></script>
+{{--<script src="{{url('public/js/demo/chart-area-demo.js')}}"></script>--}}
+{{--<script src="{{url('js/demo/chart-pie-demo.js')}}"></script>--}}
 
 <script src="{{ url('public/js/treeview.js') }}"></script>
 <script src="{{ url('public/js/backend.js') }}"></script>
 
+<script src="{{ url('/public/plugins/custom/sweetalert2/dist/sweetalert2.js') }}"></script>
 
 @yield('scripts')
 </body>
