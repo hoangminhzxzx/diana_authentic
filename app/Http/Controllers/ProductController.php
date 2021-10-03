@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Psy\Util\Str;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -66,6 +66,7 @@ class ProductController extends Controller
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
         $product->category_id = $data['category_id']?$data['category_id']:0;
         $product->price = $data['price']?$data['price']:0;
+        $product->slug = Str::slug($data['title'], '-');
         $product->save();
 //        return back();
         return redirect()->route('admin.product.edit', ['id' => $product->id]);
@@ -144,6 +145,7 @@ class ProductController extends Controller
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
         $product->category_id = $data['category_id'];
         $product->is_hot = $data['is_hot'];
+        $product->slug = Str::slug($data['title'], '-');
         $product->save();
 
         return back()->with('success_product', 'Cập nhật thành công');
@@ -242,4 +244,27 @@ class ProductController extends Controller
     public function uploadImageTinymce(Request $request) {
         dd($request->input());
     }
+
+//    public function detailBanner() {
+//        $products = Product::query()->get();
+//        $product_banner_first = Product::query()->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))->first();
+//        $data_response = [
+//            'products' => $products,
+////            'current_product_banner' =>
+//        ];
+//        if ($products->count() > 0) {
+//            return view('admin.product.config_banners',[
+//                'products' => $products
+//            ]);
+//        }
+//    }
+
+//    public function storeBanner(Request $request) {
+//        $product_id = intval($request->input('product_id'));
+//        $list_product_banners = Product::query()->where('is_hot', '=', 2)->get();
+//        $product = Product::query()->find($product_id);
+//        if ($product) {
+//
+//        }
+//    }
 }

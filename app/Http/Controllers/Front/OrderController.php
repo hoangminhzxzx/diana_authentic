@@ -38,7 +38,7 @@ class OrderController extends Controller
             $order_master->email = $data['email'];
             $order_master->note = (isset($data['note']) && $data['note']) ? $data['note'] : '';
             $order_master->status = 1; //status 1 : đặt hàng. 2 : hoàn thành, 3 : hủy
-            $order_master->total_price = Cart::total() * 1000;
+            $order_master->total_price = intval(Cart::total()) * 1000;
             $order_master->save();
 
             $data_items = Cart::content();

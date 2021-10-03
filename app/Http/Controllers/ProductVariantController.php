@@ -96,14 +96,14 @@ class ProductVariantController extends Controller
                 'color_hex' => 'required',
                 'color_name' => 'required',
                 'size' => 'required',
-                'price' => 'required|integer'
+//                'price' => 'required|integer'
             ],
             [],
             [
                 'color_hex' => 'Color Hex',
                 'color_name' => 'Coler Name',
                 'size' => 'Size',
-                'price' => 'Price'
+//                'price' => 'Price'
             ]
         );
 
@@ -135,7 +135,7 @@ class ProductVariantController extends Controller
         $product_variant->product_id = $data['product_id'];
         $product_variant->color_id = $color->id;
         $product_variant->size_id = $size->id;
-        $product_variant->price = $data['price'];
+//        $product_variant->price = $data['price'];
         $product_variant->save();
         return redirect("admin/product/edit/$product_variant->product_id")->with('status_update_variant', 'Cập nhật thành công');
     }

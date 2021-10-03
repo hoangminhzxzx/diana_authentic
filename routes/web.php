@@ -52,6 +52,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/user/delete/{id}', 'UserController@delete')->name('admin.user.delete')->middleware('CheckRole');
 
         Route::post('/upload-image-tinymce', 'ProductController@uploadImageTinymce')->name('admin.upload.file.tinymce');
+
+        //Banner
+        Route::get('/config-banner', 'ProductController@detailBanner')->name('admin.product.config_banner.detail');
+        Route::post('/config-banner-store', 'ProductController@storeBanner')->name('admin.product.config_banner.store');
+
+        //Orders
+        Route::get('/order-list', 'OrderController@list')->name('admin.order.list');
+        Route::get('/order-detail/{id}', 'OrderController@detail')->name('admin.order.detail');
     });
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
