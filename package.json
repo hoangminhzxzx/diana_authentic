@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "dropzone": "^5.8.1"
+        "dropzone": "^5.8.1",
+        "spectrum-colorpicker": "^1.8.1",
+        "sweetalert2": "^11.1.7"
     }
 }
