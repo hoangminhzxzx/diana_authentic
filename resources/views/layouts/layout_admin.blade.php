@@ -37,7 +37,7 @@
 
 <script>
     var editor_config = {
-        path_absolute : "http://localhost/diana_authentic_shop/",
+        path_absolute : "http://localhost/diana_authentic/",
         selector: "textarea",
         plugins: [
             "advlist autolink lists link image charmap print preview hr anchor pagebreak",
