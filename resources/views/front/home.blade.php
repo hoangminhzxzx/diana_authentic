@@ -6,14 +6,14 @@
     <div class="row">
         <div class="col-2">
             <h1>Diana Authentic <br>Sản Phẩm </h1>
-            @if($product_banner)
+            @if(isset($product_banner) && $product_banner)
 {{--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. <br> Lorem ipsum dolor sit amet, consectetur adipisicing.</p>--}}
                 <p>{{ $product_banner->title }}</p>
                 <a href="{{ route('client.product.detail', ['slug' => $product_banner->slug]) }}" class="btn">Mua ngay &#8594;</a>
             @endif
         </div>
         <div class="col-2">
-            @if($product_banner)
+            @if(isset($product_banner) && $product_banner)
                <img src="{{url($product_banner->thumbnail)}}">
 {{--                <img src="{{url('public/images/image2.png')}}">--}}
             @endif

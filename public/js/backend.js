@@ -106,3 +106,45 @@ function selectProductBanner(e) {
         },
     });
 }
+
+function addProductVariant(e) {
+    let ele = $(e);
+    console.log(ele);
+
+    let form_data = $('form#form_product_variant').serialize();
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source + '/product/variant',
+        type: 'POST',
+        data: form_data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thêm variant thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                // console.log(res.html);
+
+                let row_variant = $('#tbl_list_variant tbody').children().first();
+                row_variant.before(res.html);
+            }
+        },
+    });
+}
+
+function checkOrder(e) {
+    let ele = $(e);
+    console.log(ele);
+
+    //effect
+    // ele.removeClass('item-circle');
+    // ele.addClass('item-circle-success');
+    // ele.children().first().addClass('d-none');
+    // ele.children().last().removeClass('d-none');
+}

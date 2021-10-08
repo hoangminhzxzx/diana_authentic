@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class ProductVariantController extends Controller
 {
     public function store(Request $request) {
+        $res = ['success' => false];
         $request->validate(
             [
                 'color_hex' => 'required',
@@ -57,7 +58,12 @@ class ProductVariantController extends Controller
 //        $product_variant->price = $data['price'];
         $product_variant->save();
 
-        return back()->with('success_variant', 'Thêm thành công');
+        $res['success'] = true;
+        $res['html'] = view('admin.product.row_variant_ajax', [
+            'item' => $product_variant
+        ])->toHtml();
+
+        return response()->json($res);
     }
 
     public function storeAss(Request $request) {

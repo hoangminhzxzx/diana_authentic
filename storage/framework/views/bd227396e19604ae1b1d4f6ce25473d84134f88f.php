@@ -1,5 +1,4 @@
-@extends('layouts.layout_admin')
-@section('styles')
+<?php $__env->startSection('styles'); ?>
     <style>
         .item-circle {
             min-height: 60px;
@@ -26,10 +25,10 @@
             background: #d6e2ed;
         }
     </style>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="card shadow mb-4">
-        <input type="hidden" value="{{ $order_master->id }}" id="order_id">
+        <input type="hidden" value="<?php echo e($order_master->id); ?>" id="order_id">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Trạng thái đơn hàng</h6>
         </div>
@@ -38,13 +37,13 @@
                 <div class="block block-link-shadow text-center">
                     <div class="block-content block-content-full">
                         <div class="item item-circle bg-success-light mx-auto" onclick="checkOrder(this)">
-{{--                            <i class="fa fa-check text-success"></i>--}}
-                            <i class="fa fa-sync fa-spin text-warning @if($order_master->status != 1) d-none @endif"></i>
-                            <i class="far fa-check-circle text-success @if($order_master->status != 2) d-none @endif" style="font-size: 20px;"></i>
+
+                            <i class="fa fa-sync fa-spin text-warning <?php if($order_master->status != 1): ?> d-none <?php endif; ?>"></i>
+                            <i class="far fa-check-circle text-success <?php if($order_master->status != 2): ?> d-none <?php endif; ?>" style="font-size: 20px;"></i>
                         </div>
                     </div>
                     <div class="block-content py-2 bg-body-light">
-{{--                        <p class="font-w600 font-size-sm text-success mb-0">--}}
+
                         <p class="font-w600 font-size-sm text-muted mb-0">
                             Check đơn hàng
                         </p>
@@ -117,32 +116,34 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($order_details as $k=>$item)
+                    <?php $__currentLoopData = $order_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k=>$item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                        <td>{{ $k+1 }}</td>
-                        <td>{{ $order_master->customer_name }}</td>
-                        <td>{{ $order_master->customer_phone }}</td>
-                        <td>{{ $order_master->email }}</td>
-                        <td><b>{{ $item->product_title }}</b></td>
-                        <td>{{ $item->color }} - {{ $item->size }}</td>
-                        <td><img src="{{ url($item->product_thumbnail) }}" alt="" class="img-thumbnail" width="120"></td>
-                        <td>{{ number_format($item->price, 0, '.', '.') }} VND</td>
+                        <td><?php echo e($k+1); ?></td>
+                        <td><?php echo e($order_master->customer_name); ?></td>
+                        <td><?php echo e($order_master->customer_phone); ?></td>
+                        <td><?php echo e($order_master->email); ?></td>
+                        <td><b><?php echo e($item->product_title); ?></b></td>
+                        <td><?php echo e($item->color); ?> - <?php echo e($item->size); ?></td>
+                        <td><img src="<?php echo e(url($item->product_thumbnail)); ?>" alt="" class="img-thumbnail" width="120"></td>
+                        <td><?php echo e(number_format($item->price, 0, '.', '.')); ?> VND</td>
                     </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
         </div>
         <div class="card-footer">
             <div class="info-more" style="padding: 0 3rem;">
                 <h4 class="border-bottom-primary">Tổng đơn hàng</h4>
-                <b class="mb-1">{{ number_format($order_master->total_price, 0, '.', '.') }} VND</b>
+                <b class="mb-1"><?php echo e(number_format($order_master->total_price, 0, '.', '.')); ?> VND</b>
 
                 <h4 class="border-bottom-success">Địa chỉ giao hàng</h4>
-                <p>{{ $order_master->address }}</p>
+                <p><?php echo e($order_master->address); ?></p>
 
                 <h4 class="border-bottom-danger">Note của đơn hàng</h4>
-                <p>{{ $order_master->note }}</p>
+                <p><?php echo e($order_master->note); ?></p>
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.layout_admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xamp\htdocs\diana_authentic\resources\views/admin/order/detail.blade.php ENDPATH**/ ?>

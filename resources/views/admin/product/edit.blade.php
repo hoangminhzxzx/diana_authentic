@@ -108,7 +108,7 @@
                 </div>
                 <div class="card-body">
                     @if(isset($product->category->id) && $product->category->id != 12)
-                        <form action="{{ route('admin.product.variant.store') }}" method="POST">
+                        <form method="POST" id="form_product_variant">
                             @csrf
                             <input type="hidden" value="{{ $product->id }}" name="product_id">
                             <div class="form-group color_hex">
@@ -142,7 +142,10 @@
                             {{--                                @enderror--}}
                             {{--                            </div>--}}
                             <div class="form-group text-center">
-                                <input type="submit" class="btn btn-outline-success w-25" value="Thêm">
+{{--                                <input type="submit" class="btn btn-outline-success w-25" value="Thêm">--}}
+                                <button type="button" onclick="addProductVariant(this)" class="btn btn-outline-success w-25">
+                                    <i class="spinner spinner-dark mr-2 d-none"></i>Thêm
+                                </button>
                             </div>
                         </form>
                     @endif
@@ -167,7 +170,7 @@
                     <h4>List Variants</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table" id="tbl_list_variant">
                         <thead>
                         <tr>
                             <th>
@@ -184,8 +187,12 @@
                         {{--                        {{$product->ProductVariants}}--}}
                         @foreach($product->ProductVariants as $item)
                             <tr>
-                                <td><span><label class="checkbox checkbox-single"><input type="checkbox"
-                                                                                         value="1">&nbsp;<span></span></label></span>
+                                <td>
+                                    <span>
+                                        <label class="checkbox checkbox-single">
+                                            <input type="checkbox" value="1">&nbsp;
+                                        </label>
+                                    </span>
                                 </td>
                                 <td><span>{{ ($item->color)?$item->color->value:"" }}</span></td>
                                 <td><span>{{ ($item->color)?$item->color->name:"" }}</span></td>
@@ -193,7 +200,7 @@
                                 <td><span>{{$item->price?$item->price:""}}</span></td>
                                 <td>
                                     <a href="{{ route('admin.product.variant.edit', ['id'=>$item->id]) }}"
-                                       class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
+                                       class="btn btn-icon btn-light btn-hover-primary btn-sm mr-1">
                                         <i class="fas fa-pen-alt"></i>
                                     </a>
                                     <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"

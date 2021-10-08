@@ -121,6 +121,11 @@ function chooseSize(e) {
         product_id: product_id,
         size_id : size_id
     };
+
+    let group_color = $('#group_color');
+    if (group_color) {
+        group_color.remove();
+    }
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

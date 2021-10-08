@@ -107,7 +107,7 @@
                 </div>
                 <div class="card-body">
                     <?php if(isset($product->category->id) && $product->category->id != 12): ?>
-                        <form action="<?php echo e(route('admin.product.variant.store')); ?>" method="POST">
+                        <form method="POST" id="form_product_variant">
                             <?php echo csrf_field(); ?>
                             <input type="hidden" value="<?php echo e($product->id); ?>" name="product_id">
                             <div class="form-group color_hex">
@@ -162,7 +162,10 @@ unset($__errorArgs, $__bag); ?>
                             
                             
                             <div class="form-group text-center">
-                                <input type="submit" class="btn btn-outline-success w-25" value="Thêm">
+
+                                <button type="button" onclick="addProductVariant(this)" class="btn btn-outline-success w-25">
+                                    <i class="spinner spinner-dark mr-2 d-none"></i>Thêm
+                                </button>
                             </div>
                         </form>
                     <?php endif; ?>
@@ -187,7 +190,7 @@ unset($__errorArgs, $__bag); ?>
                     <h4>List Variants</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table" id="tbl_list_variant">
                         <thead>
                         <tr>
                             <th>
@@ -204,8 +207,12 @@ unset($__errorArgs, $__bag); ?>
                         
                         <?php $__currentLoopData = $product->ProductVariants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><span><label class="checkbox checkbox-single"><input type="checkbox"
-                                                                                         value="1">&nbsp;<span></span></label></span>
+                                <td>
+                                    <span>
+                                        <label class="checkbox checkbox-single">
+                                            <input type="checkbox" value="1">&nbsp;
+                                        </label>
+                                    </span>
                                 </td>
                                 <td><span><?php echo e(($item->color)?$item->color->value:""); ?></span></td>
                                 <td><span><?php echo e(($item->color)?$item->color->name:""); ?></span></td>
@@ -213,7 +220,7 @@ unset($__errorArgs, $__bag); ?>
                                 <td><span><?php echo e($item->price?$item->price:""); ?></span></td>
                                 <td>
                                     <a href="<?php echo e(route('admin.product.variant.edit', ['id'=>$item->id])); ?>"
-                                       class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
+                                       class="btn btn-icon btn-light btn-hover-primary btn-sm mr-1">
                                         <i class="fas fa-pen-alt"></i>
                                     </a>
                                     <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"

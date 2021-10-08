@@ -1,4 +1,4 @@
-<div class="form-group" style="margin-top: .5rem;">
+<div class="form-group" style="margin-top: .5rem;" id="group_color">
     <label for="">Chọn Màu</label>
     <div style="display: flex;">
         <input type="hidden" id="valueColor" name="color" value="">

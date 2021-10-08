@@ -13,6 +13,7 @@
                         <th>Tên khách hàng</th>
                         <th>Số điện thoại</th>
                         <th>Email</th>
+                        <th>Created_at</th>
                         <th>Hành động</th>
                     </tr>
                     </thead>
@@ -23,6 +24,7 @@
                             <td><b>{{ $order->customer_name }}</b></td>
                             <td>{{ $order->customer_phone }}</td>
                             <td>{{ $order->email }}</td>
+                            <td>{{ $order->created_at }}</td>
                             <td>
                                 <a href="{{route('admin.order.detail', $order->id)}}" class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
                                     <i class="fas fa-pen-alt"></i>
