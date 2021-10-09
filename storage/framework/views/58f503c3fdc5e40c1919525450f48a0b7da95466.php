@@ -151,17 +151,16 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders"
-               aria-expanded="true" aria-controls="collapseOrders">
+            <a class="nav-link collapsed" href="<?php echo e(route('admin.order.list')); ?>">
                 <i class="fas fa-users"></i>
                 <span>Đơn hàng</span>
             </a>
-            <div id="collapseOrders" class="collapse" aria-labelledby="headingOrders"
-                 data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?php echo e(route('admin.order.list')); ?>">Danh sách</a>
-                </div>
-            </div>
+
+
+
+
+
+
         </li>
 
 

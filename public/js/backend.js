@@ -139,12 +139,204 @@ function addProductVariant(e) {
 }
 
 function checkOrder(e) {
-    let ele = $(e);
-    console.log(ele);
+    Swal.fire({
+        title: "Check Order ?",
+        icon: "warning",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let ele = $(e);
+            let order_id = $("#order_id").val();
 
-    //effect
-    // ele.removeClass('item-circle');
-    // ele.addClass('item-circle-success');
-    // ele.children().first().addClass('d-none');
-    // ele.children().last().removeClass('d-none');
+            let data = {
+                order_id : order_id
+            };
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url_source + '/check-order',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        //effect
+                        ele.removeClass('item-circle');
+                        ele.addClass('item-circle-success');
+                        ele.removeAttr('onclick');
+                        ele.children().first().remove();
+                        ele.append('<i class="far fa-check-circle text-success" style="font-size: 20px;"></i>');
+
+                        //-----add event onclick step next -------------------
+                        let step_confirm_shipping = $("#step_confirm_shipping");
+                        step_confirm_shipping.attr('onclick', 'confirmShipOrder(this)');
+                    } else {
+                        if (res.message) {
+                            Swal.fire({
+                                title: res.message,
+                                icon: "danger",
+                                showCancelButton: true,
+                            })
+                        }
+                    }
+                },
+            });
+        }
+    });
+}
+
+function confirmShipOrder(e) {
+    Swal.fire({
+        title: "Xác nhận đang ship Order ?",
+        icon: "warning",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let ele = $(e);
+            let order_id = $("#order_id").val();
+
+            let data = {
+                order_id : order_id
+            };
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url_source + '/confirm-ship-order',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        //effect
+                        ele.removeClass('item-circle');
+                        ele.addClass('item-circle-success');
+                        ele.removeAttr('onclick');
+                        ele.children().first().remove();
+                        ele.append('<i class="far fa-check-circle text-success" style="font-size: 20px;"></i>');
+
+                        //-----add event onclick step next -------------------
+                        let step_confirm_complete = $("#step_confirm_complete");
+                        step_confirm_complete.attr('onclick', 'confirmCompleteOrder(this)');
+                    } else {
+                        if (res.message) {
+                            Swal.fire({
+                                title: res.message,
+                                icon: "danger",
+                                showCancelButton: true,
+                            })
+                        }
+                    }
+                },
+            });
+        }
+    });
+}
+
+function confirmCompleteOrder(e) {
+    Swal.fire({
+        title: "Xác nhận hoàn thành Order ?",
+        icon: "warning",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let ele = $(e);
+            let order_id = $("#order_id").val();
+
+            let data = {
+                order_id : order_id
+            };
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url_source + '/confirm-complete-order',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        //effect
+                        ele.removeClass('item-circle');
+                        ele.addClass('item-circle-success');
+                        ele.removeAttr('onclick');
+                        ele.children().first().remove();
+                        ele.append('<i class="far fa-check-circle text-success" style="font-size: 20px;"></i>');
+
+                        // //-----add event onclick step next -------------------
+                        // let step_confirm_complete = $("#step_confirm_complete");
+                        // step_confirm_complete.attr('onclick', 'confirmCompleteOrder(this)');
+
+                        //---- remove box cancle Order -----------
+                        let box_cancle_order = $("#box_cancle_order");
+                        if (box_cancle_order) {
+                            box_cancle_order.remove();
+                        }
+                    } else {
+                        if (res.message) {
+                            Swal.fire({
+                                title: res.message,
+                                icon: "danger",
+                                showCancelButton: true,
+                            })
+                        }
+                    }
+                },
+            });
+        }
+    });
+}
+
+function cancleOrder(e) {
+    Swal.fire({
+        title: "Xác nhận hủy Order ?",
+        icon: "warning",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let ele = $(e);
+            let order_id = $("#order_id").val();
+
+            let data = {
+                order_id : order_id
+            };
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url_source + '/confirm-cancle-order',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        let box_check_order = $("#box_check_order"),
+                            box_shipping_order = $("#box_shipping_order"),
+                            box_complete_order = $("#box_complete_order"),
+                            box_cancle_order = $("#box_cancle_order");
+                        box_check_order.remove();
+                        box_shipping_order.remove();
+                        box_complete_order.remove();
+                        box_cancle_order.remove();
+
+                        //---show alert order cancled-----
+                        let box_cancled_order = $("#box_cancled_order");
+                        box_cancled_order.removeClass('d-none');
+                    } else {
+                        if (res.message) {
+                            Swal.fire({
+                                text: res.message,
+                                icon: "warning",
+                            })
+                        }
+                    }
+                },
+            });
+        }
+    });
 }

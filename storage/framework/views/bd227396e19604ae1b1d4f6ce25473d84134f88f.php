@@ -33,13 +33,17 @@
             <h6 class="m-0 font-weight-bold text-primary">Trạng thái đơn hàng</h6>
         </div>
         <div class="card-body d-flex">
-            <div class="col-6 col-lg-3">
+            <?php if($order_master->status != config('constant.ORDER_STATUS.ORDER_CANCLE')): ?>
+            <div class="col-6 col-lg-3" id="box_check_order">
                 <div class="block block-link-shadow text-center">
                     <div class="block-content block-content-full">
-                        <div class="item item-circle bg-success-light mx-auto" onclick="checkOrder(this)">
-
-                            <i class="fa fa-sync fa-spin text-warning <?php if($order_master->status != 1): ?> d-none <?php endif; ?>"></i>
-                            <i class="far fa-check-circle text-success <?php if($order_master->status != 2): ?> d-none <?php endif; ?>" style="font-size: 20px;"></i>
+                        <div class="item item-circle bg-success-light mx-auto" <?php if($order_master->status == config('constant.ORDER_STATUS.ORDER')): ?> onclick="checkOrder(this)" <?php endif; ?> id="step_check_order">
+                            <?php if($order_master->status < config('constant.ORDER_STATUS.CHECK_ORDER') || $order_master->status == config('constant.ORDER_STATUS.ORDER_CANCLE')): ?>
+                                <i class="fa fa-sync fa-spin text-warning"></i>
+                            <?php endif; ?>
+                            <?php if($order_master->status >= config('constant.ORDER_STATUS.CHECK_ORDER') && $order_master->status != config('constant.ORDER_STATUS.ORDER_CANCLE')): ?>
+                                <i class="far fa-check-circle text-success" style="font-size: 20px;"></i>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="block-content py-2 bg-body-light">
@@ -50,12 +54,16 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-6 col-lg-3">
-                <div class="block block-link-shadow text-center" style="cursor: pointer" onclick="order_payment(148)">
+            <div class="col-6 col-lg-3" id="box_shipping_order">
+                <div class="block block-link-shadow text-center" style="cursor: pointer">
                     <div class="block-content block-content-full">
-                        <div class="item item-circle bg-body mx-auto">
-                            <i class="fa fa-sync fa-spin text-warning"></i>
+                        <div class="item item-circle bg-body mx-auto" <?php if($order_master->status == config('constant.ORDER_STATUS.CHECK_ORDER')): ?> onclick="confirmShipOrder(this)" <?php endif; ?> id="step_confirm_shipping">
+                            <?php if($order_master->status < config('constant.ORDER_STATUS.ORDER_SHIPPING') || $order_master->status == config('constant.ORDER_STATUS.ORDER_CANCLE')): ?>
+                                <i class="fa fa-sync fa-spin text-warning"></i>
+                            <?php endif; ?>
+                            <?php if($order_master->status >= config('constant.ORDER_STATUS.ORDER_SHIPPING') && $order_master->status != config('constant.ORDER_STATUS.ORDER_CANCLE')): ?>
+                                <i class="far fa-check-circle text-success" style="font-size: 20px;"></i>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="block-content py-2 bg-body-light">
@@ -65,12 +73,16 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-6 col-lg-3">
-                <div class="block block-link-shadow text-center" style="cursor: pointer" onclick="order_payment(148)">
+            <div class="col-6 col-lg-3" id="box_complete_order">
+                <div class="block block-link-shadow text-center" style="cursor: pointer">
                     <div class="block-content block-content-full">
-                        <div class="item item-circle bg-body mx-auto">
-                            <i class="fa fa-sync fa-spin text-warning"></i>
+                        <div class="item item-circle bg-body mx-auto" <?php if($order_master->status == config('constant.ORDER_STATUS.ORDER_SHIPPING')): ?> onclick="confirmCompleteOrder(this)" <?php endif; ?> id="step_confirm_complete">
+                            <?php if($order_master->status < config('constant.ORDER_STATUS.ORDER_COMPLETE') || $order_master->status == config('constant.ORDER_STATUS.ORDER_CANCLE')): ?>
+                                <i class="fa fa-sync fa-spin text-warning"></i>
+                            <?php endif; ?>
+                            <?php if($order_master->status == config('constant.ORDER_STATUS.ORDER_COMPLETE')): ?>
+                                <i class="far fa-check-circle text-success" style="font-size: 20px;"></i>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="block-content py-2 bg-body-light">
@@ -80,21 +92,41 @@
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
-            <div class="col-6 col-lg-3">
-                <div class="block block-link-shadow text-center" style="cursor: pointer" onclick="order_cancel(148)">
-                    <div class="block-content block-content-full">
-                        <div class="item item-circle bg-body mx-auto">
-                            <i class="fa fa-times text-muted"></i>
+            <?php if($order_master->status != config('constant.ORDER_STATUS.ORDER_COMPLETE') && $order_master->status != config('constant.ORDER_STATUS.ORDER_CANCLE')): ?>
+                <div class="col-6 col-lg-3" id="box_cancle_order">
+                    <div class="block block-link-shadow text-center" style="cursor: pointer">
+                        <div class="block-content block-content-full">
+                            <div class="item item-circle bg-body mx-auto" id="cancle_order" onclick="cancleOrder(this)">
+                                <i class="fa fa-times text-muted"></i>
+                            </div>
+                        </div>
+                        <div class="block-content py-2 bg-body-light">
+                            <p class="font-w600 font-size-sm text-muted mb-0">
+                                Hủy
+                            </p>
                         </div>
                     </div>
-                    <div class="block-content py-2 bg-body-light">
-                        <p class="font-w600 font-size-sm text-muted mb-0">
-                            Hủy
-                        </p>
-                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
+
+
+                    <div class="col-6 col-lg-3 <?php if($order_master->status != config('constant.ORDER_STATUS.ORDER_CANCLE')): ?> d-none <?php endif; ?>" id="box_cancled_order">
+                        <div class="block block-link-shadow text-center" style="cursor: pointer">
+                            <div class="block-content block-content-full">
+                                <div class="item item-circle bg-body mx-auto">
+
+                                </div>
+                            </div>
+                            <div class="block-content py-2 bg-body-light">
+                                <p class="font-w600 font-size-sm text-muted mb-0">
+                                    Order đã hủy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
         </div>
     </div>
     <div class="cart shadow mb-4">

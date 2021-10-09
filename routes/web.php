@@ -60,6 +60,12 @@ Route::group(['middleware' => 'auth'], function () {
         //Orders
         Route::get('/order-list', 'OrderController@list')->name('admin.order.list');
         Route::get('/order-detail/{id}', 'OrderController@detail')->name('admin.order.detail');
+
+        //-----status order---------
+        Route::post('/check-order', 'OrderController@checkOrder')->name('admin.order.checkOrder');
+        Route::post('/confirm-ship-order', 'OrderController@confirmShipOrder')->name('admin.order.confirm.ship.order');
+        Route::post('/confirm-complete-order', 'OrderController@confirmCompleteOrder')->name('admin.order.confirm.complete.order');
+        Route::post('/confirm-cancle-order', 'OrderController@confirmCancleOrder')->name('admin.order.confirm.cancle.order');
     });
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
