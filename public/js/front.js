@@ -12,10 +12,15 @@ MenuItems.style.maxHeight = "0px";
 
 function menutoggle() {
     if (MenuItems.style.maxHeight == "0px") {
-        MenuItems.style.maxHeight = "290px";
+        MenuItems.style.maxHeight = "500px";
         MenuItems.style.background = "#fec8b5 none repeat scroll 0% 0%";
     } else {
         MenuItems.style.maxHeight = "0px";
+    }
+
+    let widthScreen = window.screen.width;
+    if (widthScreen <= 800) {
+
     }
 };
 // function chooseSize(e) {
@@ -359,3 +364,154 @@ function orderSubmit(e) {
         },
     });
 }
+
+//--------- Account Client ---------------
+$("#btnRegister").click(function () {
+    let form_data = $("#RegForm").serialize();
+
+    let ele_error_required_orders = $(".error_required_order");
+    $.each(ele_error_required_orders, function (index, item) {
+        if (item.value) {
+            item.classList.remove('error_required_order');
+        }
+    })
+
+    let ele_error_placeholder_text = $(".error-placeholder-text");
+    $.each(ele_error_placeholder_text, function (index, item) {
+        if (item.value) {
+            item.classList.remove('error-placeholder-text');
+        }
+    })
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source+'/dang-ky-tai-khoan',
+        type: 'POST',
+        data: form_data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    text: 'Bạn đã đăng ký thành công',
+                    icon: "success",
+                })
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status == 422) {
+                let obj_errors = JSON.parse(xhr.responseText).errors;
+                $.each(obj_errors, function(key, value) {
+                    let eleInput = $("#RegForm input[name = "+ "'"+key+"'" +"]");
+                    eleInput.attr('placeholder', value);
+                    eleInput.addClass('error-placeholder-text');
+
+                    if (eleInput) {
+                        eleInput.addClass('error_required_order');
+                    }
+                });
+            }
+        }
+    });
+})
+
+$("#btnLogin").click(function () {
+    let form_data = $("#LoginForm").serialize();
+    console.log(form_data);
+
+    let ele_error_required_orders = $(".error_required_order");
+    $.each(ele_error_required_orders, function (index, item) {
+        if (item.value) {
+            item.classList.remove('error_required_order');
+        }
+    })
+
+    let ele_error_placeholder_text = $(".error-placeholder-text");
+    $.each(ele_error_placeholder_text, function (index, item) {
+        if (item.value) {
+            item.classList.remove('error-placeholder-text');
+        }
+    })
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source+'/dang-nhap-tai-khoan',
+        type: 'POST',
+        data: form_data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    text: 'Bạn đã đăng nhập thành công',
+                    icon: "success",
+                })
+                window.location.href = url_source + '/';
+            } else {
+                if (res.message_error_account) {
+                    Swal.fire({
+                        text: res.message_error_account,
+                        icon: "warning",
+                    })
+                }
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status == 422) {
+                let obj_errors = JSON.parse(xhr.responseText).errors;
+                $.each(obj_errors, function(key, value) {
+                    let eleInput = $("#LoginForm input[name = "+ "'"+key+"'" +"]");
+                    eleInput.attr('placeholder', value);
+                    eleInput.addClass('error-placeholder-text');
+
+                    if (eleInput) {
+                        eleInput.addClass('error_required_order');
+                    }
+                });
+            }
+        }
+    });
+})
+
+function showSubMenu(e) {
+    $("ul#sub_menu").toggleClass('d-none');
+    let widthScreen = window.screen.width;
+    if (widthScreen <= 800) {
+        $("ul#sub_menu").css({
+            'left' : '66%',
+            'top' : '-60px',
+            'width' : '21%',
+            'background-color' : '#fec8b5'
+        });
+    }
+}
+$("#btn_logout").click(function () {
+    Swal.fire({
+        title: "Bạn có muốn đăng xuất ?",
+        icon: "warning",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url_source+'/dang-xuat',
+                type: 'POST',
+                data: {},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        window.location.href = url_source + '/';
+                    } else {
+
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                }
+            });
+        }
+    });
+})

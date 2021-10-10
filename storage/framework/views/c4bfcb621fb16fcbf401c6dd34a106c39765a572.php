@@ -13,6 +13,7 @@
                         <th>Số điện thoại</th>
                         <th>Email</th>
                         <th>Created_at</th>
+                        <th>Trạng thái</th>
                         <th>Hành động</th>
                     </tr>
                     </thead>
@@ -24,6 +25,23 @@
                             <td><?php echo e($order->customer_phone); ?></td>
                             <td><?php echo e($order->email); ?></td>
                             <td><?php echo e($order->created_at); ?></td>
+                            <td>
+                                <?php if($order->status == 1): ?>
+                                    <span class="badge badge-success">Order</span>
+                                <?php endif; ?>
+                                <?php if($order->status == 2): ?>
+                                    <span class="badge badge-warning">Check Order</span>
+                                <?php endif; ?>
+                                <?php if($order->status == 3): ?>
+                                    <span class="badge badge-primary">Đang giao hàng</span>
+                                <?php endif; ?>
+                                <?php if($order->status == 4): ?>
+                                    <span class="badge badge-info">Hoàn thành</span>
+                                <?php endif; ?>
+                                <?php if($order->status == 5): ?>
+                                    <span class="badge badge-danger">Hủy đơn hàng</span>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <a href="<?php echo e(route('admin.order.detail', $order->id)); ?>" class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
                                     <i class="fas fa-pen-alt"></i>

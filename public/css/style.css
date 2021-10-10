@@ -533,3 +533,40 @@ form a{
 .active_thumb_preview {
     border: 1px solid #ccc;
 }
+
+.d-none {
+    display: none;
+}
+
+.error-placeholder-text::-webkit-input-placeholder {
+    color: tomato;
+}
+
+#MenuItems li {
+    padding: 2px 6px;
+}
+#MenuItems li:hover {
+    background: #eed4d4;
+    border-radius: 20%;
+}
+
+.dropdown {
+    position: relative;
+}
+#sub_menu {
+    /*display: none;*/
+    position: absolute;
+    background-color: #f9e0e0;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 5px 0px;
+    z-index: 1;
+    left: 5%;
+    top: 89%;
+}
+/*.dropdown:hover #sub_menu {*/
+/*    display: block;*/
+/*}*/
+.item-single-menu {
+    padding: 3px 16px;
+}

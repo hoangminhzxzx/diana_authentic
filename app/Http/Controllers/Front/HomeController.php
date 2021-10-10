@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Model\Category;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
     public function index() {
+//        Session::forget('client_login');
+//        Session::forget('is_login');
         $list_products = Product::query()->where('is_publish' ,'=', 1)->get();
         $product_banner = Product::query()
             ->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))

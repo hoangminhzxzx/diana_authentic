@@ -131,8 +131,8 @@ function addProductVariant(e) {
 
                 // console.log(res.html);
 
-                let row_variant = $('#tbl_list_variant tbody').children().first();
-                row_variant.before(res.html);
+                let row_variant = $('#tbl_list_variant tbody');
+                row_variant.append(res.html);
             }
         },
     });

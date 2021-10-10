@@ -22,7 +22,7 @@ class CategoryController extends Controller
                 }
             }
 
-            $list_product = Product::query()->whereIn('category_id', $list_category)->get();
+            $list_product = Product::query()->whereIn('category_id', $list_category)->where('is_publish', '=', 1)->get();
             if ($list_product->count() > 0) {
                 return view('front.category.list_product',
                     [

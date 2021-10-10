@@ -14,6 +14,7 @@
                         <th>Số điện thoại</th>
                         <th>Email</th>
                         <th>Created_at</th>
+                        <th>Trạng thái</th>
                         <th>Hành động</th>
                     </tr>
                     </thead>
@@ -25,6 +26,23 @@
                             <td>{{ $order->customer_phone }}</td>
                             <td>{{ $order->email }}</td>
                             <td>{{ $order->created_at }}</td>
+                            <td>
+                                @if($order->status == 1)
+                                    <span class="badge badge-success">Order</span>
+                                @endif
+                                @if($order->status == 2)
+                                    <span class="badge badge-warning">Check Order</span>
+                                @endif
+                                @if($order->status == 3)
+                                    <span class="badge badge-primary">Đang giao hàng</span>
+                                @endif
+                                @if($order->status == 4)
+                                    <span class="badge badge-info">Hoàn thành</span>
+                                @endif
+                                @if($order->status == 5)
+                                    <span class="badge badge-danger">Hủy đơn hàng</span>
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{route('admin.order.detail', $order->id)}}" class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
                                     <i class="fas fa-pen-alt"></i>
@@ -48,3 +66,4 @@
     </div>
     <!-- /.container-fluid -->
 @endsection
+

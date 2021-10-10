@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?php echo e(url('public/css/style.css')); ?>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo e(url('/public/plugins/custom/sweetalert2/dist/sweetalert2.css')); ?>">
 </head>
 <body>
 <?php
@@ -31,7 +32,21 @@
 
                     <li><a href="">Giới thiệu</a></li>
                     <li><a href="">Liên hệ</a></li>
-
+                    <?php if(session()->has('client_login')): ?>
+                        <li class="dropdown" onclick="showSubMenu(this)">
+                            <a href="#" id="more_action">Tài khoản</a>
+                            <ul class="d-none" id="sub_menu">
+                                <li class="item-single-menu">
+                                    <a href="" class="">Hồ sơ</a>
+                                </li>
+                                <li class="item-single-menu">
+                                    <a href="#" class="" id="btn_logout">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php else: ?>
+                        <li><a href="<?php echo e(route("client.account.client")); ?>">Đăng nhập</a></li>
+                    <?php endif; ?>
                 </ul>
             </nav>
             <a href="<?php echo e(route('client.cart')); ?>"  style="position: relative;">
@@ -80,6 +95,12 @@
 
 <script src="<?php echo e(url('public/js/jquery-3.6.0.min.js')); ?>"></script>
 <script src="<?php echo e(url('public/js/front.js')); ?>"></script>
+
+<script src="<?php echo e(url('/public/plugins/custom/sweetalert2/dist/sweetalert2.js')); ?>"></script>
+
+
+<script src="<?php echo e(url('/public/plugins/custom/sweetalert2/dist/sweetalert2.all.min.js')); ?>"></script>
+<?php echo $__env->yieldContent('scripts'); ?>
 </body>
 </html>
 <?php /**PATH E:\xamp\htdocs\diana_authentic\resources\views/layouts/layout_front.blade.php ENDPATH**/ ?>

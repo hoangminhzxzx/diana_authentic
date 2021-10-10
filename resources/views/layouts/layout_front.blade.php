@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{url('public/css/style.css')}}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ url('/public/plugins/custom/sweetalert2/dist/sweetalert2.css') }}">
 </head>
 <body>
 @php
@@ -31,7 +32,21 @@
 {{--                    <li><a href="">Túi xách</a></li>--}}
                     <li><a href="">Giới thiệu</a></li>
                     <li><a href="">Liên hệ</a></li>
-{{--                    <li><a href="">Tài khoản</a></li>--}}
+                    @if(session()->has('client_login'))
+                        <li class="dropdown" onclick="showSubMenu(this)">
+                            <a href="#" id="more_action">Tài khoản</a>
+                            <ul class="d-none" id="sub_menu">
+                                <li class="item-single-menu">
+                                    <a href="" class="">Hồ sơ</a>
+                                </li>
+                                <li class="item-single-menu">
+                                    <a href="#" class="" id="btn_logout">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>
+                    @else
+                        <li><a href="{{ route("client.account.client") }}">Đăng nhập</a></li>
+                    @endif
                 </ul>
             </nav>
             <a href="{{ route('client.cart') }}"  style="position: relative;">
@@ -80,5 +95,11 @@
 
 <script src="{{ url('public/js/jquery-3.6.0.min.js') }}"></script>
 <script src="{{url('public/js/front.js')}}"></script>
+
+<script src="{{ url('/public/plugins/custom/sweetalert2/dist/sweetalert2.js') }}"></script>
+
+{{--<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
+<script src="{{ url('/public/plugins/custom/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+@yield('scripts')
 </body>
 </html>

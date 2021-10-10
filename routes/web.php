@@ -88,3 +88,9 @@ Route::post('/thanh-toan', 'Front\OrderController@insertOrder')->name('client.in
 Route::get('/thank-you', 'Front\OrderController@thankYou')->name('client.thank.you');
 
 Route::get('/category/{slug}', 'Front\CategoryController@listProductFollowCategory')->name('client.category.list.product');
+
+//Account Client
+Route::get('/account', 'Front\AccountController@index')->name('client.account.client');
+Route::post('/dang-ky-tai-khoan', 'Front\AccountController@register')->name('client.account.client.register');
+Route::post('/dang-nhap-tai-khoan', 'Front\AccountController@login')->name('client.account.client.login');
+Route::post('/dang-xuat', 'Front\AccountController@logout')->name('client.account.client.logout');
