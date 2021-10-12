@@ -1,10 +1,8 @@
-
-
 <?php $__env->startSection('content'); ?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="background: linear-gradient(90deg, rgb(244, 148, 108) 0%, rgb(249, 193, 172) 35%, rgb(234, 214, 204) 100%);">
                 <div class="card-header"><?php echo e(__('Login')); ?></div>
 
                 <div class="card-body">

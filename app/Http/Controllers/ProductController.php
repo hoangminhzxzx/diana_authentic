@@ -135,11 +135,13 @@ class ProductController extends Controller
         }
 
         //xử lý nếu is_hot == 2 thì sẽ chỉ có sản phẩm này bằng 2 thôi, sản phẩm khác đã là 2 thì chuyển về 1
-        $product_hot_current = Product::query()->where('is_hot', '=', 2)->first();
-        if ($product_hot_current) {
-            $product_hot_current->is_hot = 1;
-            $product_hot_current->save();
-        }
+//        if ($data['is_hot'] == config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')) {
+//            $product_hot_current = Product::query()->where('is_hot', '=', 2)->first();
+//            if ($product_hot_current) {
+//                $product_hot_current->is_hot = 1;
+//                $product_hot_current->save();
+//            }
+//        }
 
         $product->price = $data['price']?$data['price']:0;
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
@@ -267,4 +269,12 @@ class ProductController extends Controller
 //
 //        }
 //    }
+    public function configProduct() {
+        $products = Product::all();
+        $data_response = [];
+        if ($products->count() > 0) {
+            $data_response['products'] = $products;
+        }
+        return view('admin.product.config_product', $data_response);
+    }
 }

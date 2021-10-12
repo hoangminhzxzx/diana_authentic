@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Category;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class CategoryController extends Controller
 {
@@ -22,15 +23,15 @@ class CategoryController extends Controller
                 }
             }
 
-            $list_product = Product::query()->whereIn('category_id', $list_category)->where('is_publish', '=', 1)->get();
-            if ($list_product->count() > 0) {
+            $list_product = Product::query()->whereIn('category_id', $list_category)->where('is_publish', '=', 1)->paginate(3);
+//            if ($list_product->count() > 0) {
                 return view('front.category.list_product',
                     [
                         'list_product' => $list_product,
                         'category_title' => $category_title
                     ]
                 );
-            }
+//            }
         }
     }
 }

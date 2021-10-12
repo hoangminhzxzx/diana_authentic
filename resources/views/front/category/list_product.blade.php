@@ -28,6 +28,7 @@
             </div>
             @endforeach
         </div>
+        {{ $list_product->render('vendor.pagination.bootstrap-4') }}
 {{--        <div class="page-btn">--}}
 {{--            <span>1</span>--}}
 {{--            <span>2</span>--}}

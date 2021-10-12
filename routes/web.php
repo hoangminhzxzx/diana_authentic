@@ -66,6 +66,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/confirm-ship-order', 'OrderController@confirmShipOrder')->name('admin.order.confirm.ship.order');
         Route::post('/confirm-complete-order', 'OrderController@confirmCompleteOrder')->name('admin.order.confirm.complete.order');
         Route::post('/confirm-cancle-order', 'OrderController@confirmCancleOrder')->name('admin.order.confirm.cancle.order');
+
+        //----- config product hot most--------------
+        Route::get('config-product', 'ProductController@configProduct')->name('admin.product.config.product');
     });
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();

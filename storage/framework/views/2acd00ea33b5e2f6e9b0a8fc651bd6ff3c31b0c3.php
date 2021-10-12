@@ -28,6 +28,8 @@
             </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
+        <?php echo e($list_product->render('vendor.pagination.bootstrap-4')); ?>
+
 
 
 

@@ -39,9 +39,9 @@
 
     <!-- featured products -->
     <div class="small-container">
-        <h2 class="title">Sản phẩm của Diana Authentic</h2>
-        <div class="row" style="justify-content: center;">
-            <?php $__currentLoopData = $list_products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <h2 class="title">Sản phẩm hot</h2>
+        <div class="row" style="justify-content: unset;">
+            <?php $__currentLoopData = $list_products_hot; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="col-4">
                 <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
                 <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>

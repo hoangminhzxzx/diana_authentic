@@ -40,9 +40,9 @@
 
     <!-- featured products -->
     <div class="small-container">
-        <h2 class="title">Sản phẩm của Diana Authentic</h2>
-        <div class="row" style="justify-content: center;">
-            @foreach($list_products as $item)
+        <h2 class="title">Sản phẩm hot</h2>
+        <div class="row" style="justify-content: unset;">
+            @foreach($list_products_hot as $item)
             <div class="col-4">
                 <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
                 <h4 class="product-title text-center">{{ $item->title }}</h4>

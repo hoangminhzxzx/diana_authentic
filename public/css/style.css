@@ -89,6 +89,7 @@ p{
     margin: auto;
     padding-left: 25px;
     padding-right: 25px;
+    min-height: 500px;
 }
 .col-4{
     flex-basis: 25%;
@@ -569,4 +570,13 @@ form a{
 /*}*/
 .item-single-menu {
     padding: 3px 16px;
+}
+
+.page-item {
+    background: #cccccc;
+    padding: 3px 15px;
+}
+.page-item.active {
+    background: tomato;
+    color: #ffffff;
 }

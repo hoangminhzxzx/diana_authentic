@@ -135,32 +135,39 @@
         </li>
 
         <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
-               aria-expanded="true" aria-controls="collapseUsers">
-               <i class="fas fa-users"></i>
-                <span>Users</span>
-            </a>
-            <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers"
-                 data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?php echo e(route('admin.user.add')); ?>">New</a>
-                    <a class="collapse-item" href="<?php echo e(route('admin.user.list')); ?>">List</a>
-                </div>
-            </div>
-        </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="<?php echo e(route('admin.order.list')); ?>">
                 <i class="fas fa-users"></i>
                 <span>Đơn hàng</span>
             </a>
+        </li>
 
-
-
-
-
-
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="<?php echo e(route('admin.product.config.product')); ?>">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Chọn sản phẩm hot nhất</span>
+            </a>
         </li>
 
 
@@ -180,50 +187,50 @@
         <hr class="sidebar-divider">
 
         <!-- Heading -->
-        <div class="sidebar-heading">
-            Addons
-        </div>
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-               aria-expanded="true" aria-controls="collapsePages">
-                <i class="fas fa-fw fa-folder"></i>
-                <span>Pages</span>
-            </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="">Login</a>
-                    <a class="collapse-item" href="">Register</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">Other Pages:</h6>
-                    <a class="collapse-item" href="">404 Page</a>
-                    <a class="collapse-item" href="">Blank Page</a>
-                </div>
-            </div>
-        </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Charts</span></a>
-        </li>
 
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="tables.html">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Tables</span></a>
-        </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </ul>
     <!-- End of Sidebar -->

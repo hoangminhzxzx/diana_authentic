@@ -66,4 +66,5 @@
     <!-- /.container-fluid -->
 <?php $__env->stopSection(); ?>
 
+
 <?php echo $__env->make('layouts.layout_admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xamp\htdocs\diana_authentic\resources\views/admin/order/list.blade.php ENDPATH**/ ?>
