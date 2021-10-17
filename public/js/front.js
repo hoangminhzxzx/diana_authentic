@@ -1,5 +1,20 @@
 const url_source = 'http://localhost/diana_authentic';
 
+// function showLoading(selector) {
+//     let loading = document.createElement('span');
+//     loading.className = 'spinner-border spinner-border-sm spinner-diana';
+//     loading.setAttribute('role', 'status');
+//     loading.setAttribute('aria-hidden', 'true');
+//     loading.style.marginLeft = '5px';
+//     selector.append(loading);
+// }
+// function hideLoading(selector) {
+//     let loading = $(selector).find('.spinner-diana');
+//     if (loading) {
+//         loading.remove();
+//     }
+// }
+
 function confirmDelete(form_id) {
     if (confirm('Bạn muốn thực hiện thao tác này ?')) {
         $(form_id).submit();
@@ -512,6 +527,107 @@ $("#btn_logout").click(function () {
 
                 }
             });
+        }
+    });
+})
+
+$("#btnRestore").click(function () {
+    // console.log('send request');
+    $('#btnRestore').attr('disabled', 'disabled');
+    $('#btnRestore').css('opacity', '0.3');
+    let spanError = $('#span_error_email'),
+        spannSuccess = $("#span_success_email");
+    let form_data = $("#restoreForm").serialize();
+    // console.log(form_data);
+    spannSuccess.text(null);
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source+'/restart-password-client',
+        type: 'POST',
+        data: form_data,
+        dataType: 'json',
+        success: function (res) {
+            // console.log(res);
+            if (res.success) {
+                spanError.text(null);
+                if (res.mess_send) {
+                    spannSuccess.text(res.mess_send);
+                }
+            } else {
+                if (res.error_isset_email) {
+                    spanError.text(res.error_isset_email);
+                }
+            }
+
+            $('#btnRestore').removeAttr('disabled');
+            $('#btnRestore').css('opacity', '1');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status == 422) {
+                let obj_errors = JSON.parse(xhr.responseText).errors;
+                $.each(obj_errors, function(key, value) {
+                    console.log(spanError);
+                    spanError.text(value);
+                });
+                $('#btnRestore').removeAttr('disabled');
+                $('#btnRestore').css('opacity', '1');
+            }
+        }
+    });
+})
+
+$("#btnUpdateRestorePassForm").click(function () {
+    $("#btnUpdateRestorePassForm").attr('disabled', 'disabled');
+    $("#btnUpdateRestorePassForm").css('opacity', '0.3');
+
+    let spanError = $("#span_error");
+    let form_data = $("#updateRestorePassForm").serialize();
+    let account_client_id = $("#hidden_info").attr('data-account-client-id'),
+        account_client_email = $('#hidden_info').attr('data-account-client-email');
+    form_data = form_data + '&id='+account_client_id + '&email=' + account_client_email;
+
+    spanError.text(null);
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source+'/restore-update-password',
+        type: 'POST',
+        data: form_data,
+        dataType: 'json',
+        success: function (res) {
+            // console.log(res);
+            if (res.success) {
+                Swal.fire({
+                    text: 'Bạn đã đổi mật khẩu thành công, đợi giây lát Diana Au sẽ đưa bạn về Home',
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+
+                setTimeout(function () {
+                    window.location.href = url_source + '/';
+                }, 3000);
+            } else {
+                if (res.error_confirm) {
+                    spanError.text(res.error_confirm);
+                }
+            }
+
+            $("#btnUpdateRestorePassForm").removeAttr('disabled');
+            $("#btnUpdateRestorePassForm").css('opacity', '1');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status == 422) {
+                let obj_errors = JSON.parse(xhr.responseText).errors;
+                $.each(obj_errors, function(key, value) {
+                    spanError.text(value);
+                });
+                $("#btnUpdateRestorePassForm").removeAttr('disabled');
+                $("#btnUpdateRestorePassForm").css('opacity', '1');
+            }
         }
     });
 })

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Model\Front\AccountClient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -13,7 +14,6 @@ class AccountController extends Controller
     public function index() {
         return view('front.account.account');
     }
-
     public function register(Request $request) {
         $res = ['success' => false];
         $data = $request->input();
@@ -78,6 +78,8 @@ class AccountController extends Controller
                 $request->session()->put([
                     'client_login' => [
                         'username' => $account_client->username,
+                        'email' => $account_client->email,
+                        'id' => $account_client->id,
                         'is_login' => true
                     ]
                 ]);
@@ -96,4 +98,73 @@ class AccountController extends Controller
         $res['success'] = true;
         return response()->json($res);
     }
+
+    public function restorePassword() {
+        return view('front.account.restart_password');
+    }
+
+    public function restoreUpdatePassword(Request $request) {
+        $res = ['success' => false];
+        $data = $request->input();
+        //validate
+        $validated = $request->validate(
+            [
+                'password' => 'required|min:6',
+                'confirm_password' => 'required'
+            ],
+            [],
+            [
+                'password' => 'Password',
+                'confirm_password' => 'Confirm Password'
+            ]
+        );
+        if (!$validated) {
+//            dd($validated);
+            $res['errors'] = $validated['errors'];
+        } else {
+            //check confirm password
+            if ($data['confirm_password'] != $data['password']) {
+                $res['error_confirm'] = 'Xác nhận mật khẩu sai';
+                $res['success'] = false;
+                return response()->json($res);
+            }
+
+            $account_client = AccountClient::query()->where('email','=', $data['email'])->where('id','=',$data['id'])->first();
+            if ($account_client) {
+                $account_client->password = md5($data['password']);
+                $account_client->save();
+
+                //login cho khách hàng vừa request luôn
+                //set sesion for client
+                $request->session()->put([
+                    'client_login' => [
+                        'username' => $account_client->username,
+                        'is_login' => true
+                    ]
+                ]);
+                $res['success'] = true;
+            }
+        }
+
+        return response()->json($res);
+    }
+
+    public function detail(Request $request) {
+        if ($request->session()->has('client_login')) {
+            //đã login
+            $info_account = $request->session()->get('client_login');
+            $account_client = AccountClient::query()->find($info_account['id']);
+            $data_response = [];
+
+            $provinces = DB::table('provinces')->get();
+            if ($account_client) {
+                $data_response['account_client'] = $account_client;
+                $data_response['provinces'] = $provinces;
+            }
+            return view('front.account.detail', $data_response);
+        } else {
+            //chưa login
+            return redirect()->route('client.account.client')->with('status', 'Bạn chưa đăng nhập !');
+        }
+     }
 }

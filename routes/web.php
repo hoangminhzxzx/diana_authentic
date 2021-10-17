@@ -94,7 +94,14 @@ Route::get('/thank-you', 'Front\OrderController@thankYou')->name('client.thank.y
 Route::get('/category/{slug}', 'Front\CategoryController@listProductFollowCategory')->name('client.category.list.product');
 
 //Account Client
-Route::get('/account', 'Front\AccountController@index')->name('client.account.client');
+Route::get('/tai-khoan', 'Front\AccountController@index')->name('client.account.client');
+Route::get('/tai-khoan/ho-so', 'Front\AccountController@detail')->name('client.account.detail');
 Route::post('/dang-ky-tai-khoan', 'Front\AccountController@register')->name('client.account.client.register');
 Route::post('/dang-nhap-tai-khoan', 'Front\AccountController@login')->name('client.account.client.login');
 Route::post('/dang-xuat', 'Front\AccountController@logout')->name('client.account.client.logout');
+Route::get('/khoi-phuc-mat-khau', 'Front\AccountController@restorePassword')->name('client.restore.password');
+
+Route::get('/send-mail', 'MailController@testMail');
+Route::post('/restart-password-client', 'MailController@restartPasswordClient')->name('client.restart.password');
+Route::get('/cap-nhat-mat-khau/{key}/{reset}', 'MailController@updatePasswordNewFromEmail')->name('client.update.password.from.email');
+Route::post('/restore-update-password', 'Front\AccountController@restoreUpdatePassword')->name('client.restore.update.password');

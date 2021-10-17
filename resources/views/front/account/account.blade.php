@@ -23,7 +23,7 @@
                             <input type="password" name="password" placeholder="Password">
 {{--                            <input type="submit" class="btn" value="Login">--}}
                             <button type="button" class="btn" id="btnLogin">Đăng nhập</button>
-                            <a href="">Forgot password</a>
+                            <a href="{{ route('client.restore.password') }}">Forgot password</a>
                         </form>
                         <form action="" id="RegForm">
                             <input type="text" name="username" placeholder="Username">

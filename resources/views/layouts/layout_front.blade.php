@@ -37,7 +37,7 @@
                             <a href="#" id="more_action">Tài khoản</a>
                             <ul class="d-none" id="sub_menu">
                                 <li class="item-single-menu">
-                                    <a href="" class="">Hồ sơ</a>
+                                    <a href="{{ route('client.account.detail') }}" class="">Hồ sơ</a>
                                 </li>
                                 <li class="item-single-menu">
                                     <a href="#" class="" id="btn_logout">Đăng xuất</a>
