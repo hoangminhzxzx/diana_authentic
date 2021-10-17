@@ -6,15 +6,15 @@
     <div class="row">
         <div class="col-2">
             <h1>Diana Authentic <br>Sản Phẩm </h1>
-            @if(isset($product_banner) && $product_banner)
+            @if(isset($product_banners[0]) && $product_banners)
 {{--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. <br> Lorem ipsum dolor sit amet, consectetur adipisicing.</p>--}}
-                <p>{{ $product_banner->title }}</p>
-                <a href="{{ route('client.product.detail', ['slug' => $product_banner->slug]) }}" class="btn">Mua ngay &#8594;</a>
+                <p>{{ $product_banners[0]->title }}</p>
+                <a href="{{ route('client.product.detail', ['slug' => $product_banners[0]->slug]) }}" class="btn">Mua ngay &#8594;</a>
             @endif
         </div>
         <div class="col-2">
-            @if(isset($product_banner) && $product_banner)
-               <img src="{{url($product_banner->thumbnail)}}">
+            @if(isset($product_banners[0]) && $product_banners[0])
+               <img src="{{url($product_banners[0]->thumbnail)}}">
 {{--                <img src="{{url('public/images/image2.png')}}">--}}
             @endif
         </div>
@@ -62,21 +62,23 @@
     </div>
 
     <!-- offer -->
+    @if(isset($product_banners[1]) && $product_banners[1])
     <div class="offer">
         <div class="small-container">
             <div class="row">
                 <div class="col-2">
-                    <img src="{{url('public/images/exclusive.png')}}" class="offer-img">
+                    <img src="{{ url($product_banners[1]->thumbnail) }}" class="offer-img">
                 </div>
                 <div class="col-2">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                    <h1>Lorem ipsum dolor sit.</h1>
-                    <small>The Mi Smart Band 4 featured a 39.9% larger (than Mi Band 3) AMOLED color full-touch display with adjustable brightness, so everything is clear as can</small>
-                    <a href="" class="btn">Mua ngay &#8594;</a>
+                    <p>Sản phẩm tiếp theo của Diana Authentic</p>
+                    <h1>{{ $product_banners[1]->title }}</h1>
+                    <small>{!! $product_banners[1]->desc !!}</small>
+                    <a href="{{ route('client.product.detail', ['slug' => $product_banners[1]->slug]) }}" class="btn">Mua ngay &#8594;</a>
                 </div>
             </div>
         </div>
     </div>
+    @endif
 
     <!-- ----testimonial-------- -->
 {{--    <div class="testimonial">--}}

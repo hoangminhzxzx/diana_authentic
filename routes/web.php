@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         //----- config product hot most--------------
         Route::get('config-product', 'ProductController@configProduct')->name('admin.product.config.product');
+        Route::post('config-product-update', 'ProductController@configProductStore')->name('admin.product.config.product.store');
     });
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();

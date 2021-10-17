@@ -277,4 +277,36 @@ class ProductController extends Controller
         }
         return view('admin.product.config_product', $data_response);
     }
+    public function configProductStore(Request $request) {
+        //cho phép tối đa 2 sản phẩm lên hot nhất
+        $res = ['success' => false];
+        $data = $request->input();
+        $product_id = intval($data['product_id']);
+        $product = Product::query()->find($product_id);
+        if ($product) {
+            //check xem đã có bao nhiêu sản phẩm lên hot nhất, trường hợp có 2 sản phẩm r thì phải bỏ đi 1 sản phẩm để cho sản phẩm đang chọn này lên thay thế
+            if ($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')) {
+                $product_hot_headers = Product::query()->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))->get();
+                if ($product_hot_headers->count() == 2) {
+                    $product_hot_headers[0]->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
+                    $product_hot_headers[0]->save();
+                    $res['product_down'] = $product_hot_headers[0];
+                }
+
+                //hiển thị selected
+                $product->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER');
+                $product->save();
+                $res['text'] = 'Selected';
+            } else {
+                //hiển thị select
+                $product->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
+                $product->save();
+                $res['text'] = 'Select';
+            }
+
+            $res['success'] = true;
+        }
+
+        return response()->json($res);
+    }
 }

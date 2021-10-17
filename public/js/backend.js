@@ -340,3 +340,71 @@ function cancleOrder(e) {
         }
     });
 }
+
+// <i className="spinner spinner-dark d-none" style="padding-right: 20px;"></i>
+// <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+function showLoading(selector) {
+    let loading = document.createElement('span');
+    loading.className = 'spinner-border spinner-border-sm spinner-diana';
+    loading.setAttribute('role', 'status');
+    loading.setAttribute('aria-hidden', 'true');
+    loading.style.marginLeft = '5px';
+    selector.append(loading);
+}
+function hideLoading(selector) {
+    let loading = $(selector).find('.spinner-diana');
+    if (loading) {
+        loading.remove();
+    }
+}
+
+function configProductSelect(e) {
+    showLoading(e);
+    let ele = $(e);
+    let product_id = ele.attr('data-productId');
+    console.log(product_id);
+
+    let data = {
+        product_id: product_id
+    };
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source + '/config-product-update',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cập nhật thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                $(e).text(res.text);
+                if (res.text == 'Selected') {
+                    $(e).removeClass('btn-warning');
+                    $(e).addClass('btn-success');
+                } else {
+                    $(e).addClass('btn-warning');
+                    $(e).removeClass('btn-success');
+                }
+
+                if (res.product_down) {
+                    console.log(res.product_down);
+                    let btn_product_down = $(".btn-select-diana[data-productId = '"+ res.product_down.id +"']");
+                    console.log(btn_product_down);
+                    btn_product_down.removeClass('btn-success');
+                    btn_product_down.addClass('btn-warning');
+                    btn_product_down.text('Select');
+                }
+            } else {
+
+            }
+            hideLoading(e);
+        },
+    });
+}

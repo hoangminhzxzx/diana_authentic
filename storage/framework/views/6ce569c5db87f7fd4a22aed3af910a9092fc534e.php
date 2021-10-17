@@ -5,15 +5,15 @@
     <div class="row">
         <div class="col-2">
             <h1>Diana Authentic <br>Sản Phẩm </h1>
-            <?php if(isset($product_banner) && $product_banner): ?>
+            <?php if(isset($product_banners[0]) && $product_banners): ?>
 
-                <p><?php echo e($product_banner->title); ?></p>
-                <a href="<?php echo e(route('client.product.detail', ['slug' => $product_banner->slug])); ?>" class="btn">Mua ngay &#8594;</a>
+                <p><?php echo e($product_banners[0]->title); ?></p>
+                <a href="<?php echo e(route('client.product.detail', ['slug' => $product_banners[0]->slug])); ?>" class="btn">Mua ngay &#8594;</a>
             <?php endif; ?>
         </div>
         <div class="col-2">
-            <?php if(isset($product_banner) && $product_banner): ?>
-               <img src="<?php echo e(url($product_banner->thumbnail)); ?>">
+            <?php if(isset($product_banners[0]) && $product_banners[0]): ?>
+               <img src="<?php echo e(url($product_banners[0]->thumbnail)); ?>">
 
             <?php endif; ?>
         </div>
@@ -61,21 +61,23 @@
     </div>
 
     <!-- offer -->
+    <?php if(isset($product_banners[1]) && $product_banners[1]): ?>
     <div class="offer">
         <div class="small-container">
             <div class="row">
                 <div class="col-2">
-                    <img src="<?php echo e(url('public/images/exclusive.png')); ?>" class="offer-img">
+                    <img src="<?php echo e(url($product_banners[1]->thumbnail)); ?>" class="offer-img">
                 </div>
                 <div class="col-2">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                    <h1>Lorem ipsum dolor sit.</h1>
-                    <small>The Mi Smart Band 4 featured a 39.9% larger (than Mi Band 3) AMOLED color full-touch display with adjustable brightness, so everything is clear as can</small>
-                    <a href="" class="btn">Mua ngay &#8594;</a>
+                    <p>Sản phẩm tiếp theo của Diana Authentic</p>
+                    <h1><?php echo e($product_banners[1]->title); ?></h1>
+                    <small><?php echo $product_banners[1]->desc; ?></small>
+                    <a href="<?php echo e(route('client.product.detail', ['slug' => $product_banners[1]->slug])); ?>" class="btn">Mua ngay &#8594;</a>
                 </div>
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
     <!-- ----testimonial-------- -->
 

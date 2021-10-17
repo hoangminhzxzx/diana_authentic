@@ -580,3 +580,14 @@ form a{
     background: tomato;
     color: #ffffff;
 }
+
+.page-item {
+    padding: 0 !important;
+    margin-right: 6px !important;
+}
+.page-item:last-child {
+    margin-right: 0px !important;
+}
+.page-link {
+    padding: 0px 8px;
+}
