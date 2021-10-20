@@ -393,6 +393,7 @@ function configProductSelect(e) {
                     $(e).removeClass('btn-success');
                 }
 
+                //chuyển product hot về như bình thg
                 if (res.product_down) {
                     console.log(res.product_down);
                     let btn_product_down = $(".btn-select-diana[data-productId = '"+ res.product_down.id +"']");
@@ -400,11 +401,66 @@ function configProductSelect(e) {
                     btn_product_down.removeClass('btn-success');
                     btn_product_down.addClass('btn-warning');
                     btn_product_down.text('Select');
+
+                    //remove position
+                    btn_product_down.parent().children().first().remove();
+                }
+
+                //đoạn xử lý show position sản phẩm hot
+                if (res.position) {
+                    let card_product_hot_banner = $(e).parent();
+                    let divPosition = '<div class="hot-position" data-productId="'+ product_id +'" onclick="changePosition(this)"><span>'+ res.position +'</span></div>';
+
+                    card_product_hot_banner.prepend(divPosition);
                 }
             } else {
 
             }
             hideLoading(e);
+        },
+    });
+}
+function changePosition(e) {
+    let product_id = $(e).attr('data-productId');
+    let data = {
+        product_id: product_id
+    };
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source + '/config-change-position',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    text: 'Cập nhật vị trí banner thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                //trả về position mới cho sản phẩm vừa click
+                $(e).children().first().text(res.position_product_this);
+
+                //trả về position mới cho sản phẩm rest nếu có tồn tại
+                if (res.position_product_rest) {
+                    let btn_position_rest = $(".hot-position[data-productId = '"+ res.product_rest_id +"']");
+                    if (btn_position_rest) {
+                        btn_position_rest.children().first().text(res.position_product_rest);
+                    }
+                }
+            } else {
+                Swal.fire({
+                    text: res.mess,
+                    position: 'top-end',
+                    icon: 'danger',
+                })
+            }
         },
     });
 }

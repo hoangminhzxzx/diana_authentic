@@ -285,26 +285,95 @@ class ProductController extends Controller
         $product = Product::query()->find($product_id);
         if ($product) {
             //check xem đã có bao nhiêu sản phẩm lên hot nhất, trường hợp có 2 sản phẩm r thì phải bỏ đi 1 sản phẩm để cho sản phẩm đang chọn này lên thay thế
-            if ($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')) {
-                $product_hot_headers = Product::query()->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))->get();
-                if ($product_hot_headers->count() == 2) {
-                    $product_hot_headers[0]->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
-                    $product_hot_headers[0]->save();
-                    $res['product_down'] = $product_hot_headers[0];
-                }
+//            if ($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')) {
+//                $product_hot_headers = Product::query()->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))->get();
+//                if ($product_hot_headers->count() == 2) {
+//                    $product_hot_headers[0]->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
+//                    $product_hot_headers[0]->save();
+//                    $res['product_down'] = $product_hot_headers[0];
+//                }
+//
+//                //hiển thị selected
+//                $product->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER');
+//                $product->save();
+//                $res['text'] = 'Selected';
+//            } else {
+//                //hiển thị select
+//                $product->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
+//                $product->save();
+//                $res['text'] = 'Select';
+//            }
+//            $res['success'] = true;
 
+            $product_hot_banners = Product::query()->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))->get();
+            if ($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')) {
                 //hiển thị selected
                 $product->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER');
-                $product->save();
+
+                //-- trường hợp chưa có sản phẩm hot banner nào --------------
+                if ($product_hot_banners->count() == 0) {
+                    $product->position = 1;
+                }
+                //--- truờng hợp đã có 1 sản phẩm hot banner từ trước --------
+                if ($product_hot_banners->count() == 1) {
+                    $product->position = 2;
+                }
+                //--- trường hợp đã có 2 sản phẩm hot banner từ trước -----
+                if ($product_hot_banners->count() == 2) {
+                    foreach ($product_hot_banners as $item) {
+                        if ($item->position == 2) $product_second_hot_banner_cur = $item;
+                    }
+                    $product->position = 2;
+
+                    $product_second_hot_banner_cur->position = 0;
+                    $product_second_hot_banner_cur->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
+                    $product_second_hot_banner_cur->save();
+
+                    $res['product_down'] = $product_second_hot_banner_cur;
+                }
                 $res['text'] = 'Selected';
+                $res['position'] = $product->position;
             } else {
                 //hiển thị select
                 $product->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
-                $product->save();
                 $res['text'] = 'Select';
             }
 
+            $product->save();
             $res['success'] = true;
+        }
+
+        return response()->json($res);
+    }
+
+    public function configChangePosition(Request $request) {
+        $res = ['success' => false];
+        $product_id = intval($request->input('product_id'));
+        $product = Product::query()->find($product_id);
+        if ($product) {
+            $position_1 = $product->position;
+            $product_hot_banner_rest = Product::query()->where('id', '!=', $product_id)->where('is_hot', '=', 2)->first(); //sản phẩm hot banner thứ 2 mà ko click
+            if ($product_hot_banner_rest) { //có 2 sản phẩm hot tính cả sp vừa click
+                $position_2 = $product_hot_banner_rest->position;
+                $product->position = $position_2;
+                $product->save();
+
+                $product_hot_banner_rest->position = $position_1;
+                $product_hot_banner_rest->save();
+
+                $res['position_product_rest'] = $product_hot_banner_rest->position;
+                $res['product_rest_id'] = $product_hot_banner_rest->id;
+                $res['case'] ='here 1';
+            } else { //chỉ có 1 sản phẩm vừa click là sản phẩm hot thôi
+                if ($product->position == 1) $product->position = 2;
+                if ($product->position == 2) $product->position = 1;
+                $product->save();
+                $res['case'] = 'here 2';
+            }
+            $res['position_product_this'] = $product->position;
+            $res['success'] = true;
+        } else {
+            $res['mess'] = 'Sản phẩm không tồn tại hoặc Diana Authentic đang bị lỗi';
         }
 
         return response()->json($res);

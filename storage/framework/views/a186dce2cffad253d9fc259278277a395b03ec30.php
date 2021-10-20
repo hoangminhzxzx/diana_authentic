@@ -8,8 +8,11 @@
         </div>
         <div class="card-body d-flex flex-wrap">
             <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="border mr-4 mb-2 text-center p-3" style="width: 15%; box-shadow: 1px 1px 5px 0px; position: relative;">
-                <button class="btn-select-diana btn btn-sm <?php if($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')): ?> btn-warning <?php else: ?> btn-success <?php endif; ?>" data-productId="<?php echo e($product->id); ?>" style="position: absolute; right: 0; top: 0;" onclick="configProductSelect(this)"><?php if($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')): ?> Select <?php else: ?> Selected <?php endif; ?></button>
+            <div class="border mr-4 mb-2 text-center p-3 card-product-hot">
+                <?php if($product->is_hot == config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')): ?>
+                    <div class="hot-position" data-productId="<?php echo e($product->id); ?>" onclick="changePosition(this)"><span><?php echo e($product->position); ?></span></div>
+                <?php endif; ?>
+                <button class="btn-select-diana btn btn-sm <?php if($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')): ?> btn-warning <?php else: ?> btn-success <?php endif; ?>" data-productId="<?php echo e($product->id); ?>" onclick="configProductSelect(this)"><?php if($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')): ?> Select <?php else: ?> Selected <?php endif; ?></button>
                 <img src="<?php echo e(asset($product->thumbnail)); ?>" alt="" class="" height="100">
                 <p><?php echo e($product->title); ?></p>
 

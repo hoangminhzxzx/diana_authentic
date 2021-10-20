@@ -1,0 +1,21 @@
+.card-product-hot {
+    width: 15%;
+    box-shadow: 1px 1px 5px 0px;
+    position: relative;
+}
+
+.hot-position {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: tomato;
+    color: #fff;
+    cursor: pointer;
+    padding: 2px 9px;
+}
+
+.btn-select-diana {
+    position: absolute;
+    right: 0;
+    top: 0;
+}

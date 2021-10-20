@@ -18,6 +18,7 @@ class HomeController extends Controller
         $product_banners = Product::query()
             ->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))
             ->select(['id', 'title', 'slug', 'thumbnail', 'desc', 'content'])
+            ->orderBy('position', 'asc')
             ->get();
         $data_response = [];
         if ($list_products->count() > 0) $data_response['list_products'] = $list_products;
