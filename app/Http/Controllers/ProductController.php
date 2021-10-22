@@ -54,8 +54,9 @@ class ProductController extends Controller
             $fileNameToStore = $filename.'-'.self::quickRandom().'.'.$extension;
             // Upload Image
             $path = $request->file('thumbnail')->storeAs('public/uploads', $fileNameToStore);
+            $path = $this->changePathUpload($path);
             //move
-            $request->file('thumbnail')->move(public_path('uploads'),$fileNameToStore);
+//            $request->file('thumbnail')->move(public_path('uploads'),$fileNameToStore);
         }
 
 //        $arr_image = [];
@@ -121,8 +122,9 @@ class ProductController extends Controller
             $fileNameToStore = $filename.'-'.self::quickRandom().'.'.$extension;
             // Upload Image
             $path = $request->file('thumbnail')->storeAs('public/uploads', $fileNameToStore);
+            $path = $this->changePathUpload($path);
             //move
-            $request->file('thumbnail')->move(public_path('uploads'),$fileNameToStore);
+//            $request->file('thumbnail')->move(public_path('uploads'),$fileNameToStore);
 
             //xóa thumbnail cũ
             $thumbnail_old = $product->thumbnail; //cbi xóa thumbnail cũ
@@ -211,9 +213,9 @@ class ProductController extends Controller
             $fileNameToStore = $filename.'-sticky-'.self::quickRandom().'.'.$extension;
             // Upload Image
             $path = $request->file('file')->storeAs('public/uploads', $fileNameToStore);
+            $path = $this->changePathUpload($path);
             //move
-            $request->file('file')->move(public_path('uploads'),$fileNameToStore);
-
+//            $request->file('file')->move(public_path('uploads'),$fileNameToStore); //bỏ cái này vì nó sinh ra ở dòng trên rồi
             $arr_image = [];
             if (isset($product->images) && $product->images) {
                 $arr_image = json_decode($product->images, true);
@@ -227,6 +229,11 @@ class ProductController extends Controller
             $res['path_image'] = $path;
             return response()->json($res);
         }
+    }
+
+    protected function changePathUpload($path) { //chuyển về 1 file ở trong stoage/uploads vì nó đang bị sinh ra ở 2 nơi
+        $path = str_replace('public/uploads', 'public/storage/uploads', $path);
+        return $path;
     }
 
     public function removeImageSingle(Request $request) {
