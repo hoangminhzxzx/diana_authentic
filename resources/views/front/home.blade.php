@@ -22,43 +22,72 @@
 @endsection
 @section('content')
     <!-- featured categories -->
-    <div class="categories">
-        <div class="small-container">
-            <div class="row">
-                <div class="col-4">
-                    <img src="{{url('public/images/category-1.jpg')}}" alt="">
-                </div>
-                <div class="col-4">
-                    <img src="{{url('public/images/category-2.jpg')}}" alt="">
-                </div>
-                <div class="col-4">
-                    <img src="{{url('public/images/category-3.jpg')}}" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
+{{--    <div class="categories">--}}
+{{--        <div class="small-container">--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-4">--}}
+{{--                    <img src="{{url('public/images/category-1.jpg')}}" alt="">--}}
+{{--                </div>--}}
+{{--                <div class="col-4">--}}
+{{--                    <img src="{{url('public/images/category-2.jpg')}}" alt="">--}}
+{{--                </div>--}}
+{{--                <div class="col-4">--}}
+{{--                    <img src="{{url('public/images/category-3.jpg')}}" alt="">--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
-    <!-- featured products -->
+    <!-- hot products -->
     <div class="small-container">
         <h2 class="title">Sản phẩm hot</h2>
         <div class="row" style="justify-content: unset;">
+            @if (isset($list_products_hot) && $list_products_hot)
             @foreach($list_products_hot as $item)
-            <div class="col-4">
-                <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
-                <h4 class="product-title text-center">{{ $item->title }}</h4>
-{{--                <p>$5.00</p>--}}
-            </div>
+                    <div class="col-4">
+                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center">{{ $item->title }}</h4>
+                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center">{{ $item->title }}</h4>
+                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center">{{ $item->title }}</h4>
+                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
+                    </div>
             @endforeach
+            @endif
         </div>
+    </div>
 
-{{--        <h2 class="title">Latest Products</h2>--}}
-{{--        <div class="row">--}}
-{{--            <div class="col-4">--}}
-{{--                <img src="{{url('public/images/product-5.jpg')}}" alt="">--}}
-{{--                <h4 class="product-title">Red Printed T-Shirt</h4>--}}
-{{--                <p>$5.00</p>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+    <!-- hot products -->
+    <div class="small-container">
+        <h2 class="title">Sản phẩm bán chạy</h2>
+        <div class="row" style="justify-content: unset;">
+            @if (isset($list_products_hot) && $list_products_hot)
+                @foreach($list_products_hot as $item)
+                    <div class="col-4">
+                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center">{{ $item->title }}</h4>
+                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center">{{ $item->title }}</h4>
+                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center">{{ $item->title }}</h4>
+                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
+                    </div>
+                @endforeach
+            @endif
+        </div>
     </div>
 
     <!-- offer -->

@@ -21,43 +21,72 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <!-- featured categories -->
-    <div class="categories">
-        <div class="small-container">
-            <div class="row">
-                <div class="col-4">
-                    <img src="<?php echo e(url('public/images/category-1.jpg')); ?>" alt="">
-                </div>
-                <div class="col-4">
-                    <img src="<?php echo e(url('public/images/category-2.jpg')); ?>" alt="">
-                </div>
-                <div class="col-4">
-                    <img src="<?php echo e(url('public/images/category-3.jpg')); ?>" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- featured products -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- hot products -->
     <div class="small-container">
         <h2 class="title">Sản phẩm hot</h2>
         <div class="row" style="justify-content: unset;">
+            <?php if(isset($list_products_hot) && $list_products_hot): ?>
             <?php $__currentLoopData = $list_products_hot; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="col-4">
-                <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
-                <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
-
-            </div>
+                    <div class="col-4">
+                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
+                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
+                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
+                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
+                    </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
         </div>
+    </div>
 
-
-
-
-
-
-
-
-
+    <!-- hot products -->
+    <div class="small-container">
+        <h2 class="title">Sản phẩm bán chạy</h2>
+        <div class="row" style="justify-content: unset;">
+            <?php if(isset($list_products_hot) && $list_products_hot): ?>
+                <?php $__currentLoopData = $list_products_hot; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="col-4">
+                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
+                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
+                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
+                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
+                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
+        </div>
     </div>
 
     <!-- offer -->

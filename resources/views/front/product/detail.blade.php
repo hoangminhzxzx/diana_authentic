@@ -50,7 +50,9 @@
                 @enderror
                 <input type="number" value="1" min="1" name="qty" style="margin-top: 1rem; border: 1px solid #000; border: 1px solid #ccc;">
                 <input type="button" onclick="addToCart(this)" class="btn" value="Thêm vào giỏ hàng" id="" style="width: 100%;">
+                @if($product->content)
                 <h3>Chi tiết sản phẩm <i class="fa fa-indent"></i></h3>
+                @endif
 {{--                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae nesciunt odit beatae veniam autem--}}
 {{--                    iste id est possimus laborum iusto.</p>--}}
                 <div>{!! $product->content !!}</div>
@@ -61,9 +63,18 @@
 
     <!-- ---------------title------------- -->
     <div class="small-container">
-        <div class="row row-2">
+        <div class="row row-2" style="margin-bottom: 0px;">
             <h2>Sản phẩm liên quan</h2>
-            <a href="">Xem thêm</a>
+            <a href="{{ route('client.category.list.product', ['slug' => $category_slug]) }}" style="text-decoration: underline;">Xem thêm</a>
+        </div>
+        <div class="row" style="justify-content: unset;">
+            @foreach($list_product_more as $item)
+                <div class="col-4">
+                    <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
+                    <h4 class="product-title text-center">{{ $item->title }}</h4>
+                    <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
+                </div>
+            @endforeach
         </div>
     </div>
 

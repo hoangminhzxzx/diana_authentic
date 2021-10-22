@@ -112,8 +112,8 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?php echo e(route('admin.product.add')); ?>">New</a>
-                    <a class="collapse-item" href="<?php echo e(route('admin.product.list')); ?>">List</a>
+                    <a class="collapse-item" href="<?php echo e(route('admin.product.add')); ?>">Tạo mới</a>
+                    <a class="collapse-item" href="<?php echo e(route('admin.product.list')); ?>">Danh sách</a>
                 </div>
             </div>
         </li>
@@ -128,8 +128,8 @@
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?php echo e(route('category-tree-view')); ?>">New</a>
-                    <a class="collapse-item" href="<?php echo e(route('admin.category.list')); ?>">List</a>
+                    <a class="collapse-item" href="<?php echo e(route('category-tree-view')); ?>">Tạo mới</a>
+                    <a class="collapse-item" href="<?php echo e(route('admin.category.list')); ?>">Danh sách</a>
                 </div>
             </div>
         </li>

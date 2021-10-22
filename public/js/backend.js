@@ -464,3 +464,78 @@ function changePosition(e) {
         },
     });
 }
+
+function deleteProduct(e, id) {
+    let ele = $(e);
+    let data = {
+        id: id
+    };
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source + '/product/delete',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    text: 'Xoá thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                let rowParent = $(".row-product-" + id);
+                if (rowParent) {
+                    rowParent.remove();
+                }
+            } else {
+                Swal.fire({
+                    text: 'Lỗi',
+                    position: 'top-end',
+                    icon: 'danger',
+                })
+            }
+        },
+    });
+}
+
+function setPublishProduct(e, product_id) {
+    let is_publish = 0;
+    if ($(e).prop("checked") == true) {
+        is_publish = 1;
+    }
+    let data = {
+        product_id: product_id,
+        is_publish: is_publish
+    };
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source + '/product/set-publish',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    text: res.text_response,
+                    position: 'top-end',
+                    icon: 'success',
+                })
+            } else {
+                Swal.fire({
+                    text: 'Lỗi',
+                    position: 'top-end',
+                    icon: 'danger',
+                })
+            }
+        },
+    });
+}

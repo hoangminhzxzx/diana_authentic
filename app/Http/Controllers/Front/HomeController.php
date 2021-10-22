@@ -14,8 +14,10 @@ class HomeController extends Controller
 //        Session::forget('client_login');
 //        Session::forget('is_login');
         $list_products = Product::query()->where('is_publish' ,'=', 1)->get();
-        $list_products_hot = Product::query()->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT'))->take(4)->get();
+        $list_products_hot = Product::query()->where('is_publish' ,'=', 1)->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT'))->take(4)->get();
+//        dd($list_products_hot);
         $product_banners = Product::query()
+            ->where('is_publish' ,'=', 1)
             ->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))
             ->select(['id', 'title', 'slug', 'thumbnail', 'desc', 'content'])
             ->orderBy('position', 'asc')

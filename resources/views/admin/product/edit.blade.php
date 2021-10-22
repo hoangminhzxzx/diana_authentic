@@ -1,9 +1,10 @@
 @extends('layouts.layout_admin')
 @section('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
-    <link rel="stylesheet" href="{{ url('public/plugins/custom/dropzone-5.7.0/dist/min/dropzone.min.css') }}">
+    {{--    <link rel="stylesheet" href="{{ url('public/plugins/custom/dropzone-5.7.0/dist/min/dropzone.min.css') }}">--}}
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css" rel="stylesheet">
+{{--    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css" rel="stylesheet">--}}
+    <link rel="stylesheet" href="{{ url('/public/plugins/custom/dropzone/dist/min/dropzone.min.css') }}">
 @endsection
 @section('content')
     <div class="row">
@@ -23,7 +24,8 @@
                 </div>
                 {{--                <img class="img-thumbnail" id="image" src="{{ asset($product->thumbnail) }}" style="margin-top: 1rem; max-width: 200px;" /> Ảnh sản phẩm đại diện ( Khi muốn thay đổi cần liên hệ với Bang Chủ hoặc xóa đi nhập liệu lại)--}}
                 <div class="card-body">
-                    <form action="{{route('admin.product.update', $product->id)}}" method="POST" id="uploadProduct" enctype="multipart/form-data">
+                    <form action="{{route('admin.product.update', $product->id)}}" method="POST" id="uploadProduct"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <lable>Title</lable>
@@ -82,14 +84,14 @@
                                         @if(isset($product->category->id) && $product->category->id == $category_accessory->id) selected @endif>{{ $category_accessory->title }}</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <lable>Phân loại thường - hot - hot header</lable>
-                            <select name="is_hot" id="" class="form-control">
-                                <option value="0" @if($product->is_hot == 0) selected @endif>Thường</option>
-                                <option value="1" @if($product->is_hot == 1) selected @endif>Hot</option>
-                                <option value="2" @if($product->is_hot == 2) selected @endif>Hot header</option>
-                            </select>
-                        </div>
+                        {{--                        <div class="form-group">--}}
+                        {{--                            <lable>Phân loại thường - hot - hot header</lable>--}}
+                        {{--                            <select name="is_hot" id="" class="form-control">--}}
+                        {{--                                <option value="0" @if($product->is_hot == 0) selected @endif>Thường</option>--}}
+                        {{--                                <option value="1" @if($product->is_hot == 1) selected @endif>Hot</option>--}}
+                        {{--                                <option value="2" @if($product->is_hot == 2) selected @endif>Hot header</option>--}}
+                        {{--                            </select>--}}
+                        {{--                        </div>--}}
                         <div class="form-group text-center">
                             <input type="submit" class="btn btn-outline-success w-25" value="Save">
                         </div>
@@ -99,18 +101,16 @@
         </div>
         <div class="col-md-6">
             @if($product->category->is_accessory != 1)
-            <div class="card mx-4">
-                <div class="card-header">
-                    @if (session('success_variant'))
-                        <div class="alert alert-success mt-3" role="alert">{{session('success_variant')}}</div>
-                    @endif
-                    <h3>Variants</h3>
-                </div>
-                <div class="card-body">
-                    @if(isset($product->category->id) && $product->category->id != 12)
+                <div class="card mx-4">
+                    <div class="card-header">
+                        @if (session('success_variant'))
+                            <div class="alert alert-success mt-3" role="alert">{{session('success_variant')}}</div>
+                        @endif
+                        <h3>Variants</h3>
+                    </div>
+                    <div class="card-body">
                         <form method="POST" id="form_product_variant">
                             @csrf
-                            <input type="hidden" value="{{ $product->id }}" name="product_id">
                             <div class="form-group color_hex">
                                 <lable>Color Hex</lable>
                                 <input type="text" name="color_hex" id="colorpicker_variant"
@@ -142,88 +142,75 @@
                             {{--                                @enderror--}}
                             {{--                            </div>--}}
                             <div class="form-group text-center">
-{{--                                <input type="submit" class="btn btn-outline-success w-25" value="Thêm">--}}
-                                <button type="button" onclick="addProductVariant(this)" class="btn btn-outline-success w-25">
+                                {{--                                <input type="submit" class="btn btn-outline-success w-25" value="Thêm">--}}
+                                <button type="button" onclick="addProductVariant(this)"
+                                        class="btn btn-outline-success w-25">
                                     <i class="spinner spinner-dark mr-2 d-none"></i>Thêm
                                 </button>
                             </div>
                         </form>
-                    @endif
-
-                    @if(isset($product->category->id) && $product->category->id == 12)
-                        <form action="{{ route('admin.product.variant_ass.store') }}" method="POST">
-                            @csrf
-                            <input type="hidden" value="{{ $product->id }}" name="product_id">
-                            <div class="form-group">
-                                <lable>Giá phụ kiện</lable>
-                                <input type="number" name="price" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-outline-success">
-                            </div>
-                        </form>
-                    @endif
+                    </div>
                 </div>
-            </div>
-            <div class="card mx-4 mt-5">
-                <div class="card-header">
-                    <h4>List Variants</h4>
-                </div>
-                <div class="card-body">
-                    <table class="table" id="tbl_list_variant">
-                        <thead>
-                        <tr>
-                            <th>
-                                <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>
-                            </th>
-                            <th class=""><span>Color hex</span></th>
-                            <th class=""><span>Color name</span></th>
-                            <th class=""><span>Size</span></th>
-                            <th class=""><span>Price</span></th>
-                            <th><span>Actions</span></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {{--                        {{$product->ProductVariants}}--}}
-                        @foreach($product->ProductVariants as $item)
+                <div class="card mx-4 mt-5">
+                    <div class="card-header">
+                        <h4>List Variants</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table" id="tbl_list_variant">
+                            <thead>
                             <tr>
-                                <td>
+                                <th>
+                                    <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>
+                                </th>
+                                <th class=""><span>Color hex</span></th>
+                                <th class=""><span>Color name</span></th>
+                                <th class=""><span>Size</span></th>
+                                <th class=""><span>Price</span></th>
+                                <th><span>Actions</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{--                        {{$product->ProductVariants}}--}}
+                            @foreach($product->ProductVariants as $item)
+                                <tr>
+                                    <td>
                                     <span>
                                         <label class="checkbox checkbox-single">
                                             <input type="checkbox" value="1">&nbsp;
                                         </label>
                                     </span>
-                                </td>
-                                <td><span>{{ ($item->color)?$item->color->value:"" }}</span></td>
-                                <td><span>{{ ($item->color)?$item->color->name:"" }}</span></td>
-                                <td><span>{{ ($item->size)?$item->size->value:"" }}</span></td>
-                                <td><span>{{$item->price?$item->price:""}}</span></td>
-                                <td>
-                                    <a href="{{ route('admin.product.variant.edit', ['id'=>$item->id]) }}"
-                                       class="btn btn-icon btn-light btn-hover-primary btn-sm mr-1">
-                                        <i class="fas fa-pen-alt"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
-                                       onclick="confirmDelete('#delete-variant-{{ $item->id }}');return false;">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                    <form method="POST" id="delete-variant-{{ $item->id }}"
-                                          action="{{ route('admin.product.variant.delete', ['id'=>$item->id]) }}"
-                                          style="display: none;">
-                                        @csrf
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td><span>{{ ($item->color)?$item->color->value:"" }}</span></td>
+                                    <td><span>{{ ($item->color)?$item->color->name:"" }}</span></td>
+                                    <td><span>{{ ($item->size)?$item->size->value:"" }}</span></td>
+                                    <td><span>{{$item->price?$item->price:""}}</span></td>
+                                    <td>
+                                        <a href="{{ route('admin.product.variant.edit', ['id'=>$item->id]) }}"
+                                           class="btn btn-icon btn-light btn-hover-primary btn-sm mr-1">
+                                            <i class="fas fa-pen-alt"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                                           onclick="confirmDelete('#delete-variant-{{ $item->id }}');return false;">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                        <form method="POST" id="delete-variant-{{ $item->id }}"
+                                              action="{{ route('admin.product.variant.delete', ['id'=>$item->id]) }}"
+                                              style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             @endif
             <div class="card mx-4 mt-5">
                 <div class="card-header">
                     <h4>Cài đặt ảnh nhỏ hiển thị</h4>
                 </div>
+                <input type="hidden" value="{{ $product->id }}" name="product_id">
                 <div class="card-body">
                     <div class="form-group">
                         <div id="actions" class="row mb-4">
@@ -233,21 +220,23 @@
                                     <i class="glyphicon glyphicon-plus"></i>
                                     <span>Add files...</span>
                                 </span>
-{{--                                <button type="submit" class="btn btn-primary start">--}}
-{{--                                    <i class="glyphicon glyphicon-upload"></i>--}}
-{{--                                    <span>Start upload</span>--}}
-{{--                                </button>--}}
-{{--                                <button type="reset" class="btn btn-warning cancel">--}}
-{{--                                    <i class="glyphicon glyphicon-ban-circle"></i>--}}
-{{--                                    <span>Cancel upload</span>--}}
-{{--                                </button>--}}
+                                {{--                                <button type="submit" class="btn btn-primary start">--}}
+                                {{--                                    <i class="glyphicon glyphicon-upload"></i>--}}
+                                {{--                                    <span>Start upload</span>--}}
+                                {{--                                </button>--}}
+                                {{--                                <button type="reset" class="btn btn-warning cancel">--}}
+                                {{--                                    <i class="glyphicon glyphicon-ban-circle"></i>--}}
+                                {{--                                    <span>Cancel upload</span>--}}
+                                {{--                                </button>--}}
                             </div>
 
                             <div class="col-lg-5">
                                 <!-- The global file processing state -->
                                 <span class="fileupload-process">
-                                    <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="opacity: 0;">
-                                        <div class="progress-bar progress-bar-success" style="width: 100%;" data-dz-uploadprogress=""></div>
+                                    <div id="total-progress" class="progress progress-striped active" role="progressbar"
+                                         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="opacity: 0;">
+                                        <div class="progress-bar progress-bar-success" style="width: 100%;"
+                                             data-dz-uploadprogress=""></div>
                                     </div>
                                 </span>
                             </div>
@@ -267,8 +256,10 @@
                                     </div>
                                     <div>
                                         <p class="size" data-dz-size></p>
-                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        <div class="progress progress-striped active" role="progressbar"
+                                             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;"
+                                                 data-dz-uploadprogress></div>
                                         </div>
                                     </div>
                                 </div>
@@ -290,37 +281,41 @@
                             @if($product->images)
                                 @foreach(json_decode($product->images) as $image)
                                     <div id="" class="file-row d-flex justify-content-between item-image-single">
-                                <!-- This is used as the file preview template -->
-                                <div class="">
-                                    <div>
-                                        <span class="preview"><img data-dz-thumbnail="" width="80" height="80" alt="" src="{{ asset($image) }}"/></span>
-                                    </div>
-                                    <div>
-                                        <p class="name" data-dz-name></p>
-                                        <strong class="error text-danger" data-dz-errormessage></strong>
-                                    </div>
-                                    <div>
-                                        <p class="size" data-dz-size></p>
-                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        <!-- This is used as the file preview template -->
+                                        <div class="">
+                                            <div>
+                                                <span class="preview"><img data-dz-thumbnail="" width="80" height="80"
+                                                                           alt="" src="{{ asset($image) }}"/></span>
+                                            </div>
+                                            <div>
+                                                <p class="name" data-dz-name></p>
+                                                <strong class="error text-danger" data-dz-errormessage></strong>
+                                            </div>
+                                            <div>
+                                                <p class="size" data-dz-size></p>
+                                                <div class="progress progress-striped active" role="progressbar"
+                                                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                    <div class="progress-bar progress-bar-success" style="width:0%;"
+                                                         data-dz-uploadprogress></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            {{--                                    <button class="btn btn-primary start">--}}
+                                            {{--                                        <i class="glyphicon glyphicon-upload"></i>--}}
+                                            {{--                                        <span>Start</span>--}}
+                                            {{--                                    </button>--}}
+                                            {{--                                    <button data-dz-remove class="btn btn-warning cancel">--}}
+                                            {{--                                        <i class="glyphicon glyphicon-ban-circle"></i>--}}
+                                            {{--                                        <span>Cancel</span>--}}
+                                            {{--                                    </button>--}}
+                                            <button class="btn btn-danger" onclick="deleteImageSingle(this)"
+                                                    data-path="{{ $image }}">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                                <span>Delete</span>
+                                            </button>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-{{--                                    <button class="btn btn-primary start">--}}
-{{--                                        <i class="glyphicon glyphicon-upload"></i>--}}
-{{--                                        <span>Start</span>--}}
-{{--                                    </button>--}}
-{{--                                    <button data-dz-remove class="btn btn-warning cancel">--}}
-{{--                                        <i class="glyphicon glyphicon-ban-circle"></i>--}}
-{{--                                        <span>Cancel</span>--}}
-{{--                                    </button>--}}
-                                    <button class="btn btn-danger" onclick="deleteImageSingle(this)" data-path="{{ $image }}">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                        <span>Delete</span>
-                                    </button>
-                                </div>
-                            </div>
                                 @endforeach
                             @endif
                         </div>
@@ -332,7 +327,8 @@
 @endsection
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>--}}
+    <script src="{{ url('/public/plugins/custom/dropzone/dist/min/dropzone.min.js') }}"></script>
     <script type="text/javascript">
         $("#colorpicker_variant").spectrum();
         // var url_source = 'http://localhost/diana_authentic_shop/';
@@ -382,6 +378,7 @@
             // file.previewElement.querySelector(".delete").classList.remove('d-none');
 
             // formData.append('idea_id', dropzone_idea_id);
+            console.log(product_id);
             formData.append('id', product_id);
             formData.append("_token", "{{ csrf_token() }}");
         });
@@ -405,10 +402,10 @@
         // Setup the buttons for all transfers
         // The "add files" button doesn't need to be setup because the config
         // `clickable` has already been specified.
-        document.querySelector(".start").onclick = function() {
+        document.querySelector(".start").onclick = function () {
             myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
         };
-        document.querySelector(".cancel").onclick = function() {
+        document.querySelector(".cancel").onclick = function () {
             myDropzone.removeAllFiles(true);
         };
 

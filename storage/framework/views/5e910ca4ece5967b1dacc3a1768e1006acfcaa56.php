@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('title'); ?>
     Chi tiết sản phẩm
 <?php $__env->stopSection(); ?>
@@ -57,7 +56,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 <input type="number" value="1" min="1" name="qty" style="margin-top: 1rem; border: 1px solid #000; border: 1px solid #ccc;">
                 <input type="button" onclick="addToCart(this)" class="btn" value="Thêm vào giỏ hàng" id="" style="width: 100%;">
+                <?php if($product->content): ?>
                 <h3>Chi tiết sản phẩm <i class="fa fa-indent"></i></h3>
+                <?php endif; ?>
 
 
                 <div><?php echo $product->content; ?></div>
@@ -68,9 +69,18 @@ unset($__errorArgs, $__bag); ?>
 
     <!-- ---------------title------------- -->
     <div class="small-container">
-        <div class="row row-2">
+        <div class="row row-2" style="margin-bottom: 0px;">
             <h2>Sản phẩm liên quan</h2>
-            <a href="">Xem thêm</a>
+            <a href="<?php echo e(route('client.category.list.product', ['slug' => $category_slug])); ?>" style="text-decoration: underline;">Xem thêm</a>
+        </div>
+        <div class="row" style="justify-content: unset;">
+            <?php $__currentLoopData = $list_product_more; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="col-4">
+                    <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
+                    <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
+                    <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 

@@ -67,29 +67,26 @@
         <div class="row">
             <div class="footer-col-2">
                 <img src="<?php echo e(url('public/images/logo_diana1.png')); ?>" alt="">
-                <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many</p>
+                <p>Hệ thống Diana Authentic đang demo</p>
             </div>
-            <div class="footer-col-3">
-                <h3>Useful Links</h3>
-                <ul>
-                    <li><a href="">Coupons</a></li>
-                    <li><a href="">Blog Post</a></li>
-                    <li><a href="">Return Policy</a></li>
-                    <li><a href="">Join Affiliate</a></li>
-                </ul>
-            </div>
+
+
+
+
+
+
+
+
+
             <div class="footer-col-4">
                 <h3>Follow Us</h3>
                 <ul>
                     <li><a href="">Facebook</a></li>
-                    <li><a href="">Twitter</a></li>
-                    <li><a href="">Instagram</a></li>
-                    <li><a href="">Youtube</a></li>
                 </ul>
             </div>
         </div>
         <hr>
-        <p class="copyright">Dev by Hoàng Công Minh</p>
+        <p class="copyright">Dev by Minh Bé Tý</p>
     </div>
 </div>
 

@@ -35,7 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/product/store', 'ProductController@store')->name('admin.product.store');
         Route::get('/product/edit/{id}', 'ProductController@edit')->name('admin.product.edit');
         Route::post('/product/update/{id}', 'ProductController@update')->name('admin.product.update');
-        Route::post('/product/delete/{id}', 'ProductController@delete')->name('admin.product.delete');
+        Route::post('/product/delete', 'ProductController@delete')->name('admin.product.delete');
+        Route::post('/product/set-publish', 'ProductController@setPublish')->name('admin.product.setPublish');
 
         Route::post('/product/variant', 'ProductVariantController@store')->name('admin.product.variant.store');
         Route::post('/product/variant-ass', 'ProductVariantController@storeAss')->name('admin.product.variant_ass.store');

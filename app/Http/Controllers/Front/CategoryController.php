@@ -7,10 +7,12 @@ use App\Model\Category;
 use App\Model\Product;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Matrix\Builder;
 
 class CategoryController extends Controller
 {
-    public function listProductFollowCategory($slug) {
+    public function listProductFollowCategory($slug)
+    {
         $category = Category::query()->where('slug', '=', $slug)->first();
         if ($category) {
             $category_title = $category->title;
@@ -23,14 +25,30 @@ class CategoryController extends Controller
                 }
             }
 
-            $list_product = Product::query()->whereIn('category_id', $list_category)->where('is_publish', '=', 1)->paginate(3);
-//            if ($list_product->count() > 0) {
-                return view('front.category.list_product',
-                    [
-                        'list_product' => $list_product,
-                        'category_title' => $category_title
-                    ]
-                );
+            $limit = 4;
+            if (isset($_GET['limit']) && $_GET['limit']) {
+                $limit = $_GET['limit'];
+            }
+
+            $orderBy = 'asc';
+            if (isset($_GET['orderBy']) && $_GET['orderBy']) {
+                $orderBy = $_GET['orderBy'];
+            }
+            $list_product = Product::query()
+                ->whereIn('category_id', $list_category)
+                ->where('is_publish', '=', 1)
+                ->orderBy('price', $orderBy)
+                ->paginate($limit);
+
+            return view('front.category.list_product',
+                [
+                    'list_product' => $list_product,
+                    'category_title' => $category_title,
+                    'slug' => $slug,
+                    'orderBy' => $orderBy,
+                    'limit' => $limit
+                ]
+            );
 //            }
         }
     }

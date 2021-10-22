@@ -631,3 +631,34 @@ $("#btnUpdateRestorePassForm").click(function () {
         }
     });
 })
+
+// $("#select_order_product").onchange(function () {
+//     console.log('here');
+//     console.log(this.value);
+// })
+function orderProduct(e) {
+    console.log('here');
+    console.log($(e).val());
+    $("#formFilterProduct").submit();
+    // let slug = $(e).attr('data-category-slug');
+    // let data = {
+    //     order_type: $(e).val()
+    // };
+    // $.ajax({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     },
+    //     url: url_source+'/category/'+slug,
+    //     type: 'GET',
+    //     data: data,
+    //     dataType: 'json',
+    //     success: function (res) {
+    //         if (res.success) {
+    //
+    //         }
+    //     },
+    //     error: function (xhr, ajaxOptions, thrownError) {
+    //
+    //     }
+    // });
+}

@@ -9,40 +9,49 @@
                 <table class="table" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
+                        <th>Ảnh đại diện</th>
                         <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
-                        <th>Ảnh đại diện</th>
                         <th>Trạng thái kích hoạt</th>
                         <th>Hành động</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($list_product as $product)
-                    <tr>
+                    <tr class="row-product-{{ $product->id }}">
+                        <td><img src="{{ url($product->thumbnail) }}" alt="" class="img-thumbnail" width="120"></td>
                         <td>{{ $product->title }}</td>
                         <td><b>{{ $product->category->title }}</b></td>
-                        <td><img src="{{ url($product->thumbnail) }}" alt="" class="img-thumbnail" width="120"></td>
                         <td>
-                            @if($product->is_publish == 1)
-                                Kích hoạt
-                            @endif
-                            @if($product->is_publish == 2)
-                                Không kích hoạt
-                            @endif
+{{--                            @if($product->is_publish == 1)--}}
+{{--                                Kích hoạt--}}
+{{--                            @endif--}}
+{{--                            @if($product->is_publish == 2)--}}
+{{--                                Không kích hoạt--}}
+{{--                            @endif--}}
+
+                            <!-- switch -->
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" onchange="setPublishProduct(this, {{ $product->id }})" id="set-publish-{{ $product->id }}" @if ($product->is_publish == 1) checked @endif>
+                                <label class="custom-control-label" for="set-publish-{{ $product->id }}"></label>
+                            </div>
                         </td>
                         <td>
                             <a href="{{route('admin.product.edit', $product->id)}}" class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
                                 <i class="fas fa-pen-alt"></i>
                             </a>
-                            <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
-                               onclick="confirmDelete('#delete-product-{{$product->id}}');return false;">
+                            <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm" onclick="deleteProduct(this, {{ $product->id }})">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
-                            <form method="POST" id="delete-product-{{$product->id}}"
-                                  action="{{route('admin.product.delete', $product->id)}}"
-                                  style="display: none;">
-                                @csrf
-                            </form>
+
+{{--                            <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm" onclick="confirmDelete('#delete-product-{{$product->id}}');return false;">--}}
+{{--                                <i class="fas fa-trash-alt"></i>--}}
+{{--                            </a>--}}
+{{--                            <form method="POST" id="delete-product-{{$product->id}}"--}}
+{{--                                  action="{{route('admin.product.delete', $product->id)}}"--}}
+{{--                                  style="display: none;">--}}
+{{--                                @csrf--}}
+{{--                            </form>--}}
                         </td>
                     </tr>
                     @endforeach

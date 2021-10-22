@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Category;
 use App\Model\Product;
+use App\Model\ProductOption;
+use App\Model\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -30,11 +32,13 @@ class ProductController extends Controller
         $request -> validate(
             [
                 'title' => "required",
-                'price' => 'required'
+                'price' => 'required',
+                'category_id' => 'required'
             ],
             [
                 'title' => "Title",
-                'price' => 'Price'
+                'price' => 'Price',
+                'category_id' => 'Danh mục cha'
             ]
         );
         $data = $request->input();
@@ -61,7 +65,7 @@ class ProductController extends Controller
         $product->title = $data['title']?$data['title']:"";
         $product->desc = $data['desc']?$data['desc']:"";
         $product->content = $data['content']?$data['content']:"";
-        $product->thumbnail = $path;
+        $product->thumbnail = (isset($path) && $path) ? $path : '';
 //        $product->images = json_encode($arr_image);
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
         $product->category_id = $data['category_id']?$data['category_id']:0;
@@ -146,14 +150,16 @@ class ProductController extends Controller
         $product->price = $data['price']?$data['price']:0;
         $product->is_publish = $data['is_publish']?$data['is_publish']:0;
         $product->category_id = $data['category_id'];
-        $product->is_hot = $data['is_hot'];
+//        $product->is_hot = $data['is_hot'];
         $product->slug = Str::slug($data['title'], '-');
         $product->save();
 
         return back()->with('success_product', 'Cập nhật thành công');
     }
 
-    public function delete ($id) {
+    public function delete (Request $request) {
+        $res = ['success' => false];
+        $id = intval($request->input('id'));
         $product = Product::query()->find($id);
         if ($product) {
             //xóa các file ảnh
@@ -168,11 +174,24 @@ class ProductController extends Controller
                     }
                 }
             }
+            //xóa file thumbnail
+            if ($product->thumbnail) {
+                $path_thumb = $product->thumbnail;
+                $path_thumb = str_replace('public', '', $path_thumb);
+                if (file_exists(public_path($path_thumb))) {
+                    unlink(public_path($path_thumb));
+                }
+            }
 
             $product->delete();
-            return back();
+
+            //delete product option, product variants
+            ProductOption::query()->where('product_id', '=', $product->id)->delete();
+            ProductVariant::query()->where('product_id', '=', $product->id)->delete();
+
+            $res['success'] = true;
         }
-        return back();
+        return response()->json($res);
     }
 
     public function uploadImageDZ(Request $request) {
@@ -196,9 +215,10 @@ class ProductController extends Controller
             $request->file('file')->move(public_path('uploads'),$fileNameToStore);
 
             $arr_image = [];
-            if ($product && $product->images) {
+            if (isset($product->images) && $product->images) {
                 $arr_image = json_decode($product->images, true);
             }
+
             $arr_image[] = $path;
             $product->images = json_encode($arr_image);
             $product->save();
@@ -376,6 +396,25 @@ class ProductController extends Controller
             $res['mess'] = 'Sản phẩm không tồn tại hoặc Diana Authentic đang bị lỗi';
         }
 
+        return response()->json($res);
+    }
+
+    public function setPublish(Request $request) {
+        $res = ['success' => false];
+        $data_request = $request->input();
+        $product = Product::query()->find(intval($data_request['product_id']));
+        if ($product) {
+            $product->is_publish = intval($data_request['is_publish']);
+            $product->save();
+
+            if ($product->is_publish == 0) {
+                $text_response = 'Đã vô hiệu hóa';
+            } else {
+                $text_response = 'Đã kích hoạt';
+            }
+            $res['success'] = true;
+            $res['text_response'] = $text_response;
+        }
         return response()->json($res);
     }
 }

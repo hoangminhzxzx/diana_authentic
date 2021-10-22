@@ -69,6 +69,7 @@ p{
 }
 .header{
     background: radial-gradient(#fff, #ffd6d6);
+    margin-bottom: 2rem;
 }
 .header .row{
     margin-top: 70px;

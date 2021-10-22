@@ -22,7 +22,7 @@
                             <input type="password" name="password" placeholder="Password">
 
                             <button type="button" class="btn" id="btnLogin">Đăng nhập</button>
-                            <a href="<?php echo e(route('client.restore.password')); ?>">Forgot password</a>
+                            <a href="<?php echo e(route('client.restore.password')); ?>">Quên mật khẩu</a>
                         </form>
                         <form action="" id="RegForm">
                             <input type="text" name="username" placeholder="Username">

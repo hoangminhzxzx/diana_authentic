@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Model\Category;
 use App\Model\Product;
 use App\Model\ProductOption;
 use App\Model\ProductVariant;
@@ -31,6 +32,12 @@ class ProductController extends Controller
                 }
                 $data_response['sizes'] = array_unique($list_variants['sizes']);
             }
+
+            $category_slug = Category::query()->where('id', '=', $product->category_id)->first()->slug;
+            $data_response['category_slug'] = $category_slug;
+
+            $list_product_more = Product::query()->where('category_id', '=', $product->category_id)->where('slug', '!=', $slug)->take(4)->get();
+            $data_response['list_product_more'] = $list_product_more;
 //        dd($data_response);
 //                Cart::destroy();
             return view('front.product.detail', $data_response);

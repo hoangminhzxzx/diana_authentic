@@ -1,8 +1,9 @@
 <?php $__env->startSection('styles'); ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
-    <link rel="stylesheet" href="<?php echo e(url('public/plugins/custom/dropzone-5.7.0/dist/min/dropzone.min.css')); ?>">
+    
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo e(url('/public/plugins/custom/dropzone/dist/min/dropzone.min.css')); ?>">
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <div class="row">
@@ -22,7 +23,8 @@
                 </div>
                 
                 <div class="card-body">
-                    <form action="<?php echo e(route('admin.product.update', $product->id)); ?>" method="POST" id="uploadProduct" enctype="multipart/form-data">
+                    <form action="<?php echo e(route('admin.product.update', $product->id)); ?>" method="POST" id="uploadProduct"
+                          enctype="multipart/form-data">
                         <?php echo csrf_field(); ?>
                         <div class="form-group">
                             <lable>Title</lable>
@@ -81,14 +83,14 @@
                                         <?php if(isset($product->category->id) && $product->category->id == $category_accessory->id): ?> selected <?php endif; ?>><?php echo e($category_accessory->title); ?></option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <lable>Phân loại thường - hot - hot header</lable>
-                            <select name="is_hot" id="" class="form-control">
-                                <option value="0" <?php if($product->is_hot == 0): ?> selected <?php endif; ?>>Thường</option>
-                                <option value="1" <?php if($product->is_hot == 1): ?> selected <?php endif; ?>>Hot</option>
-                                <option value="2" <?php if($product->is_hot == 2): ?> selected <?php endif; ?>>Hot header</option>
-                            </select>
-                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         <div class="form-group text-center">
                             <input type="submit" class="btn btn-outline-success w-25" value="Save">
                         </div>
@@ -98,18 +100,16 @@
         </div>
         <div class="col-md-6">
             <?php if($product->category->is_accessory != 1): ?>
-            <div class="card mx-4">
-                <div class="card-header">
-                    <?php if(session('success_variant')): ?>
-                        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('success_variant')); ?></div>
-                    <?php endif; ?>
-                    <h3>Variants</h3>
-                </div>
-                <div class="card-body">
-                    <?php if(isset($product->category->id) && $product->category->id != 12): ?>
+                <div class="card mx-4">
+                    <div class="card-header">
+                        <?php if(session('success_variant')): ?>
+                            <div class="alert alert-success mt-3" role="alert"><?php echo e(session('success_variant')); ?></div>
+                        <?php endif; ?>
+                        <h3>Variants</h3>
+                    </div>
+                    <div class="card-body">
                         <form method="POST" id="form_product_variant">
                             <?php echo csrf_field(); ?>
-                            <input type="hidden" value="<?php echo e($product->id); ?>" name="product_id">
                             <div class="form-group color_hex">
                                 <lable>Color Hex</lable>
                                 <input type="text" name="color_hex" id="colorpicker_variant"
@@ -162,88 +162,75 @@ unset($__errorArgs, $__bag); ?>
                             
                             
                             <div class="form-group text-center">
-
-                                <button type="button" onclick="addProductVariant(this)" class="btn btn-outline-success w-25">
+                                
+                                <button type="button" onclick="addProductVariant(this)"
+                                        class="btn btn-outline-success w-25">
                                     <i class="spinner spinner-dark mr-2 d-none"></i>Thêm
                                 </button>
                             </div>
                         </form>
-                    <?php endif; ?>
-
-                    <?php if(isset($product->category->id) && $product->category->id == 12): ?>
-                        <form action="<?php echo e(route('admin.product.variant_ass.store')); ?>" method="POST">
-                            <?php echo csrf_field(); ?>
-                            <input type="hidden" value="<?php echo e($product->id); ?>" name="product_id">
-                            <div class="form-group">
-                                <lable>Giá phụ kiện</lable>
-                                <input type="number" name="price" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-outline-success">
-                            </div>
-                        </form>
-                    <?php endif; ?>
+                    </div>
                 </div>
-            </div>
-            <div class="card mx-4 mt-5">
-                <div class="card-header">
-                    <h4>List Variants</h4>
-                </div>
-                <div class="card-body">
-                    <table class="table" id="tbl_list_variant">
-                        <thead>
-                        <tr>
-                            <th>
-                                <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>
-                            </th>
-                            <th class=""><span>Color hex</span></th>
-                            <th class=""><span>Color name</span></th>
-                            <th class=""><span>Size</span></th>
-                            <th class=""><span>Price</span></th>
-                            <th><span>Actions</span></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                        <?php $__currentLoopData = $product->ProductVariants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="card mx-4 mt-5">
+                    <div class="card-header">
+                        <h4>List Variants</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table" id="tbl_list_variant">
+                            <thead>
                             <tr>
-                                <td>
+                                <th>
+                                    <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>
+                                </th>
+                                <th class=""><span>Color hex</span></th>
+                                <th class=""><span>Color name</span></th>
+                                <th class=""><span>Size</span></th>
+                                <th class=""><span>Price</span></th>
+                                <th><span>Actions</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                            <?php $__currentLoopData = $product->ProductVariants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <tr>
+                                    <td>
                                     <span>
                                         <label class="checkbox checkbox-single">
                                             <input type="checkbox" value="1">&nbsp;
                                         </label>
                                     </span>
-                                </td>
-                                <td><span><?php echo e(($item->color)?$item->color->value:""); ?></span></td>
-                                <td><span><?php echo e(($item->color)?$item->color->name:""); ?></span></td>
-                                <td><span><?php echo e(($item->size)?$item->size->value:""); ?></span></td>
-                                <td><span><?php echo e($item->price?$item->price:""); ?></span></td>
-                                <td>
-                                    <a href="<?php echo e(route('admin.product.variant.edit', ['id'=>$item->id])); ?>"
-                                       class="btn btn-icon btn-light btn-hover-primary btn-sm mr-1">
-                                        <i class="fas fa-pen-alt"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
-                                       onclick="confirmDelete('#delete-variant-<?php echo e($item->id); ?>');return false;">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                    <form method="POST" id="delete-variant-<?php echo e($item->id); ?>"
-                                          action="<?php echo e(route('admin.product.variant.delete', ['id'=>$item->id])); ?>"
-                                          style="display: none;">
-                                        <?php echo csrf_field(); ?>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td><span><?php echo e(($item->color)?$item->color->value:""); ?></span></td>
+                                    <td><span><?php echo e(($item->color)?$item->color->name:""); ?></span></td>
+                                    <td><span><?php echo e(($item->size)?$item->size->value:""); ?></span></td>
+                                    <td><span><?php echo e($item->price?$item->price:""); ?></span></td>
+                                    <td>
+                                        <a href="<?php echo e(route('admin.product.variant.edit', ['id'=>$item->id])); ?>"
+                                           class="btn btn-icon btn-light btn-hover-primary btn-sm mr-1">
+                                            <i class="fas fa-pen-alt"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                                           onclick="confirmDelete('#delete-variant-<?php echo e($item->id); ?>');return false;">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                        <form method="POST" id="delete-variant-<?php echo e($item->id); ?>"
+                                              action="<?php echo e(route('admin.product.variant.delete', ['id'=>$item->id])); ?>"
+                                              style="display: none;">
+                                            <?php echo csrf_field(); ?>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
             <div class="card mx-4 mt-5">
                 <div class="card-header">
                     <h4>Cài đặt ảnh nhỏ hiển thị</h4>
                 </div>
+                <input type="hidden" value="<?php echo e($product->id); ?>" name="product_id">
                 <div class="card-body">
                     <div class="form-group">
                         <div id="actions" class="row mb-4">
@@ -253,21 +240,23 @@ unset($__errorArgs, $__bag); ?>
                                     <i class="glyphicon glyphicon-plus"></i>
                                     <span>Add files...</span>
                                 </span>
-
-
-
-
-
-
-
-
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                             </div>
 
                             <div class="col-lg-5">
                                 <!-- The global file processing state -->
                                 <span class="fileupload-process">
-                                    <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="opacity: 0;">
-                                        <div class="progress-bar progress-bar-success" style="width: 100%;" data-dz-uploadprogress=""></div>
+                                    <div id="total-progress" class="progress progress-striped active" role="progressbar"
+                                         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="opacity: 0;">
+                                        <div class="progress-bar progress-bar-success" style="width: 100%;"
+                                             data-dz-uploadprogress=""></div>
                                     </div>
                                 </span>
                             </div>
@@ -287,8 +276,10 @@ unset($__errorArgs, $__bag); ?>
                                     </div>
                                     <div>
                                         <p class="size" data-dz-size></p>
-                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        <div class="progress progress-striped active" role="progressbar"
+                                             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;"
+                                                 data-dz-uploadprogress></div>
                                         </div>
                                     </div>
                                 </div>
@@ -310,37 +301,41 @@ unset($__errorArgs, $__bag); ?>
                             <?php if($product->images): ?>
                                 <?php $__currentLoopData = json_decode($product->images); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div id="" class="file-row d-flex justify-content-between item-image-single">
-                                <!-- This is used as the file preview template -->
-                                <div class="">
-                                    <div>
-                                        <span class="preview"><img data-dz-thumbnail="" width="80" height="80" alt="" src="<?php echo e(asset($image)); ?>"/></span>
-                                    </div>
-                                    <div>
-                                        <p class="name" data-dz-name></p>
-                                        <strong class="error text-danger" data-dz-errormessage></strong>
-                                    </div>
-                                    <div>
-                                        <p class="size" data-dz-size></p>
-                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        <!-- This is used as the file preview template -->
+                                        <div class="">
+                                            <div>
+                                                <span class="preview"><img data-dz-thumbnail="" width="80" height="80"
+                                                                           alt="" src="<?php echo e(asset($image)); ?>"/></span>
+                                            </div>
+                                            <div>
+                                                <p class="name" data-dz-name></p>
+                                                <strong class="error text-danger" data-dz-errormessage></strong>
+                                            </div>
+                                            <div>
+                                                <p class="size" data-dz-size></p>
+                                                <div class="progress progress-striped active" role="progressbar"
+                                                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                    <div class="progress-bar progress-bar-success" style="width:0%;"
+                                                         data-dz-uploadprogress></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <button class="btn btn-danger" onclick="deleteImageSingle(this)"
+                                                    data-path="<?php echo e($image); ?>">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                                <span>Delete</span>
+                                            </button>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-
-
-
-
-
-
-
-
-                                    <button class="btn btn-danger" onclick="deleteImageSingle(this)" data-path="<?php echo e($image); ?>">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                        <span>Delete</span>
-                                    </button>
-                                </div>
-                            </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php endif; ?>
                         </div>
@@ -352,7 +347,8 @@ unset($__errorArgs, $__bag); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('scripts'); ?>
     <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
+
+    <script src="<?php echo e(url('/public/plugins/custom/dropzone/dist/min/dropzone.min.js')); ?>"></script>
     <script type="text/javascript">
         $("#colorpicker_variant").spectrum();
         // var url_source = 'http://localhost/diana_authentic_shop/';
@@ -402,6 +398,7 @@ unset($__errorArgs, $__bag); ?>
             // file.previewElement.querySelector(".delete").classList.remove('d-none');
 
             // formData.append('idea_id', dropzone_idea_id);
+            console.log(product_id);
             formData.append('id', product_id);
             formData.append("_token", "<?php echo e(csrf_token()); ?>");
         });
@@ -425,10 +422,10 @@ unset($__errorArgs, $__bag); ?>
         // Setup the buttons for all transfers
         // The "add files" button doesn't need to be setup because the config
         // `clickable` has already been specified.
-        document.querySelector(".start").onclick = function() {
+        document.querySelector(".start").onclick = function () {
             myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
         };
-        document.querySelector(".cancel").onclick = function() {
+        document.querySelector(".cancel").onclick = function () {
             myDropzone.removeAllFiles(true);
         };
 

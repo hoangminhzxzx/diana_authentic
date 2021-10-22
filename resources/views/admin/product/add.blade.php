@@ -50,7 +50,7 @@
             </div>
             <div class="form-group">
                 <lable>Giá sản phẩm</lable>
-                <input type="text" name="price" class="form-control">
+                <input type="text" name="price" class="form-control" value="{{ old('price') }}">
                 @error('price')
                 <small class="text-danger">{{$message}}</small>
                 @enderror
@@ -58,11 +58,14 @@
             <div class="form-group">
                 <lable>Danh mục cha</lable>
                 <select name="category_id" id="" class="form-control">
-                    <option value="0">Choose</option>
+                    <option value="">Choose</option>
                     @foreach($categories as $item)
                     <option value="{{$item->id}}">{{$item->title}}</option>
                     @endforeach
                 </select>
+                @error('category_id')
+                <small class="text-danger">{{$message}}</small>
+                @enderror
             </div>
             <div class="form-group text-center">
                 <input type="submit" class="btn btn-outline-success w-25" value="Add">

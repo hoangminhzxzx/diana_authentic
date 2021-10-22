@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('styles'); ?>
 
 <?php $__env->stopSection(); ?>
@@ -64,7 +63,7 @@ unset($__errorArgs, $__bag); ?>
             </div>
             <div class="form-group">
                 <lable>Giá sản phẩm</lable>
-                <input type="text" name="price" class="form-control">
+                <input type="text" name="price" class="form-control" value="<?php echo e(old('price')); ?>">
                 <?php $__errorArgs = ['price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -79,11 +78,21 @@ unset($__errorArgs, $__bag); ?>
             <div class="form-group">
                 <lable>Danh mục cha</lable>
                 <select name="category_id" id="" class="form-control">
-                    <option value="0">Choose</option>
+                    <option value="">Choose</option>
                     <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option value="<?php echo e($item->id); ?>"><?php echo e($item->title); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
+                <?php $__errorArgs = ['category_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <small class="text-danger"><?php echo e($message); ?></small>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
             <div class="form-group text-center">
                 <input type="submit" class="btn btn-outline-success w-25" value="Add">
