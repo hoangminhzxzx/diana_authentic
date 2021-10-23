@@ -74,6 +74,8 @@
                             </td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php echo e($list_product->render('vendor.pagination.bootstrap-4')); ?>
+
                     </tbody>
                 </table>
             </div>

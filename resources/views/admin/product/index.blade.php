@@ -75,6 +75,7 @@
                             </td>
                         </tr>
                     @endforeach
+                    {{ $list_product->render('vendor.pagination.bootstrap-4') }}
                     </tbody>
                 </table>
             </div>

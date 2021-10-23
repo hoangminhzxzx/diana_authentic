@@ -154,7 +154,7 @@
                         <td><?php echo e($order_master->customer_name); ?></td>
                         <td><?php echo e($order_master->customer_phone); ?></td>
                         <td><?php echo e($order_master->email); ?></td>
-                        <td><b><?php echo e($item->product_title ? $item->product_title : ''); ?></b></td>
+                        <td><a href="<?php echo e(route('admin.product.edit', ['id' => $item->product_id])); ?>" target="_blank"><b><?php echo e($item->product_title ? $item->product_title : ''); ?></b></a></td>
                         <td><?php echo e($item->color); ?> - <?php echo e($item->size); ?></td>
                         <td><img src="<?php echo e($item->product_thumbnail ? url($item->product_thumbnail) : ''); ?>" alt="" class="img-thumbnail" width="120"></td>
                         <td><?php echo e(number_format($item->price, 0, '.', '.')); ?> VND</td>

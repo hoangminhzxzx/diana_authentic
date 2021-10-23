@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Front\OrderDetail;
 use App\Model\Front\OrderMaster;
 use App\Model\Product;
+use App\Model\ProductVariant;
 use App\Model\Statistic;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class OrderController extends Controller
             ->when($filter_status, function (Builder $query, $filter_status) {
                 return $query->where('status', '=', $filter_status);
             })
-            ->get();
+            ->paginate(20);
         $data_response = [];
         $data_response['filter_keyword'] = $filter_keyword;
         $data_response['filter_status'] = $filter_status;
@@ -125,6 +126,19 @@ class OrderController extends Controller
             } else {
                 $order_master->status = config('constant.ORDER_STATUS.ORDER_CANCLE');
                 $order_master->save();
+
+                //Cộng lại qty cho product variant vì order đã hủy vì lý do nào đó
+                $order_details = OrderDetail::query()->where('order_id', '=', $order_id)->get();
+                if ($order_details->count() > 0) {
+                    foreach ($order_details as $order_detail) {
+                        $product_variant = ProductVariant::query()->where('id', '=', $order_detail->product_variant_id)->first();
+                        if ($product_variant) {
+                            $product_variant->qty = $product_variant->qty + $order_detail->qty;
+                            $product_variant->save();
+                        }
+                    }
+                }
+
                 $res['success'] = true;
             }
         }

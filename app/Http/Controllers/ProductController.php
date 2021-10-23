@@ -25,7 +25,7 @@ class ProductController extends Controller
             ->when($filer_status, function (Builder $query, $filer_status) {
                 return $query->where('is_publish', '=', ($filer_status == 'off') ? 0 : 1);
             })
-            ->get();
+            ->paginate(20);
 
         return view('admin.product.index',
             [

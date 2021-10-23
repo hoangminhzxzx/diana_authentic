@@ -48,7 +48,7 @@
 {{--                            </div>--}}
                             <div class="form-group size">
                                 <lable>Số lượng</lable>
-                                <input type="text" name="qty" value="{{ old('qty') }}" class="form-control">
+                                <input type="text" name="qty" value="{{ $variant->qty ? $variant->qty : old('qty') }}" class="form-control">
                                 @error('qty')
                                 <small class="text-danger">{{$message}}</small>
                                 @enderror

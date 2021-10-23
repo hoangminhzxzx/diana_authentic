@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('title'); ?>
     Giỏ hàng
 <?php $__env->stopSection(); ?>
@@ -26,7 +25,7 @@
                 </td>
                 <input type="hidden" id="rowIdItem-<?php echo e($item->id); ?>" value="<?php echo e($item->rowId); ?>">
                 <input type="hidden" id="idItem-<?php echo e($item->id); ?>" value="<?php echo e($item->id); ?>">
-                <td><input type="number" min="1" id="qtyItem-<?php echo e($item->id); ?>" value="<?php echo e($item->qty); ?>" onchange="changeQty(<?php echo e($item->id); ?>,this)"></td>
+                <td><input type="number" min="1" max="<?php echo e($item->options->qty_in_stock); ?>" id="qtyItem-<?php echo e($item->id); ?>" value="<?php echo e($item->qty); ?>" onchange="changeQty(<?php echo e($item->id); ?>,this)"></td>
                 <td id="subTotal-<?php echo e($item->id); ?>"><?php echo e(number_format($item->subtotal, 0, '.', '.')); ?> VND</td>
             </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

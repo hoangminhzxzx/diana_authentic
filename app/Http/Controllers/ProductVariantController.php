@@ -147,7 +147,10 @@ class ProductVariantController extends Controller
         $product_variant->color_id = $color->id;
         $product_variant->size_id = $size->id;
 //        $product_variant->price = $data['price'];
-        $product_variant->qty = $data['qty'];;
+        $product_variant->qty = $data['qty'];
+        if ($data['qty'] > 0) {
+            $product_variant->is_out_stock = 0;
+        }
         $product_variant->save();
         return redirect("admin/product/edit/$product_variant->product_id")->with('status_update_variant', 'Cập nhật thành công');
     }

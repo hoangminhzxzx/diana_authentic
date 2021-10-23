@@ -99,9 +99,16 @@ class ProductController extends Controller
                 'color' => $color->name,
                 'thumbnail' => $product->thumbnail,
                 'slug' => $product->slug,
-                'product_variant_id' => $variantProduct->id
+                'product_variant_id' => $variantProduct->id,
+                'qty_in_stock' => $variantProduct->qty
             ];
-            $addToCart = Cart::add($product->id, $product->title, $data['qty'], $product->price, 0, $options);
+
+            $qty_atc = $data['qty'];
+            if ($variantProduct->qty < $data['qty']) {
+                $qty_atc = $variantProduct->qty;
+            }
+
+            $addToCart = Cart::add($product->id, $product->title, $qty_atc, $product->price, 0, $options);
         }
 
         if ($addToCart) {
@@ -136,14 +143,29 @@ class ProductController extends Controller
     }
 
     public function updateQty(Request $request,$rowId) {
+        $res = ['success' => false];
         $data = $request->input();
+//        dd(Cart::get($rowId)->options->product_variant_id);
+        $product_variant_id = Cart::get($rowId)->options->product_variant_id;
+        $product_variant = ProductVariant::query()->find($product_variant_id);
+        $total_stock = $product_variant->qty;
         if ($data['qty']) {
-            Cart::update($rowId, $data['qty']);
-            $qtyNewItem = Cart::get($rowId)->qty;
-            $priceItem = Cart::get($rowId)->price;
-            $totalCart = Cart::total();
-            return response()->json(['success' => true, 'qtyNewItem' => $qtyNewItem, 'totalCart' => $totalCart, 'priceItem' => $priceItem]);
+//            if ($total_stock < $data['qty']) {
+//                $res['success'] = false;
+//                $res['qty_stock'] = $product_variant->qty;
+//            } else {
+                Cart::update($rowId, $data['qty']);
+                $qtyNewItem = Cart::get($rowId)->qty;
+                $priceItem = Cart::get($rowId)->price;
+                $totalCart = Cart::total();
+                $res['qtyNewItem'] = $qtyNewItem;
+                $res['totalCart'] = $totalCart;
+                $res['priceItem'] = $priceItem;
+                $res['success'] = true;
+//            return response()->json(['success' => true, 'qtyNewItem' => $qtyNewItem, 'totalCart' => $totalCart, 'priceItem' => $priceItem]);
+//            }
         }
+        return response()->json($res);
     }
 
     public function checkOutGet(Request $request) {

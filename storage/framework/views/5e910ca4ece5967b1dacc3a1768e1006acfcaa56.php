@@ -54,7 +54,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                <input type="number" value="1" min="1" name="qty" style="margin-top: 1rem; border: 1px solid #000; border: 1px solid #ccc;">
+                <input type="number" value="1" min="1" max="" name="qty" style="margin-top: 1rem; border: 1px solid #000; border: 1px solid #ccc;">
                 <input type="button" onclick="addToCart(this)" class="btn" value="Thêm vào giỏ hàng" id="" style="width: 100%;">
                 <?php if($product->content): ?>
                 <h3>Chi tiết sản phẩm <i class="fa fa-indent"></i></h3>

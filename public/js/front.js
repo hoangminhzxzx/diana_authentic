@@ -111,6 +111,11 @@ function changeQty(id,e) {
                 // console.log(totalCart);
                 $('#subTotal-' + idItem).text(qtyNewItem * priceItem + ' VND');
                 $('#totalCart').text(totalCart + ' VND');
+            } else {
+                Swal.fire({
+                    text: 'Mặt hàng này chỉ còn ' + res.qty_stock,
+                    icon: "warning",
+                })
             }
         },
         // error: function (xhr, ajaxOptions, thrownError) {

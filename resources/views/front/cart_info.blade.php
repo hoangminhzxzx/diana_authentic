@@ -26,7 +26,7 @@
                 </td>
                 <input type="hidden" id="rowIdItem-{{ $item->id }}" value="{{ $item->rowId }}">
                 <input type="hidden" id="idItem-{{ $item->id }}" value="{{ $item->id }}">
-                <td><input type="number" min="1" id="qtyItem-{{ $item->id }}" value="{{ $item->qty }}" onchange="changeQty({{ $item->id }},this)"></td>
+                <td><input type="number" min="1" max="{{ $item->options->qty_in_stock }}" id="qtyItem-{{ $item->id }}" value="{{ $item->qty }}" onchange="changeQty({{ $item->id }},this)"></td>
                 <td id="subTotal-{{ $item->id }}">{{ number_format($item->subtotal, 0, '.', '.') }} VND</td>
             </tr>
                 @endforeach

@@ -68,7 +68,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <div class="form-group size">
                                 <lable>Số lượng</lable>
-                                <input type="text" name="qty" value="<?php echo e(old('qty')); ?>" class="form-control">
+                                <input type="text" name="qty" value="<?php echo e($variant->qty ? $variant->qty : old('qty')); ?>" class="form-control">
                                 <?php $__errorArgs = ['qty'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
