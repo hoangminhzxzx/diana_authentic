@@ -710,6 +710,7 @@ class ComposerStaticInit9bda30dc54f08ba0e8e96e266324cbe4
         'App\\Model\\ProductOption' => __DIR__ . '/../..' . '/app/Model/ProductOption.php',
         'App\\Model\\ProductVariant' => __DIR__ . '/../..' . '/app/Model/ProductVariant.php',
         'App\\Model\\Role' => __DIR__ . '/../..' . '/app/Model/Role.php',
+        'App\\Model\\Statistic' => __DIR__ . '/../..' . '/app/Model/Statistic.php',
         'App\\Model\\User' => __DIR__ . '/../..' . '/app/Model/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

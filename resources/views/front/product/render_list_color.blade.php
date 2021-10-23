@@ -1,4 +1,5 @@
 <div class="form-group" style="margin-top: .5rem;" id="group_color">
+    @if($colors)
     <label for="">Chọn Màu</label>
     <div style="display: flex;">
         <input type="hidden" id="valueColor" name="color" value="">
@@ -9,4 +10,8 @@
     @error('color')
     <small style="color: indianred;">{{$message}}</small>
     @enderror
+
+    @else
+        <span style="margin-top: 1rem;">Hết hàng</span> <br>
+    @endif
 </div>

@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('styles'); ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
 <?php $__env->stopSection(); ?>
@@ -67,6 +66,20 @@ unset($__errorArgs, $__bag); ?>
 
 
 
+                            <div class="form-group size">
+                                <lable>Số lượng</lable>
+                                <input type="text" name="qty" value="<?php echo e(old('qty')); ?>" class="form-control">
+                                <?php $__errorArgs = ['qty'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <small class="text-danger"><?php echo e($message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-outline-success w-25" value="Save">
                             </div>

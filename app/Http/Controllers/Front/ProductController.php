@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Model\Category;
+use App\Model\Front\AccountClient;
 use App\Model\Product;
 use App\Model\ProductOption;
 use App\Model\ProductVariant;
@@ -47,7 +48,9 @@ class ProductController extends Controller
     public function chooseSize(Request $request) {
         $response = ['success' => false];
         $data = $request->input();
-        $product_variants = ProductVariant::query()->where('product_id', '=', $data['product_id'])->where('size_id', '=', $data['size_id'])->get();
+        $product_variants = ProductVariant::query()->where('product_id', '=', $data['product_id'])->where('size_id', '=', $data['size_id'])
+            ->where('is_out_stock', '=', 0)
+            ->get();
         if ($product_variants) {
             $list_color = [];
             foreach ($product_variants as $product_variant) {
@@ -95,7 +98,8 @@ class ProductController extends Controller
                 'size' => $size->name,
                 'color' => $color->name,
                 'thumbnail' => $product->thumbnail,
-                'slug' => $product->slug
+                'slug' => $product->slug,
+                'product_variant_id' => $variantProduct->id
             ];
             $addToCart = Cart::add($product->id, $product->title, $data['qty'], $product->price, 0, $options);
         }
@@ -142,11 +146,22 @@ class ProductController extends Controller
         }
     }
 
-    public function checkOutGet() {
+    public function checkOutGet(Request $request) {
         $provinces = DB::table('provinces')->get();
+
         $data = [
             'provinces' => $provinces,
         ];
+
+        if ($request->session()->has('client_login')) {
+            $info_account = $request->session()->get('client_login');
+            $account_client = AccountClient::query()->find($info_account['id']);
+            $districts = DB::table('districts')->where('province_id', '=', $account_client->province_id)->get();
+            $wards = DB::table('wards')->where('district_id', '=', $account_client->district_id)->get();
+            $data['account_client'] = $account_client;
+            $data['districts'] = $districts;
+            $data['wards'] = $wards;
+        }
         return view('front.checkout', $data);
     }
 

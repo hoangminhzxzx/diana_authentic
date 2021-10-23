@@ -107,3 +107,4 @@ Route::get('/send-mail', 'MailController@testMail');
 Route::post('/restart-password-client', 'MailController@restartPasswordClient')->name('client.restart.password');
 Route::get('/cap-nhat-mat-khau/{key}/{reset}', 'MailController@updatePasswordNewFromEmail')->name('client.update.password.from.email');
 Route::post('/restore-update-password', 'Front\AccountController@restoreUpdatePassword')->name('client.restore.update.password');
+Route::post('/tai-khoan/cap-nhap', 'Front\AccountController@updateAccountClient')->name('client.update.account');

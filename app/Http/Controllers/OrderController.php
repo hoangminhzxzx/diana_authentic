@@ -7,13 +7,31 @@ use App\Model\Front\OrderDetail;
 use App\Model\Front\OrderMaster;
 use App\Model\Product;
 use App\Model\Statistic;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function list() {
-        $orders = OrderMaster::all();
+    public function list(Request $request) {
+        $filter_keyword = $request->query('filter_keyword');
+        $filter_status = $request->query('filter_status');
+
+        $orders = OrderMaster::query()
+            ->where(function (Builder $query) use ($filter_keyword) {
+                return $query
+                    ->where('id', '=', $filter_keyword)
+                    ->orWhere('customer_name', 'like', '%'.$filter_keyword.'%')
+                    ->orWhere('email', 'like', '%'.$filter_keyword.'%')
+                    ->orWhere('customer_phone', 'like', '%'.$filter_keyword.'%');
+            })
+            ->when($filter_status, function (Builder $query, $filter_status) {
+                return $query->where('status', '=', $filter_status);
+            })
+            ->get();
         $data_response = [];
+        $data_response['filter_keyword'] = $filter_keyword;
+        $data_response['filter_status'] = $filter_status;
+        $data_response['orders'] = [];
         if ($orders->count() > 0) {
             $data_response['orders'] = $orders;
         }

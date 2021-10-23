@@ -287,28 +287,6 @@ class ProductController extends Controller
         dd($request->input());
     }
 
-//    public function detailBanner() {
-//        $products = Product::query()->get();
-//        $product_banner_first = Product::query()->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))->first();
-//        $data_response = [
-//            'products' => $products,
-////            'current_product_banner' =>
-//        ];
-//        if ($products->count() > 0) {
-//            return view('admin.product.config_banners',[
-//                'products' => $products
-//            ]);
-//        }
-//    }
-
-//    public function storeBanner(Request $request) {
-//        $product_id = intval($request->input('product_id'));
-//        $list_product_banners = Product::query()->where('is_hot', '=', 2)->get();
-//        $product = Product::query()->find($product_id);
-//        if ($product) {
-//
-//        }
-//    }
     public function configProduct() {
         $products = Product::all();
         $data_response = [];
@@ -324,27 +302,6 @@ class ProductController extends Controller
         $product_id = intval($data['product_id']);
         $product = Product::query()->find($product_id);
         if ($product) {
-            //check xem đã có bao nhiêu sản phẩm lên hot nhất, trường hợp có 2 sản phẩm r thì phải bỏ đi 1 sản phẩm để cho sản phẩm đang chọn này lên thay thế
-//            if ($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')) {
-//                $product_hot_headers = Product::query()->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))->get();
-//                if ($product_hot_headers->count() == 2) {
-//                    $product_hot_headers[0]->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
-//                    $product_hot_headers[0]->save();
-//                    $res['product_down'] = $product_hot_headers[0];
-//                }
-//
-//                //hiển thị selected
-//                $product->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER');
-//                $product->save();
-//                $res['text'] = 'Selected';
-//            } else {
-//                //hiển thị select
-//                $product->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
-//                $product->save();
-//                $res['text'] = 'Select';
-//            }
-//            $res['success'] = true;
-
             $product_hot_banners = Product::query()->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))->get();
             if ($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')) {
                 //hiển thị selected

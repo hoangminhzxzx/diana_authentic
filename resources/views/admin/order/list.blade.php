@@ -3,6 +3,24 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Danh sách ORDER</h6>
+            <form action="{{ route('admin.order.list') }}" method="GET">
+                <div class="row">
+                    <div class="col-4">
+                        <input type="text" name="filter_keyword" value="{{ $filter_keyword ? $filter_keyword : '' }}" class="form-control" placeholder="Tìm kiếm order">
+                    </div>
+                    <div class="col-4">
+                        <select name="filter_status" id="" class="form-control">
+                            <option value="">Trạng thái</option>
+                            <option value="1" @if($filter_status == 1) selected @endif>Đặt hàng</option>
+                            <option value="2" @if($filter_status == 2) selected @endif>Check order</option>
+                            <option value="3" @if($filter_status == 3) selected @endif>Shipping</option>
+                            <option value="4" @if($filter_status == 4) selected @endif>Complete</option>
+                            <option value="5" @if($filter_status == 5) selected @endif>Cancle</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                </div>
+            </form>
         </div>
         <div class="card-body">
             <div class="table-responsive">

@@ -110,6 +110,7 @@
                     <div class="card-body">
                         <form method="POST" id="form_product_variant">
                             <?php echo csrf_field(); ?>
+                            <input type="hidden" value="<?php echo e($product->id); ?>" name="product_id">
                             <div class="form-group color_hex">
                                 <lable>Color Hex</lable>
                                 <input type="text" name="color_hex" id="colorpicker_variant"
@@ -154,6 +155,20 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
+                            <div class="form-group size">
+                                <lable>Số lượng</lable>
+                                <input type="text" name="qty" value="<?php echo e(old('qty')); ?>" class="form-control">
+                                <?php $__errorArgs = ['qty'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <small class="text-danger"><?php echo e($message); ?></small>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>
                             
                             
                             
@@ -185,7 +200,7 @@ unset($__errorArgs, $__bag); ?>
                                 <th class=""><span>Color hex</span></th>
                                 <th class=""><span>Color name</span></th>
                                 <th class=""><span>Size</span></th>
-                                <th class=""><span>Price</span></th>
+                                <th class=""><span>Số lượng</span></th>
                                 <th><span>Actions</span></th>
                             </tr>
                             </thead>
@@ -203,7 +218,7 @@ unset($__errorArgs, $__bag); ?>
                                     <td><span><?php echo e(($item->color)?$item->color->value:""); ?></span></td>
                                     <td><span><?php echo e(($item->color)?$item->color->name:""); ?></span></td>
                                     <td><span><?php echo e(($item->size)?$item->size->value:""); ?></span></td>
-                                    <td><span><?php echo e($item->price?$item->price:""); ?></span></td>
+                                    <td><span><?php echo e(($item->qty)?$item->qty:""); ?></span></td>
                                     <td>
                                         <a href="<?php echo e(route('admin.product.variant.edit', ['id'=>$item->id])); ?>"
                                            class="btn btn-icon btn-light btn-hover-primary btn-sm mr-1">

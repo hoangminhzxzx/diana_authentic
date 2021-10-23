@@ -111,6 +111,7 @@
                     <div class="card-body">
                         <form method="POST" id="form_product_variant">
                             @csrf
+                            <input type="hidden" value="{{ $product->id }}" name="product_id">
                             <div class="form-group color_hex">
                                 <lable>Color Hex</lable>
                                 <input type="text" name="color_hex" id="colorpicker_variant"
@@ -131,6 +132,13 @@
                                 <lable>Size</lable>
                                 <input type="text" name="size" value="{{ old('size') }}" class="form-control">
                                 @error('size')
+                                <small class="text-danger">{{$message}}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group size">
+                                <lable>Số lượng</lable>
+                                <input type="text" name="qty" value="{{ old('qty') }}" class="form-control">
+                                @error('qty')
                                 <small class="text-danger">{{$message}}</small>
                                 @enderror
                             </div>
@@ -165,7 +173,7 @@
                                 <th class=""><span>Color hex</span></th>
                                 <th class=""><span>Color name</span></th>
                                 <th class=""><span>Size</span></th>
-                                <th class=""><span>Price</span></th>
+                                <th class=""><span>Số lượng</span></th>
                                 <th><span>Actions</span></th>
                             </tr>
                             </thead>
@@ -183,7 +191,7 @@
                                     <td><span>{{ ($item->color)?$item->color->value:"" }}</span></td>
                                     <td><span>{{ ($item->color)?$item->color->name:"" }}</span></td>
                                     <td><span>{{ ($item->size)?$item->size->value:"" }}</span></td>
-                                    <td><span>{{$item->price?$item->price:""}}</span></td>
+                                    <td><span>{{ ($item->qty)?$item->qty:""}}</span></td>
                                     <td>
                                         <a href="{{ route('admin.product.variant.edit', ['id'=>$item->id]) }}"
                                            class="btn btn-icon btn-light btn-hover-primary btn-sm mr-1">

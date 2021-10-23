@@ -11,10 +11,9 @@
     </style>
     <div class="small-container" style="min-height: 400px; margin-top: 80px;">
         <div class="info-client">
-            <form action="" method="post" id="form-pending-order">
+            <form action="{{ route('client.update.account') }}" method="post">
                 @csrf
-                <div class="row">
-
+                <div class="row" style="margin-bottom: 4rem;">
                     <div class="col-3">
                         <h3>Cập nhật thông tin <span>{{ $account_client->name }}</span></h3>
 
@@ -28,7 +27,9 @@
                         <small class="text-danger">{{$message}}</small>
                         @enderror
 
-                        <input type="number" name="phone" placeholder="Số điện thoại" id="phone" value="{{ $account_client->phone }}">
+                        <input type="date" name="birth_day" value="{{ $account_client->date_of_birth }}">
+
+                        <input type="text" name="phone" placeholder="Số điện thoại" id="phone" value="{{ $account_client->phone ? $account_client->phone : old('phone') }}">
                         @error('phone')
                         <small class="text-danger">{{$message}}</small>
                         @enderror
@@ -37,25 +38,36 @@
                             <select name="province" id="province" class="select_checkout" onchange="selectProvince(this)">
                                 <option value="" disabled="disabled" selected="" value="null">Tỉnh/Thành Phố</option>
                                 @foreach($provinces as $province)
-                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                    <option value="{{ $province->id }}" @if($province->id == $account_client->province_id) selected @endif>{{ $province->name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <input type="text" id="province" name="address_street_plus" placeholder="Số nhà, đường, ...">
+                        @if($account_client->district_id)
+                            <select name="district" id="district" class="select_checkout" onchange="selectDistrict(this)">
+                                <option value="" disabled="disabled" selected="" value="null">Quận/Huyện</option>
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}" @if($district->id == $account_client->district_id) selected @endif>{{ $district->name }}</option>
+                                @endforeach
+                            </select>
+                        @endif
 
-                        <textarea name="note" id="note" cols="41" rows="10" placeholder="Ghi chú" style="padding-left: .5rem; padding-top: .5rem">
+                        @if($account_client->ward_id)
+                            <select name="ward" id="ward" class="select_checkout">
+                                <option value="" disabled="disabled" selected="" value="null">Phường/Xã</option>
+                                @foreach($wards as $ward)
+                                    <option value="{{ $ward->id }}" @if($ward->id == $account_client->ward_id) selected @endif>{{ $ward->name }}</option>
+                                @endforeach
+                            </select>
+                        @endif
 
-                        </textarea>
+                        <input type="text" name="address_plus" placeholder="Số nhà, đường, ..." value="{{ $account_client->address_plus }}">
+
+                        <button type="submit" class="btn">Lưu</button>
                     </div>
                     <div class="col-3">
-{{--                        <h3>Thông tin đơn hàng</h3>--}}
-
+{{--                        sau này thêm thắt cái gì ở đây --}}
                     </div>
-
-                </div>
-                <div class="row">
-
                 </div>
             </form>
         </div>

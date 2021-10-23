@@ -1,4 +1,5 @@
 <div class="form-group" style="margin-top: .5rem;" id="group_color">
+    <?php if($colors): ?>
     <label for="">Chọn Màu</label>
     <div style="display: flex;">
         <input type="hidden" id="valueColor" name="color" value="">
@@ -16,5 +17,9 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+
+    <?php else: ?>
+        <span style="margin-top: 1rem;">Hết hàng</span> <br>
+    <?php endif; ?>
 </div>
 <?php /**PATH E:\xamp\htdocs\diana_authentic\resources\views/front/product/render_list_color.blade.php ENDPATH**/ ?>

@@ -10,10 +10,9 @@
     </style>
     <div class="small-container" style="min-height: 400px; margin-top: 80px;">
         <div class="info-client">
-            <form action="" method="post" id="form-pending-order">
+            <form action="<?php echo e(route('client.update.account')); ?>" method="post">
                 <?php echo csrf_field(); ?>
-                <div class="row">
-
+                <div class="row" style="margin-bottom: 4rem;">
                     <div class="col-3">
                         <h3>Cập nhật thông tin <span><?php echo e($account_client->name); ?></span></h3>
 
@@ -41,7 +40,9 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
 
-                        <input type="number" name="phone" placeholder="Số điện thoại" id="phone" value="<?php echo e($account_client->phone); ?>">
+                        <input type="date" name="birth_day" value="<?php echo e($account_client->date_of_birth); ?>">
+
+                        <input type="text" name="phone" placeholder="Số điện thoại" id="phone" value="<?php echo e($account_client->phone ? $account_client->phone : old('phone')); ?>">
                         <?php $__errorArgs = ['phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -57,25 +58,36 @@ unset($__errorArgs, $__bag); ?>
                             <select name="province" id="province" class="select_checkout" onchange="selectProvince(this)">
                                 <option value="" disabled="disabled" selected="" value="null">Tỉnh/Thành Phố</option>
                                 <?php $__currentLoopData = $provinces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $province): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($province->id); ?>"><?php echo e($province->name); ?></option>
+                                    <option value="<?php echo e($province->id); ?>" <?php if($province->id == $account_client->province_id): ?> selected <?php endif; ?>><?php echo e($province->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
 
-                        <input type="text" id="province" name="address_street_plus" placeholder="Số nhà, đường, ...">
+                        <?php if($account_client->district_id): ?>
+                            <select name="district" id="district" class="select_checkout" onchange="selectDistrict(this)">
+                                <option value="" disabled="disabled" selected="" value="null">Quận/Huyện</option>
+                                <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($district->id); ?>" <?php if($district->id == $account_client->district_id): ?> selected <?php endif; ?>><?php echo e($district->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        <?php endif; ?>
 
-                        <textarea name="note" id="note" cols="41" rows="10" placeholder="Ghi chú" style="padding-left: .5rem; padding-top: .5rem">
+                        <?php if($account_client->ward_id): ?>
+                            <select name="ward" id="ward" class="select_checkout">
+                                <option value="" disabled="disabled" selected="" value="null">Phường/Xã</option>
+                                <?php $__currentLoopData = $wards; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ward): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($ward->id); ?>" <?php if($ward->id == $account_client->ward_id): ?> selected <?php endif; ?>><?php echo e($ward->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        <?php endif; ?>
 
-                        </textarea>
+                        <input type="text" name="address_plus" placeholder="Số nhà, đường, ..." value="<?php echo e($account_client->address_plus); ?>">
+
+                        <button type="submit" class="btn">Lưu</button>
                     </div>
                     <div class="col-3">
 
-
                     </div>
-
-                </div>
-                <div class="row">
-
                 </div>
             </form>
         </div>

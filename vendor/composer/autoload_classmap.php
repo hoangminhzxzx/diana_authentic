@@ -47,6 +47,7 @@ return array(
     'App\\Model\\ProductOption' => $baseDir . '/app/Model/ProductOption.php',
     'App\\Model\\ProductVariant' => $baseDir . '/app/Model/ProductVariant.php',
     'App\\Model\\Role' => $baseDir . '/app/Model/Role.php',
+    'App\\Model\\Statistic' => $baseDir . '/app/Model/Statistic.php',
     'App\\Model\\User' => $baseDir . '/app/Model/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

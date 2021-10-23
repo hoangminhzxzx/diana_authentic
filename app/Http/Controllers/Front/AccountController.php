@@ -157,14 +157,66 @@ class AccountController extends Controller
             $data_response = [];
 
             $provinces = DB::table('provinces')->get();
+            $districts = DB::table('districts')->where('province_id', '=', $account_client->province_id)->get();
+            $wards = DB::table('wards')->where('district_id', '=', $account_client->district_id)->get();
             if ($account_client) {
                 $data_response['account_client'] = $account_client;
                 $data_response['provinces'] = $provinces;
+                $data_response['districts'] = $districts;
+                $data_response['wards'] = $wards;
             }
             return view('front.account.detail', $data_response);
         } else {
             //chưa login
             return redirect()->route('client.account.client')->with('status', 'Bạn chưa đăng nhập !');
         }
+     }
+
+     public function updateAccountClient(Request $request) {
+         if ($request->session()->has('client_login')) {
+             //đã login
+//             $request->validate(
+//                 [
+//                     'phone' => 'required|regex:/(0)[0-9]{9}/'
+//                 ],
+//                 [],
+//                 [
+//                     'phone' => 'Phone'
+//                 ]
+//             );
+
+             $info_account = $request->session()->get('client_login');
+             $account_client = AccountClient::query()->find($info_account['id']);
+             $data_response = [];
+
+//             dd($request->input());
+             $data_request = $request->input();
+
+             //xử lý địa chỉ của khách hàng trước khi save vào order master
+             $customer_province = DB::table('provinces')->where('id', '=', intval($data_request['province']))->first()->name;
+             $customer_district = DB::table('districts')->where('id', '=', intval($data_request['district']))->first()->name;
+             $customer_ward = DB::table('wards')->where('id', '=', intval($data_request['ward']))->first()->name;
+             $customer_address_plus = $data_request['address_plus'] ? $data_request['address_plus'] : '';
+
+             $merge_address = trim($customer_address_plus . ' ' . $customer_ward . ', '. $customer_district . ', ' . $customer_province);
+
+             $birth_day = strtotime($data_request['birth_day']);
+             $birth_day_format = date('Y-m-d',$birth_day);
+
+             $account_client->name = $data_request['name'];
+             $account_client->date_of_birth = $birth_day_format;
+             $account_client->phone = $data_request['phone'];
+             $account_client->province_id = $data_request['province'];
+             $account_client->ward_id = $data_request['ward'];
+             $account_client->district_id = $data_request['district'];
+             $account_client->address = $merge_address;
+             $account_client->address_plus = $data_request['address_plus'];
+             $account_client->save();
+
+             return back();
+         } else {
+             //chưa login
+             return redirect()->route('client.account.client')->with('status', 'Bạn chưa đăng nhập !');
+         }
      }
 }

@@ -19,17 +19,17 @@
                     <div class="col-3">
                         <h3>Thông tin khách hàng</h3>
 
-                        <input type="text" name="name" placeholder="Họ tên" id="name">
+                        <input type="text" name="name" placeholder="Họ tên" id="name" value="{{ (isset($account_client) && $account_client) ? $account_client->name : '' }}">
                         @error('name')
                         <small class="text-danger">{{$message}}</small>
                         @enderror
 
-                        <input type="email" name="email" placeholder="Email" id="email">
+                        <input type="email" name="email" placeholder="Email" id="email" value="{{ (isset($account_client) && $account_client) ? $account_client->email : '' }}">
                         @error('email')
                         <small class="text-danger">{{$message}}</small>
                         @enderror
 
-                        <input type="number" name="phone" placeholder="Số điện thoại" id="phone">
+                        <input type="number" name="phone" placeholder="Số điện thoại" id="phone" value="{{ (isset($account_client) && $account_client) ? $account_client->phone : '' }}">
                         @error('phone')
                         <small class="text-danger">{{$message}}</small>
                         @enderror
@@ -43,12 +43,30 @@
                             <select name="province" id="province" class="select_checkout" onchange="selectProvince(this)">
                                 <option value="" disabled="disabled" selected="" value="null">Tỉnh/Thành Phố</option>
                                 @foreach($provinces as $province)
-                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                    <option value="{{ $province->id }}" @if((isset($account_client) && $account_client) && $account_client->province_id == $province->id) selected @endif>{{ $province->name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <input type="text" id="province" name="address_street_plus" placeholder="Số nhà, đường, ...">
+                        @if((isset($account_client) && $account_client) && $account_client->district_id)
+                            <select name="district" id="district" class="select_checkout" onchange="selectDistrict(this)">
+                                <option value="" disabled="disabled" selected="" value="null">Quận/Huyện</option>
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}" @if($district->id == $account_client->district_id) selected @endif>{{ $district->name }}</option>
+                                @endforeach
+                            </select>
+                        @endif
+
+                        @if((isset($account_client) && $account_client) && $account_client->ward_id)
+                            <select name="ward" id="ward" class="select_checkout">
+                                <option value="" disabled="disabled" selected="" value="null">Phường/Xã</option>
+                                @foreach($wards as $ward)
+                                    <option value="{{ $ward->id }}" @if($ward->id == $account_client->ward_id) selected @endif>{{ $ward->name }}</option>
+                                @endforeach
+                            </select>
+                        @endif
+
+                        <input type="text" id="province" name="address_street_plus" placeholder="Số nhà, đường, ..." value="{{ (isset($account_client) && $account_client) ? $account_client->address_plus : '' }}">
 
                         <textarea name="note" id="note" cols="41" rows="10" placeholder="Ghi chú" style="padding-left: .5rem; padding-top: .5rem"></textarea>
                     </div>

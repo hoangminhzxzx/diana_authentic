@@ -10,21 +10,25 @@ use Illuminate\Http\Request;
 class ProductVariantController extends Controller
 {
     public function store(Request $request) {
+//        dd($request->input());
         $res = ['success' => false];
         $request->validate(
             [
                 'color_hex' => 'required',
                 'color_name' => 'required',
                 'size' => 'required',
+                'qty' => 'required'
             ],
             [],
             [
                 'color_hex' => 'Color Hex',
                 'color_name' => 'Coler Name',
                 'size' => 'Size',
+                'qty' => 'Số lượng'
             ]
         );
         $data = $request->input();
+
         $color = ProductOption::query()->where('product_id', '=', $data['product_id'])->where('type', '=', config('constant.PRODUCT_OPTION_TYPE.COLOR'))
             ->where('name', '=', trim($data['color_name']))->where('value', '=', trim($data['color_hex']))->first();
         if (!$color) {
@@ -56,6 +60,7 @@ class ProductVariantController extends Controller
         $product_variant->color_id = $color->id;
         $product_variant->size_id = $size->id;
 //        $product_variant->price = $data['price'];
+        $product_variant->qty = $data['qty'];
         $product_variant->save();
 
         $res['success'] = true;
@@ -142,6 +147,7 @@ class ProductVariantController extends Controller
         $product_variant->color_id = $color->id;
         $product_variant->size_id = $size->id;
 //        $product_variant->price = $data['price'];
+        $product_variant->qty = $data['qty'];;
         $product_variant->save();
         return redirect("admin/product/edit/$product_variant->product_id")->with('status_update_variant', 'Cập nhật thành công');
     }

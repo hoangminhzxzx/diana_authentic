@@ -46,6 +46,13 @@
 {{--                                <small class="text-danger">{{$message}}</small>--}}
 {{--                                @enderror--}}
 {{--                            </div>--}}
+                            <div class="form-group size">
+                                <lable>Số lượng</lable>
+                                <input type="text" name="qty" value="{{ old('qty') }}" class="form-control">
+                                @error('qty')
+                                <small class="text-danger">{{$message}}</small>
+                                @enderror
+                            </div>
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-outline-success w-25" value="Save">
                             </div>

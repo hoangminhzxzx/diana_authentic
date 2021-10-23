@@ -135,6 +135,16 @@ function addProductVariant(e) {
                 row_variant.append(res.html);
             }
         },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status == 422) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Điền đầy đủ thông tin',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }
     });
 }
 

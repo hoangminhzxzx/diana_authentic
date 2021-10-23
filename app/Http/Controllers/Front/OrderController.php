@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Model\Front\OrderDetail;
 use App\Model\Front\OrderMaster;
+use App\Model\ProductVariant;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
@@ -51,9 +52,25 @@ class OrderController extends Controller
                 $order_detail->color = $item->options->color ? $item->options->color : '';
                 $order_detail->size = $item->options->size ? $item->options->size : '';
                 $order_detail->price = $item->qty * $item->price;
+                $order_detail->product_variant_id = $item->options->product_variant_id;
                 $order_detail->save();
+
+                // Trừ số lượng sản phẩn ở trong hệ thống kho
+                $product_variant = ProductVariant::query()->find($order_detail->product_variant_id);
+                if ($product_variant) {
+                    $new_qty = $product_variant->qty - $order_detail->qty;
+                    $product_variant->qty = $new_qty;
+                    if ($new_qty == 0) {
+                        $product_variant->is_out_stock = 1; //nếu số lượng về 0 => trả về trạng thái hết hàng is_out_stock = 1
+                    }
+                    $product_variant->save();
+
+                    //check xem các variant khác còn hàng ko, nếu hết hàng luôn thì sẽ update status mới cho bản ghi product
+
+                }
             }
 //            die();
+
             Cart::destroy();
             $response['success'] = true;
             $response['redirect'] = route('client.thank.you');
