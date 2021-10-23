@@ -2,6 +2,21 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
+            <form action="<?php echo e(route('admin.product.list')); ?>" method="GET">
+                <div class="row">
+                    <div class="col-4">
+                        <input type="text" name="filter_keyword" value="<?php echo e($filter_keyword ? $filter_keyword : ''); ?>" class="form-control" placeholder="Tìm kiếm sản phẩm">
+                    </div>
+                    <div class="col-4">
+                        <select name="filter_status" id="" class="form-control">
+                            <option value="">Trạng thái</option>
+                            <option value="on" <?php if($filter_status == 'on'): ?> selected <?php endif; ?>>Kích hoạt</option>
+                            <option value="off" <?php if($filter_status == 'off'): ?> selected <?php endif; ?>>Vô hiệu hóa</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                </div>
+            </form>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -17,42 +32,47 @@
                     </thead>
                     <tbody>
                     <?php $__currentLoopData = $list_product; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <tr class="row-product-<?php echo e($product->id); ?>">
-                        <td><img src="<?php echo e(url($product->thumbnail)); ?>" alt="" class="img-thumbnail" width="120"></td>
-                        <td><?php echo e($product->title); ?></td>
-                        <td><b><?php echo e($product->category->title); ?></b></td>
-                        <td>
-
-
-
-
-
-
+                        <tr class="row-product-<?php echo e($product->id); ?>">
+                            <td><img src="<?php echo e(url($product->thumbnail)); ?>" alt="" class="img-thumbnail" width="120"></td>
+                            <td><?php echo e($product->title); ?></td>
+                            <td><b><?php echo e($product->category->title); ?></b></td>
+                            <td>
+                            
+                            
+                            
+                            
+                            
+                            
 
                             <!-- switch -->
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" onchange="setPublishProduct(this, <?php echo e($product->id); ?>)" id="set-publish-<?php echo e($product->id); ?>" <?php if($product->is_publish == 1): ?> checked <?php endif; ?>>
-                                <label class="custom-control-label" for="set-publish-<?php echo e($product->id); ?>"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="<?php echo e(route('admin.product.edit', $product->id)); ?>" class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
-                                <i class="fas fa-pen-alt"></i>
-                            </a>
-                            <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm" onclick="deleteProduct(this, <?php echo e($product->id); ?>)">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input"
+                                           onchange="setPublishProduct(this, <?php echo e($product->id); ?>)"
+                                           id="set-publish-<?php echo e($product->id); ?>"
+                                           <?php if($product->is_publish == 1): ?> checked <?php endif; ?>>
+                                    <label class="custom-control-label" for="set-publish-<?php echo e($product->id); ?>"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="<?php echo e(route('admin.product.edit', $product->id)); ?>"
+                                   class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
+                                    <i class="fas fa-pen-alt"></i>
+                                </a>
+                                <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                                   onclick="deleteProduct(this, <?php echo e($product->id); ?>)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
 
-
-
-
-
-
-
-
-
-                        </td>
-                    </tr>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                            </td>
+                        </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>

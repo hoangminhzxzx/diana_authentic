@@ -11,14 +11,27 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductController extends Controller
 {
-    public function index () {
-        $list_product = Product::all();
+    public function index (Request $request) {
+        $title = $request->query('filter_keyword');
+        $filer_status = $request->query('filter_status');
+        $list_product = Product::query()
+            ->when($title, function (Builder $query, $title) {
+                return $query->where('title', 'like', '%' . $title . '%');
+            })
+            ->when($filer_status, function (Builder $query, $filer_status) {
+                return $query->where('is_publish', '=', ($filer_status == 'off') ? 0 : 1);
+            })
+            ->get();
+
         return view('admin.product.index',
             [
-                'list_product' => $list_product
+                'list_product' => $list_product,
+                'filter_keyword' => $title,
+                'filter_status' => $filer_status
             ]
         );
     }
