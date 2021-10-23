@@ -5,12 +5,20 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Model\Category;
 use App\Model\Product;
+use App\Model\Statistic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
     public function index() {
+        $statistic_view = Statistic::query()->first();
+        if (!$statistic_view) {
+            $statistic_view = new Statistic();
+        }
+        $statistic_view->view = $statistic_view->view + 1;
+        $statistic_view->save();
+
 //        Session::forget('client_login');
 //        Session::forget('is_login');
         $list_products = Product::query()->where('is_publish' ,'=', 1)->get();

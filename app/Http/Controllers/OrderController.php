@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Front\OrderDetail;
 use App\Model\Front\OrderMaster;
 use App\Model\Product;
+use App\Model\Statistic;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -28,8 +29,10 @@ class OrderController extends Controller
             foreach ($order_details as $order_detail) {
                 $product_id = $order_detail->product_id;
                 $product = Product::query()->find($product_id);
-                $order_detail->product_title = $product->title;
-                $order_detail->product_thumbnail = $product->thumbnail;
+                if ($product) {
+                    $order_detail->product_title = $product->title;
+                    $order_detail->product_thumbnail = $product->thumbnail;
+                }
             }
             $data_response['order_details'] = $order_details;
             return view('admin.order.detail', $data_response);
@@ -74,12 +77,21 @@ class OrderController extends Controller
             if ($status == $status_current + 1) {
                 $order_master->status = $status;
                 $order_master->save();
+
+                if ($status == config('constant.ORDER_STATUS.ORDER_COMPLETE')) {
+                    //Cộng vào doanh thu
+                    $statistic = Statistic::query()->first(); //dùng 1 bản ghi thôi
+                    if (!$statistic) {
+                        $statistic = new Statistic();
+                    }
+                    $total_price_order = OrderDetail::query()->where('order_id', '=', $order_id)->sum('price');
+                    $statistic->total_sales = $statistic->total_sales + $total_price_order;
+                    $statistic->save();
+                }
                 return true;
             }
 
-            if ($status_current != 5) {
 
-            }
         }
         return false;
     }

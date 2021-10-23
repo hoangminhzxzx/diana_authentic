@@ -155,9 +155,9 @@
                         <td>{{ $order_master->customer_name }}</td>
                         <td>{{ $order_master->customer_phone }}</td>
                         <td>{{ $order_master->email }}</td>
-                        <td><b>{{ $item->product_title }}</b></td>
+                        <td><b>{{ $item->product_title ? $item->product_title : '' }}</b></td>
                         <td>{{ $item->color }} - {{ $item->size }}</td>
-                        <td><img src="{{ url($item->product_thumbnail) }}" alt="" class="img-thumbnail" width="120"></td>
+                        <td><img src="{{ $item->product_thumbnail ? url($item->product_thumbnail) : '' }}" alt="" class="img-thumbnail" width="120"></td>
                         <td>{{ number_format($item->price, 0, '.', '.') }} VND</td>
                     </tr>
                     @endforeach
