@@ -37,6 +37,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @if($orders)
                     @foreach($orders as $order)
                         <tr>
                             <td>#{{ $order->id }}</td>
@@ -78,6 +79,7 @@
                         </tr>
                     @endforeach
                     {{ $orders->render('vendor.pagination.bootstrap-4') }}
+                        @endif
                     </tbody>
                 </table>
             </div>

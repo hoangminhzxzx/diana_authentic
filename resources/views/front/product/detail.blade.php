@@ -37,7 +37,7 @@
                 @if($is_accessory == 0)
                 <input type="hidden" value="" id="valueSize" name="size">
                 <select id="chooseSize" onchange="chooseSize(this)" style="border: 1px solid #ccc;">
-                    <option value="">Chọn size</option>
+                    <option value="nothing">Chọn size</option>
                     @if(isset($sizes) && $sizes)
                     @foreach($sizes as $size)
                         <option value="{{ $size->id }}">{{ $size->name }}</option>
@@ -48,7 +48,7 @@
                 @error('size')
                 <small style="color: indianred;">{{$message}}</small>
                 @enderror
-                <input type="number" value="1" min="1" max="" name="qty" style="margin-top: 1rem; border: 1px solid #000; border: 1px solid #ccc;">
+                <input type="number" value="1" min="1" max="" name="qty" style="margin-top: 1rem; border: 1px solid #000; border: 1px solid #ccc; display: none;">
                 <input type="button" onclick="addToCart(this)" class="btn" value="Thêm vào giỏ hàng" id="" style="width: 100%;">
                 @if($product->content)
                 <h3>Chi tiết sản phẩm <i class="fa fa-indent"></i></h3>

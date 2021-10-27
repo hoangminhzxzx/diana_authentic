@@ -24,15 +24,31 @@ class ProductController extends Controller
             'product' => $product,
             'is_accessory' => $is_accessory
         ];
+
         if ($product) {
             $productVariants = ProductVariant::query()->where('product_id', '=', $product->id)->get();
+            $colorIds = ProductVariant::query()->where('product_id', '=', $product->id)->pluck('color_id')->toArray();
+            $sizeIds = ProductVariant::query()->where('product_id', '=', $product->id)->pluck('size_id')->toArray();
+
+            $colorIds = array_unique($colorIds);
+            $sizeIds = array_unique($sizeIds);
+
             $list_variants = [];
+            $list_options = [];
             if (count($productVariants) > 0 && $productVariants) {
-                foreach ($productVariants as $productVariant) {
+                foreach ($productVariants as $k=>$productVariant) {
+//                    foreach ($sizeIds as $sizeId) {
+//                        if ($sizeId == $productVariant->size->id) {
+//                            $list_options[$sizeId]['name'] = $productVariant->size->name;
+//                            $list_options[$sizeId]['colors'][] = $productVariant->color->id;
+//                        }
+//                    }
                     $list_variants['sizes'][] = $productVariant->size;
                 }
                 $data_response['sizes'] = array_unique($list_variants['sizes']);
+//                $data_response['list_options'] = $list_options;
             }
+//            dd($list_options);
 
             $category_slug = Category::query()->where('id', '=', $product->category_id)->first()->slug;
             $data_response['category_slug'] = $category_slug;
@@ -148,7 +164,7 @@ class ProductController extends Controller
 //        dd(Cart::get($rowId)->options->product_variant_id);
         $product_variant_id = Cart::get($rowId)->options->product_variant_id;
         $product_variant = ProductVariant::query()->find($product_variant_id);
-        $total_stock = $product_variant->qty;
+//        $total_stock = $product_variant->qty;
         if ($data['qty']) {
 //            if ($total_stock < $data['qty']) {
 //                $res['success'] = false;
@@ -165,6 +181,9 @@ class ProductController extends Controller
 //            return response()->json(['success' => true, 'qtyNewItem' => $qtyNewItem, 'totalCart' => $totalCart, 'priceItem' => $priceItem]);
 //            }
         }
+
+        $total_item_cart = Cart::count();
+        $res['total_item_cart'] = $total_item_cart;
         return response()->json($res);
     }
 

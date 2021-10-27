@@ -17,7 +17,7 @@
                     <div class="cart-info">
                         <a href="<?php echo e(route('client.product.detail', $item->options->slug)); ?>"><img src="<?php echo e(url($item->options->thumbnail)); ?>" alt=""></a>
                         <div>
-                            <p><?php echo e($item->name); ?></p>
+                            <p><?php echo e($item->name); ?> <span class="" style="font-size: .7rem;">(size <?php echo e($item->options->size); ?>, màu <?php echo e($item->options->color); ?>)</span></p>
                             <small>Giá: <?php echo e($item->price); ?></small>
                             <a href="#" onclick="removeItemCart(this)" data-rowId="<?php echo e($item->rowId); ?>">Xóa</a>
                         </div>
@@ -25,7 +25,7 @@
                 </td>
                 <input type="hidden" id="rowIdItem-<?php echo e($item->id); ?>" value="<?php echo e($item->rowId); ?>">
                 <input type="hidden" id="idItem-<?php echo e($item->id); ?>" value="<?php echo e($item->id); ?>">
-                <td><input type="number" min="1" max="<?php echo e($item->options->qty_in_stock); ?>" id="qtyItem-<?php echo e($item->id); ?>" value="<?php echo e($item->qty); ?>" onchange="changeQty(<?php echo e($item->id); ?>,this)"></td>
+                <td><input type="number" min="1" max="<?php echo e($item->options->qty_in_stock); ?>" id="qtyItem-<?php echo e($item->id); ?>" value="<?php echo e($item->qty); ?>" onchange="changeQty(<?php echo e($item->id); ?>,this)" style="width: 50px;"></td>
                 <td id="subTotal-<?php echo e($item->id); ?>"><?php echo e(number_format($item->subtotal, 0, '.', '.')); ?> VND</td>
             </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

@@ -36,7 +36,7 @@
                 <?php if($is_accessory == 0): ?>
                 <input type="hidden" value="" id="valueSize" name="size">
                 <select id="chooseSize" onchange="chooseSize(this)" style="border: 1px solid #ccc;">
-                    <option value="">Chọn size</option>
+                    <option value="nothing">Chọn size</option>
                     <?php if(isset($sizes) && $sizes): ?>
                     <?php $__currentLoopData = $sizes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $size): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($size->id); ?>"><?php echo e($size->name); ?></option>
@@ -54,7 +54,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                <input type="number" value="1" min="1" max="" name="qty" style="margin-top: 1rem; border: 1px solid #000; border: 1px solid #ccc;">
+                <input type="number" value="1" min="1" max="" name="qty" style="margin-top: 1rem; border: 1px solid #000; border: 1px solid #ccc; display: none;">
                 <input type="button" onclick="addToCart(this)" class="btn" value="Thêm vào giỏ hàng" id="" style="width: 100%;">
                 <?php if($product->content): ?>
                 <h3>Chi tiết sản phẩm <i class="fa fa-indent"></i></h3>

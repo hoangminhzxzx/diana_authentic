@@ -40,6 +40,9 @@
                                     <a href="<?php echo e(route('client.account.detail')); ?>" class="">Hồ sơ</a>
                                 </li>
                                 <li class="item-single-menu">
+                                    <a href="<?php echo e(route('client.account.changPassword')); ?>" class="">Đổi mật khẩu</a>
+                                </li>
+                                <li class="item-single-menu">
                                     <a href="#" class="" id="btn_logout">Đăng xuất</a>
                                 </li>
                             </ul>

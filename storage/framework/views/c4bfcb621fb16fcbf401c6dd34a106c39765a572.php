@@ -36,6 +36,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php if($orders): ?>
                     <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td>#<?php echo e($order->id); ?></td>
@@ -78,6 +79,7 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <?php echo e($orders->render('vendor.pagination.bootstrap-4')); ?>
 
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

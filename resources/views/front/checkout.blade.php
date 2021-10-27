@@ -70,7 +70,7 @@
 
                         <textarea name="note" id="note" cols="41" rows="10" placeholder="Ghi chú" style="padding-left: .5rem; padding-top: .5rem"></textarea>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3 bill-infor">
                         <h3>Thông tin đơn hàng</h3>
                         <div class="total-price">
                             <table style="font-size: 13px;">
@@ -98,7 +98,7 @@
                 </div>
                 <div class="row">
 {{--                    <input type="submit" class="btn" value="Đặt hàng" style="width: 30%; ">--}}
-                    <input type="button" onclick="orderSubmit(this)" class="btn" value="Đặt hàng" style="width: 30%; ">
+                    <input type="button" onclick="orderSubmit(this)" class="btn-checkout-order" value="Đặt hàng" >
                 </div>
             </form>
         </div>

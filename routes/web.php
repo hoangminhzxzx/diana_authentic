@@ -102,6 +102,7 @@ Route::post('/dang-ky-tai-khoan', 'Front\AccountController@register')->name('cli
 Route::post('/dang-nhap-tai-khoan', 'Front\AccountController@login')->name('client.account.client.login');
 Route::post('/dang-xuat', 'Front\AccountController@logout')->name('client.account.client.logout');
 Route::get('/khoi-phuc-mat-khau', 'Front\AccountController@restorePassword')->name('client.restore.password');
+Route::get('/doi-mat-khau', 'Front\AccountController@changePassword')->name('client.account.changPassword');
 
 Route::get('/send-mail', 'MailController@testMail');
 Route::post('/restart-password-client', 'MailController@restartPasswordClient')->name('client.restart.password');

@@ -139,7 +139,9 @@ class AccountController extends Controller
                 $request->session()->put([
                     'client_login' => [
                         'username' => $account_client->username,
-                        'is_login' => true
+                        'email' => $account_client->email,
+                        'id' => $account_client->id,
+                        'is_login' => true,
                     ]
                 ]);
                 $res['success'] = true;
@@ -214,6 +216,20 @@ class AccountController extends Controller
              $account_client->save();
 
              return back();
+         } else {
+             //chưa login
+             return redirect()->route('client.account.client')->with('status', 'Bạn chưa đăng nhập !');
+         }
+     }
+
+     public function changePassword(Request $request) {
+         if ($request->session()->has('client_login')) {
+             $info_account = $request->session()->get('client_login');
+             $account_client = AccountClient::query()->find($info_account['id']);
+
+             $data_response = [];
+             $data_response['account_client'] = $account_client;
+             return view('front.account.change_password', $data_response);
          } else {
              //chưa login
              return redirect()->route('client.account.client')->with('status', 'Bạn chưa đăng nhập !');

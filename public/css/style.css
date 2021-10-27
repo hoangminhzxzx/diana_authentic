@@ -69,7 +69,7 @@ p{
 }
 .header{
     background: radial-gradient(#fff, #ffd6d6);
-    margin-bottom: 2rem;
+    /*margin-bottom: 2rem;*/
 }
 .header .row{
     margin-top: 70px;
@@ -284,6 +284,45 @@ ul{
         display: block;
         cursor: pointer;
     }
+    #sub_menu {
+        left: 20%;
+        top: -100px !important;
+        width: 60%;
+        background-color: #fec8b5 !important;
+        min-width: unset !important;
+    }
+    .custom-pagination {
+        display: flex;
+        top: unset;
+        bottom: 0%;
+        background: unset;
+        margin-left: 2rem;
+    }
+    .wp-list-product {
+        position: relative;
+    }
+    #MenuItems {
+        z-index: 999;
+    }
+}
+
+@media only screen and (max-width: 460px) {
+    #sub_menu {
+        left: 15%;
+        top: -100px !important;
+        width: 60%;
+        background-color: #fec8b5 !important;
+        min-width: unset !important;
+    }
+}
+@media only screen and (max-width: 400px) {
+    #sub_menu {
+        left: 0%;
+        top: -100px !important;
+        width: 60%;
+        background-color: #fec8b5 !important;
+        min-width: unset !important;
+    }
 }
 
 /* ----------------all products--------------------- */
@@ -377,11 +416,32 @@ input:focus{
     .cart-info p{
         display: none;
     }
+    .bill-infor {
+        margin-top: 2rem;
+    }
+    .btn-checkout-order {
+        width: 100% !important;
+    }
+    #sub_menu {
+        left: 20%;
+        top: -100px !important;
+        width: 60%;
+        background-color: #fec8b5 !important;
+        min-width: unset !important;
+    }
+    /*.custom-pagination {*/
+    /*    display: flex;*/
+    /*    top: unset;*/
+    /*    bottom: -145%;*/
+    /*    background: unset;*/
+    /*    margin-left: 2rem;*/
+    /*}*/
 }
 
 /* --------cart-item------------ */
 .cart-page{
     margin: 80px auto;
+    margin-bottom: 0px;
 }
 table{
     width: 100%;
@@ -477,10 +537,26 @@ form input{
     border: 1px solid #ccc;
 }
 form .btn{
-    width: 100%;
+    /*width: 100%;*/
     border: none;
     cursor: pointer;
     margin: 10px 0;
+}
+.btn-checkout-order {
+    width: 30%;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+    display: inline-block;
+    background: #ff523b;
+    padding: 8px 30px;
+    color: #fff;
+    margin: 30px 0;
+    border-radius: 30px;
+    transition: background .5s;
+}
+.btn-checkout-order:hover{
+    background: #563434;
 }
 form .btn:focus{
     outline: none;
@@ -559,7 +635,7 @@ form a{
     /*display: none;*/
     position: absolute;
     background-color: #f9e0e0;
-    min-width: 160px;
+    min-width: 160%;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 5px 0px;
     z-index: 1;

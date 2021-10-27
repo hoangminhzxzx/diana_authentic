@@ -18,7 +18,7 @@
                     <div class="cart-info">
                         <a href="{{ route('client.product.detail', $item->options->slug) }}"><img src="{{ url($item->options->thumbnail) }}" alt=""></a>
                         <div>
-                            <p>{{ $item->name }}</p>
+                            <p>{{ $item->name }} <span class="" style="font-size: .7rem;">(size {{ $item->options->size }}, màu {{ $item->options->color }})</span></p>
                             <small>Giá: {{ $item->price }}</small>
                             <a href="#" onclick="removeItemCart(this)" data-rowId="{{ $item->rowId }}">Xóa</a>
                         </div>
@@ -26,7 +26,7 @@
                 </td>
                 <input type="hidden" id="rowIdItem-{{ $item->id }}" value="{{ $item->rowId }}">
                 <input type="hidden" id="idItem-{{ $item->id }}" value="{{ $item->id }}">
-                <td><input type="number" min="1" max="{{ $item->options->qty_in_stock }}" id="qtyItem-{{ $item->id }}" value="{{ $item->qty }}" onchange="changeQty({{ $item->id }},this)"></td>
+                <td><input type="number" min="1" max="{{ $item->options->qty_in_stock }}" id="qtyItem-{{ $item->id }}" value="{{ $item->qty }}" onchange="changeQty({{ $item->id }},this)" style="width: 50px;"></td>
                 <td id="subTotal-{{ $item->id }}">{{ number_format($item->subtotal, 0, '.', '.') }} VND</td>
             </tr>
                 @endforeach

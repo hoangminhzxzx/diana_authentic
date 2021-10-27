@@ -111,6 +111,8 @@ function changeQty(id,e) {
                 // console.log(totalCart);
                 $('#subTotal-' + idItem).text(qtyNewItem * priceItem + ' VND');
                 $('#totalCart').text(totalCart + ' VND');
+
+                $(".count_item_cart").text(res.total_item_cart);
             } else {
                 Swal.fire({
                     text: 'Mặt hàng này chỉ còn ' + res.qty_stock,
@@ -151,20 +153,23 @@ function chooseSize(e) {
     if (group_color) {
         group_color.remove();
     }
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: url_source+'/choose-size',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        success: function (res) {
-            if (res.success) {
-                $(e).after(res.html);
-            }
-        },
-    });
+
+    if (size_id != 'nothing') {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: url_source+'/choose-size',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (res) {
+                if (res.success) {
+                    $(e).after(res.html);
+                }
+            },
+        });
+    }
 }
 
 function chooseColor(e) {
@@ -187,7 +192,7 @@ function chooseColor(e) {
         valueColor.value = null;
     }
     // $("input#valueColor").value(data_color);
-    console.log(valueColor);
+    // console.log(valueColor);
 
     //active icon color
 }
@@ -201,7 +206,11 @@ function addToCart(e) {
     let checkRequired = true;
     if (product_type == 0) { //kiểu phụ kiện
         if (!size_id || !color_id || !qty) {
-            alert('Vui lòng kiểm tra lại size, màu, số lượng');
+            // alert('Vui lòng kiểm tra lại size, màu, số lượng');
+            Swal.fire({
+                text: 'Vui lòng kiểm tra lại size, màu, số lượng',
+                icon: "warning",
+            })
             checkRequired = false;
         }
         console.log('size_id: ' + size_id);
@@ -250,26 +259,32 @@ function removeItemCart(e) {
     let data = {
         rowId: rowId
     };
-    if (confirm('Bạn muốn xóa sản phẩm này khỏi giỏ hàng ?')) {
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: url_source+'/product/remove-to-cart',
-            type: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function (res) {
-                if (res.success) {
-                    let eleParent = $(e).closest('.item-cart-single');
-                    eleParent.remove();
-                    if (res.redirect) {
-                        window.location.href = res.redirect;
+    Swal.fire({
+        title: "Bạn muốn xóa sản phẩm này khỏi giỏ hàng ?",
+        icon: "warning",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url_source+'/product/remove-to-cart',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        let eleParent = $(e).closest('.item-cart-single');
+                        eleParent.remove();
+                        if (res.redirect) {
+                            window.location.href = res.redirect;
+                        }
                     }
-                }
-            },
-        });
-    }
+                },
+            });
+        }
+    });
 }
 
 function selectProvince(e) {
@@ -496,15 +511,39 @@ $("#btnLogin").click(function () {
 
 function showSubMenu(e) {
     $("ul#sub_menu").toggleClass('d-none');
-    let widthScreen = window.screen.width;
-    if (widthScreen <= 800) {
-        $("ul#sub_menu").css({
-            'left' : '66%',
-            'top' : '-60px',
-            'width' : '21%',
-            'background-color' : '#fec8b5'
-        });
-    }
+    // let widthScreen = window.screen.width;
+    // if (widthScreen <= 800) {
+    //     $("ul#sub_menu").css({
+    //         'left' : '20%',
+    //         'top' : '-100px',
+    //         'width' : '60%',
+    //         'background-color' : '#fec8b5'
+    //     });
+    // }
+    // if (widthScreen <= 600) {
+    //     $("ul#sub_menu").css({
+    //         'left' : '20%',
+    //         'top' : '-100px',
+    //         'width' : '60%',
+    //         'background-color' : '#fec8b5'
+    //     });
+    // }
+    // if (widthScreen <= 460) {
+    //     $("ul#sub_menu").css({
+    //         'left' : '15%',
+    //         'top' : '-100px',
+    //         'width' : '60%',
+    //         'background-color' : '#fec8b5'
+    //     });
+    // }
+    // if (widthScreen <= 400) {
+    //     $("ul#sub_menu").css({
+    //         'left' : '0%',
+    //         'top' : '-100px',
+    //         'width' : '60%',
+    //         'background-color' : '#fec8b5'
+    //     });
+    // }
 }
 $("#btn_logout").click(function () {
     Swal.fire({

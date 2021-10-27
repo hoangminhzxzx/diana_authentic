@@ -3,7 +3,7 @@
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-    <div class="small-container">
+    <div class="small-container wp-list-product">
         <div class="row row-2" style="padding-left: 10px;">
             <h2>Áo của Diana Authentic</h2>
             <form action="<?php echo e(route('client.category.list.product', ['slug' => $slug])); ?>" id="formFilterProduct">

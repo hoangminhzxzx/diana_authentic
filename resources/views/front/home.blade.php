@@ -39,7 +39,7 @@
 {{--    </div>--}}
 
     <!-- hot products -->
-    <div class="small-container">
+    <div class="small-container" style="margin-top: 2rem;">
         <h2 class="title">Sản phẩm hot</h2>
         <div class="row" style="justify-content: unset;">
             @if (isset($list_products_hot) && $list_products_hot)
