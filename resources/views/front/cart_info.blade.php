@@ -5,13 +5,14 @@
 @section('content')
 {{--    {{ dd(Cart::content()) }}--}}
     <div class="small-container cart-page">
-        <table>
+        @if(Cart::count() > 0)
+        <table class="table-cart-info">
             <tr>
                 <th>Sản phẩm</th>
-                <th>Số lượng</th>
+                <th class="column-item-dia">Số lượng</th>
                 <th>Giá tiền</th>
             </tr>
-            @if(Cart::count() > 0)
+{{--            @if(Cart::count() > 0)--}}
                 @foreach(Cart::content() as $item)
             <tr class="item-cart-single">
                 <td>
@@ -19,7 +20,7 @@
                         <a href="{{ route('client.product.detail', $item->options->slug) }}"><img src="{{ url($item->options->thumbnail) }}" alt=""></a>
                         <div>
                             <p>{{ $item->name }} <span class="" style="font-size: .7rem;">(size {{ $item->options->size }}, màu {{ $item->options->color }})</span></p>
-                            <small>Giá: {{ $item->price }}</small>
+                            <small>Giá: {{ number_format($item->price, 0, '.', '.') }}</small>
                             <a href="#" onclick="removeItemCart(this)" data-rowId="{{ $item->rowId }}">Xóa</a>
                         </div>
                     </div>
@@ -30,7 +31,7 @@
                 <td id="subTotal-{{ $item->id }}">{{ number_format($item->subtotal, 0, '.', '.') }} VND</td>
             </tr>
                 @endforeach
-            @endif
+{{--            @endif--}}
         </table>
 
         <div class="total-price">
@@ -41,6 +42,13 @@
                 </tr>
             </table>
         </div>
+        @else
+            <div style="text-align: center;" >
+                <img src="{{ asset('/public/no-item-in-cart.png') }}" alt="">
+                <p style="text-align: center;">Chưa có sản phẩm nào trong giỏ hàng</p>
+                <a href="{{ route('homeFront') }}" class="btn">Tiếp tục xem hàng !!!</a>
+            </div>
+        @endif
     </div>
 @if(Cart::count() > 0)
     <div style="text-align: center;">

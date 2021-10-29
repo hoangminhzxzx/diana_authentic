@@ -39,7 +39,7 @@
                     <?php if($orders): ?>
                     <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td>#<?php echo e($order->id); ?></td>
+                            <td><?php echo e($order->order_code); ?></td>
                             <td><b><?php echo e($order->customer_name); ?></b></td>
                             <td><?php echo e($order->customer_phone); ?></td>
                             <td><?php echo e($order->email); ?></td>

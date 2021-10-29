@@ -49,16 +49,6 @@
                         <h4 class="product-title text-center">{{ $item->title }}</h4>
                         <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
                     </div>
-                    <div class="col-4">
-                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
-                        <h4 class="product-title text-center">{{ $item->title }}</h4>
-                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
-                    </div>
-                    <div class="col-4">
-                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
-                        <h4 class="product-title text-center">{{ $item->title }}</h4>
-                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
-                    </div>
             @endforeach
             @endif
         </div>
@@ -70,16 +60,6 @@
         <div class="row" style="justify-content: unset;">
             @if (isset($list_products_hot) && $list_products_hot)
                 @foreach($list_products_hot as $item)
-                    <div class="col-4">
-                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
-                        <h4 class="product-title text-center">{{ $item->title }}</h4>
-                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
-                    </div>
-                    <div class="col-4">
-                        <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
-                        <h4 class="product-title text-center">{{ $item->title }}</h4>
-                        <p>{{ number_format($item->price, 0, '.', '.') }}đ</p>
-                    </div>
                     <div class="col-4">
                         <a href="{{ route('client.product.detail', ['slug'=>$item->slug]) }}"><img src="{{url($item->thumbnail)}}" style="max-width: 200px;"></a>
                         <h4 class="product-title text-center">{{ $item->title }}</h4>

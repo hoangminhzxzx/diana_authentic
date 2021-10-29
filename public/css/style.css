@@ -63,6 +63,7 @@ p{
     margin: 30px 0;
     border-radius: 30px;
     transition: background .5s;
+    cursor: pointer;
 }
 .btn:hover{
     background: #563434;
@@ -667,4 +668,8 @@ form a{
 }
 .page-link {
     padding: 0px 8px;
+}
+
+.column-item-dia {
+    width: 33%;
 }

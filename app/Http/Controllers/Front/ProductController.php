@@ -57,6 +57,9 @@ class ProductController extends Controller
             $data_response['list_product_more'] = $list_product_more;
 //        dd($data_response);
 //                Cart::destroy();
+
+            $product->total_view = $product->total_view + 1;
+            $product->save();
             return view('front.product.detail', $data_response);
         }
     }
@@ -149,11 +152,15 @@ class ProductController extends Controller
             Cart::remove($rowId);
             $response['success'] = true;
         }
+
+        $response['count_item'] = Cart::count();
         if (Cart::count() > 0) {
 //            return back();
             return response()->json($response);
         } else {
-            $response['redirect'] = route('homeFront');
+//            $response['redirect'] = route('homeFront');
+            $response['cart_empty'] = true;
+            $response['html'] = view('front.ajax_render.cart_empty')->toHtml();
             return response()->json($response);
         }
     }
@@ -174,9 +181,11 @@ class ProductController extends Controller
                 $qtyNewItem = Cart::get($rowId)->qty;
                 $priceItem = Cart::get($rowId)->price;
                 $totalCart = Cart::total();
-                $res['qtyNewItem'] = $qtyNewItem;
+//                $res['qtyNewItem'] = $qtyNewItem;
+//                $res['priceItem'] = $priceItem;
+                $res['subTotalNew'] = number_format($qtyNewItem * $priceItem, 0, '.', '.');
+
                 $res['totalCart'] = $totalCart;
-                $res['priceItem'] = $priceItem;
                 $res['success'] = true;
 //            return response()->json(['success' => true, 'qtyNewItem' => $qtyNewItem, 'totalCart' => $totalCart, 'priceItem' => $priceItem]);
 //            }

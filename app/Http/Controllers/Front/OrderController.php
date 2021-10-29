@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Model\Front\OrderDetail;
 use App\Model\Front\OrderMaster;
+use App\Model\Product;
 use App\Model\ProductVariant;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -33,13 +34,17 @@ class OrderController extends Controller
 
             //đã chọn đủ trường, send order thôi nào !
             $order_master = new OrderMaster();
+            $order_master->order_code = $this->generateCode();
             $order_master->customer_name = $data['name'];
             $order_master->customer_phone = $data['phone'];
             $order_master->address = $merge_address;
             $order_master->email = $data['email'];
             $order_master->note = (isset($data['note']) && $data['note']) ? $data['note'] : '';
             $order_master->status = 1; //status 1 : đặt hàng. 2 : hoàn thành, 3 : hủy
-            $order_master->total_price = intval(Cart::total()) * 1000;
+
+            $total_price = intval(str_replace('.', '', Cart::total()));
+            $order_master->total_price = $total_price;
+
             $order_master->save();
 
             $data_items = Cart::content();
@@ -55,6 +60,13 @@ class OrderController extends Controller
                 $order_detail->product_variant_id = $item->options->product_variant_id;
                 $order_detail->save();
 
+                //update product lên best seller - cái này là minh làm láu cá xíu
+                $product = Product::query()->find($order_detail->product_id);
+                if ($product) {
+                    $product->is_best_sell = 1;
+                    $product->save();
+                }
+
                 // Trừ số lượng sản phẩn ở trong hệ thống kho
                 $product_variant = ProductVariant::query()->find($order_detail->product_variant_id);
                 if ($product_variant) {
@@ -64,9 +76,6 @@ class OrderController extends Controller
                         $product_variant->is_out_stock = 1; //nếu số lượng về 0 => trả về trạng thái hết hàng is_out_stock = 1
                     }
                     $product_variant->save();
-
-                    //check xem các variant khác còn hàng ko, nếu hết hàng luôn thì sẽ update status mới cho bản ghi product
-
                 }
             }
 //            die();
@@ -106,4 +115,32 @@ class OrderController extends Controller
     public function thankYou() {
         return view('front.thank');
     }
+
+    public function generateCode() {
+        $str = $this->generateRandomString(6);
+        $order_code = '#DA' . $str;
+
+//        $model = new BaseModel('product');
+//        $product = $model->where('code', $codeProduct)->get()->getRow();
+//        if (!empty($product)) {
+//            $codeProduct = $this->generateCode();
+//        }
+
+        $order_master = OrderMaster::query()->where('order_code', '=', $order_code)->first();
+        if ($order_master) {
+            $order_code = $this->generateCode();
+        }
+        return $order_code;
+    }
+
+    protected function generateRandomString($length = 5) {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
 }

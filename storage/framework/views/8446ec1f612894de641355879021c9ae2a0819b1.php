@@ -4,13 +4,14 @@
 <?php $__env->startSection('content'); ?>
 
     <div class="small-container cart-page">
-        <table>
+        <?php if(Cart::count() > 0): ?>
+        <table class="table-cart-info">
             <tr>
                 <th>Sản phẩm</th>
-                <th>Số lượng</th>
+                <th class="column-item-dia">Số lượng</th>
                 <th>Giá tiền</th>
             </tr>
-            <?php if(Cart::count() > 0): ?>
+
                 <?php $__currentLoopData = Cart::content(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr class="item-cart-single">
                 <td>
@@ -18,7 +19,7 @@
                         <a href="<?php echo e(route('client.product.detail', $item->options->slug)); ?>"><img src="<?php echo e(url($item->options->thumbnail)); ?>" alt=""></a>
                         <div>
                             <p><?php echo e($item->name); ?> <span class="" style="font-size: .7rem;">(size <?php echo e($item->options->size); ?>, màu <?php echo e($item->options->color); ?>)</span></p>
-                            <small>Giá: <?php echo e($item->price); ?></small>
+                            <small>Giá: <?php echo e(number_format($item->price, 0, '.', '.')); ?></small>
                             <a href="#" onclick="removeItemCart(this)" data-rowId="<?php echo e($item->rowId); ?>">Xóa</a>
                         </div>
                     </div>
@@ -29,7 +30,7 @@
                 <td id="subTotal-<?php echo e($item->id); ?>"><?php echo e(number_format($item->subtotal, 0, '.', '.')); ?> VND</td>
             </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <?php endif; ?>
+
         </table>
 
         <div class="total-price">
@@ -40,6 +41,13 @@
                 </tr>
             </table>
         </div>
+        <?php else: ?>
+            <div style="text-align: center;" >
+                <img src="<?php echo e(asset('/public/no-item-in-cart.png')); ?>" alt="">
+                <p style="text-align: center;">Chưa có sản phẩm nào trong giỏ hàng</p>
+                <a href="<?php echo e(route('homeFront')); ?>" class="btn">Tiếp tục xem hàng !!!</a>
+            </div>
+        <?php endif; ?>
     </div>
 <?php if(Cart::count() > 0): ?>
     <div style="text-align: center;">

@@ -18,6 +18,22 @@ class ProductController extends Controller
     public function index (Request $request) {
         $title = $request->query('filter_keyword');
         $filer_status = $request->query('filter_status');
+        $filter_category = intval($request->query('filter_category'));
+
+        $list_category = [];
+        if ($filter_category) {
+            //check xem còn category nào liên quan đén category muốn filter ko, nếu có thì render hết ra
+            $category = Category::query()->find($filter_category);
+            if ($category) {
+                $list_category[] = $filter_category;
+                if ($category->childs->count() > 0) {
+                    foreach ($category->childs as $child) {
+                        $list_category[] = $child->id;
+                    }
+                }
+            }
+        }
+
         $list_product = Product::query()
             ->when($title, function (Builder $query, $title) {
                 return $query->where('title', 'like', '%' . $title . '%');
@@ -25,13 +41,19 @@ class ProductController extends Controller
             ->when($filer_status, function (Builder $query, $filer_status) {
                 return $query->where('is_publish', '=', ($filer_status == 'off') ? 0 : 1);
             })
+            ->when($filter_category, function (Builder $query) use ($list_category) {
+                return $query->whereIn('category_id', $list_category);
+            })
+//            ->orderBy('created_at', 'desc')
             ->paginate(20);
-
+        $categories = Category::all();
         return view('admin.product.index',
             [
                 'list_product' => $list_product,
                 'filter_keyword' => $title,
-                'filter_status' => $filer_status
+                'filter_status' => $filer_status,
+                'filter_category' => $filter_category,
+                'categories' => $categories,
             ]
         );
     }

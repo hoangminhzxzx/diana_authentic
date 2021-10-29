@@ -40,7 +40,7 @@
                     @if($orders)
                     @foreach($orders as $order)
                         <tr>
-                            <td>#{{ $order->id }}</td>
+                            <td>{{ $order->order_code }}</td>
                             <td><b>{{ $order->customer_name }}</b></td>
                             <td>{{ $order->customer_phone }}</td>
                             <td>{{ $order->email }}</td>

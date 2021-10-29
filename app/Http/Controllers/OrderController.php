@@ -28,6 +28,7 @@ class OrderController extends Controller
             ->when($filter_status, function (Builder $query, $filter_status) {
                 return $query->where('status', '=', $filter_status);
             })
+            ->orderBy('created_at', 'desc')
             ->paginate(20);
         $data_response = [];
         $data_response['filter_keyword'] = $filter_keyword;
@@ -121,8 +122,9 @@ class OrderController extends Controller
         $order_master = OrderMaster::query()->find($order_id);
         if ($order_master) {
             $status_current = $order_master->status;
-            if ($status_current == config('constant.ORDER_STATUS.ORDER_SHIPPING')) {
-                $res['message'] = 'Không thể hủy đơn hàng vì hàng đang được giao !';
+            if ($status_current == config('constant.ORDER_STATUS.ORDER_COMPLETE')) {
+//                $res['message'] = 'Không thể hủy đơn hàng vì hàng đang được giao !';
+                $res['message'] = 'Không thể hủy đơn hàng vì đã hoàn thành đơn !';
             } else {
                 $order_master->status = config('constant.ORDER_STATUS.ORDER_CANCLE');
                 $order_master->save();

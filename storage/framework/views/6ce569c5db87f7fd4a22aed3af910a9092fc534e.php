@@ -48,16 +48,6 @@
                         <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
                         <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
                     </div>
-                    <div class="col-4">
-                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
-                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
-                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
-                    </div>
-                    <div class="col-4">
-                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
-                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
-                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
-                    </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <?php endif; ?>
         </div>
@@ -69,16 +59,6 @@
         <div class="row" style="justify-content: unset;">
             <?php if(isset($list_products_hot) && $list_products_hot): ?>
                 <?php $__currentLoopData = $list_products_hot; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="col-4">
-                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
-                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
-                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
-                    </div>
-                    <div class="col-4">
-                        <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
-                        <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>
-                        <p><?php echo e(number_format($item->price, 0, '.', '.')); ?>đ</p>
-                    </div>
                     <div class="col-4">
                         <a href="<?php echo e(route('client.product.detail', ['slug'=>$item->slug])); ?>"><img src="<?php echo e(url($item->thumbnail)); ?>" style="max-width: 200px;"></a>
                         <h4 class="product-title text-center"><?php echo e($item->title); ?></h4>

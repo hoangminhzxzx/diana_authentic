@@ -5,14 +5,22 @@
             <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
             <form action="{{ route('admin.product.list') }}" method="GET">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <input type="text" name="filter_keyword" value="{{ $filter_keyword ? $filter_keyword : '' }}" class="form-control" placeholder="Tìm kiếm sản phẩm">
                     </div>
-                    <div class="col-4">
+                    <div class="col-1">
                         <select name="filter_status" id="" class="form-control">
                             <option value="">Trạng thái</option>
                             <option value="on" @if ($filter_status == 'on') selected @endif>Kích hoạt</option>
                             <option value="off" @if ($filter_status == 'off') selected @endif>Vô hiệu hóa</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <select name="filter_category" id="" class="form-control">
+                            <option value="">Danh mục</option>
+                            @foreach($categories as $category)
+                                <option class="@if($category->parent_id == 0) font-weight-bold @endif" value="{{ $category->id }}" @if($category->id == $filter_category) selected @endif>{{ $category->title }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
@@ -28,6 +36,7 @@
                         <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
                         <th>Trạng thái kích hoạt</th>
+                        <th>Ngày tạo</th>
                         <th>Hành động</th>
                     </tr>
                     </thead>
@@ -38,14 +47,6 @@
                             <td>{{ $product->title }}</td>
                             <td><b>{{ $product->category->title }}</b></td>
                             <td>
-                            {{--                            @if($product->is_publish == 1)--}}
-                            {{--                                Kích hoạt--}}
-                            {{--                            @endif--}}
-                            {{--                            @if($product->is_publish == 2)--}}
-                            {{--                                Không kích hoạt--}}
-                            {{--                            @endif--}}
-
-                            <!-- switch -->
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input"
                                            onchange="setPublishProduct(this, {{ $product->id }})"
@@ -54,24 +55,16 @@
                                     <label class="custom-control-label" for="set-publish-{{ $product->id }}"></label>
                                 </div>
                             </td>
+                            <td>{{ substr($product->created_at, 0, 10) }}</td>
                             <td>
                                 <a href="{{route('admin.product.edit', $product->id)}}"
                                    class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
                                     <i class="fas fa-pen-alt"></i>
                                 </a>
-                                <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                                <a class="btn btn-icon btn-light btn-hover-danger btn-sm"
                                    onclick="deleteProduct(this, {{ $product->id }})">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
-
-                                {{--                            <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm" onclick="confirmDelete('#delete-product-{{$product->id}}');return false;">--}}
-                                {{--                                <i class="fas fa-trash-alt"></i>--}}
-                                {{--                            </a>--}}
-                                {{--                            <form method="POST" id="delete-product-{{$product->id}}"--}}
-                                {{--                                  action="{{route('admin.product.delete', $product->id)}}"--}}
-                                {{--                                  style="display: none;">--}}
-                                {{--                                @csrf--}}
-                                {{--                            </form>--}}
                             </td>
                         </tr>
                     @endforeach

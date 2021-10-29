@@ -104,12 +104,13 @@ function changeQty(id,e) {
         dataType: 'json',
         success: function (res) {
             if (res.success) {
-                var qtyNewItem = res.qtyNewItem,
-                    totalCart = res.totalCart,
-                    priceItem = res.priceItem;
+                var totalCart = res.totalCart,
+                    subTotalNew = res.subTotalNew;
+                    // qtyNewItem = res.qtyNewItem,
+                    // priceItem = res.priceItem;
                 // console.log(qtyNewItem);
                 // console.log(totalCart);
-                $('#subTotal-' + idItem).text(qtyNewItem * priceItem + ' VND');
+                $('#subTotal-' + idItem).text(subTotalNew + ' VND');
                 $('#totalCart').text(totalCart + ' VND');
 
                 $(".count_item_cart").text(res.total_item_cart);
@@ -260,7 +261,8 @@ function removeItemCart(e) {
         rowId: rowId
     };
     Swal.fire({
-        title: "Bạn muốn xóa sản phẩm này khỏi giỏ hàng ?",
+        // title: "Bạn muốn xóa sản phẩm này khỏi giỏ hàng ?",
+        text: "Bạn muốn xóa sản phẩm này khỏi giỏ hàng ?",
         icon: "warning",
         showCancelButton: true,
     }).then((result) => {
@@ -277,8 +279,14 @@ function removeItemCart(e) {
                     if (res.success) {
                         let eleParent = $(e).closest('.item-cart-single');
                         eleParent.remove();
-                        if (res.redirect) {
-                            window.location.href = res.redirect;
+                        $('.count_item_cart').text(res.count_item);
+
+                        if (res.cart_empty) {
+                            $(".total-price").remove();
+                            $('.table-cart-info').remove();
+                            $('#btn-checkout').remove();
+                            $('.count_item_cart').text(null);
+                            $('.cart-page').append(res.html);
                         }
                     }
                 },

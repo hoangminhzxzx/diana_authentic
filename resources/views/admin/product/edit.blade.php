@@ -20,7 +20,7 @@
                     @if (session('status_delete_variant'))
                         <div class="alert alert-success mt-3" role="alert">{{session('status_delete_variant')}}</div>
                     @endif
-                    <h3>Update Product</h3>
+                    <h3>Chỉnh sửa sản phẩm</h3>
                 </div>
                 {{--                <img class="img-thumbnail" id="image" src="{{ asset($product->thumbnail) }}" style="margin-top: 1rem; max-width: 200px;" /> Ảnh sản phẩm đại diện ( Khi muốn thay đổi cần liên hệ với Bang Chủ hoặc xóa đi nhập liệu lại)--}}
                 <div class="card-body">
@@ -113,7 +113,7 @@
                             @csrf
                             <input type="hidden" value="{{ $product->id }}" name="product_id">
                             <div class="form-group color_hex">
-                                <lable>Color Hex</lable>
+                                <lable>Mã màu</lable>
                                 <input type="text" name="color_hex" id="colorpicker_variant"
                                        value="{{ old('color_hex') }}" class="form-control">
                                 @error('color_hex')
@@ -121,7 +121,7 @@
                                 @enderror
                             </div>
                             <div class="form-group color_name">
-                                <lable>Color Name</lable>
+                                <lable>Tên màu</lable>
                                 <input type="text" name="color_name" value="{{ old('color_name') }}"
                                        class="form-control">
                                 @error('color_name')
@@ -167,9 +167,9 @@
                         <table class="table" id="tbl_list_variant">
                             <thead>
                             <tr>
-                                <th>
-                                    <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>
-                                </th>
+{{--                                <th>--}}
+{{--                                    <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>--}}
+{{--                                </th>--}}
                                 <th class=""><span>Color hex</span></th>
                                 <th class=""><span>Color name</span></th>
                                 <th class=""><span>Size</span></th>
@@ -181,13 +181,13 @@
                             {{--                        {{$product->ProductVariants}}--}}
                             @foreach($product->ProductVariants as $item)
                                 <tr>
-                                    <td>
-                                    <span>
-                                        <label class="checkbox checkbox-single">
-                                            <input type="checkbox" value="1">&nbsp;
-                                        </label>
-                                    </span>
-                                    </td>
+{{--                                    <td>--}}
+{{--                                    <span>--}}
+{{--                                        <label class="checkbox checkbox-single">--}}
+{{--                                            <input type="checkbox" value="1">&nbsp;--}}
+{{--                                        </label>--}}
+{{--                                    </span>--}}
+{{--                                    </td>--}}
                                     <td><span>{{ ($item->color)?$item->color->value:"" }}</span></td>
                                     <td><span>{{ ($item->color)?$item->color->name:"" }}</span></td>
                                     <td><span>{{ ($item->size)?$item->size->value:"" }}</span></td>

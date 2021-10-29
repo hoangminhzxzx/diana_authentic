@@ -476,41 +476,49 @@ function changePosition(e) {
 }
 
 function deleteProduct(e, id) {
-    let ele = $(e);
-    let data = {
-        id: id
-    };
+    Swal.fire({
+        title: "Có chắc là xóa sản phẩm này không đại ca ?",
+        icon: "warning",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let ele = $(e);
+            let data = {
+                id: id
+            };
 
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: url_source + '/product/delete',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        success: function (res) {
-            if (res.success) {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    text: 'Xoá thành công',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url_source + '/product/delete',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            text: 'Xoá thành công',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
 
-                let rowParent = $(".row-product-" + id);
-                if (rowParent) {
-                    rowParent.remove();
-                }
-            } else {
-                Swal.fire({
-                    text: 'Lỗi',
-                    position: 'top-end',
-                    icon: 'danger',
-                })
-            }
-        },
+                        let rowParent = $(".row-product-" + id);
+                        if (rowParent) {
+                            rowParent.remove();
+                        }
+                    } else {
+                        Swal.fire({
+                            text: 'Lỗi',
+                            position: 'top-end',
+                            icon: 'danger',
+                        })
+                    }
+                },
+            });
+        }
     });
 }
 

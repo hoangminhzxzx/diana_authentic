@@ -19,7 +19,7 @@
                     <?php if(session('status_delete_variant')): ?>
                         <div class="alert alert-success mt-3" role="alert"><?php echo e(session('status_delete_variant')); ?></div>
                     <?php endif; ?>
-                    <h3>Update Product</h3>
+                    <h3>Chỉnh sửa sản phẩm</h3>
                 </div>
                 
                 <div class="card-body">
@@ -112,7 +112,7 @@
                             <?php echo csrf_field(); ?>
                             <input type="hidden" value="<?php echo e($product->id); ?>" name="product_id">
                             <div class="form-group color_hex">
-                                <lable>Color Hex</lable>
+                                <lable>Mã màu</lable>
                                 <input type="text" name="color_hex" id="colorpicker_variant"
                                        value="<?php echo e(old('color_hex')); ?>" class="form-control">
                                 <?php $__errorArgs = ['color_hex'];
@@ -127,7 +127,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="form-group color_name">
-                                <lable>Color Name</lable>
+                                <lable>Tên màu</lable>
                                 <input type="text" name="color_name" value="<?php echo e(old('color_name')); ?>"
                                        class="form-control">
                                 <?php $__errorArgs = ['color_name'];
@@ -194,9 +194,9 @@ unset($__errorArgs, $__bag); ?>
                         <table class="table" id="tbl_list_variant">
                             <thead>
                             <tr>
-                                <th>
-                                    <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>
-                                </th>
+
+
+
                                 <th class=""><span>Color hex</span></th>
                                 <th class=""><span>Color name</span></th>
                                 <th class=""><span>Size</span></th>
@@ -208,13 +208,13 @@ unset($__errorArgs, $__bag); ?>
                             
                             <?php $__currentLoopData = $product->ProductVariants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td>
-                                    <span>
-                                        <label class="checkbox checkbox-single">
-                                            <input type="checkbox" value="1">&nbsp;
-                                        </label>
-                                    </span>
-                                    </td>
+
+
+
+
+
+
+
                                     <td><span><?php echo e(($item->color)?$item->color->value:""); ?></span></td>
                                     <td><span><?php echo e(($item->color)?$item->color->name:""); ?></span></td>
                                     <td><span><?php echo e(($item->size)?$item->size->value:""); ?></span></td>
