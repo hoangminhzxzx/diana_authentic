@@ -14,17 +14,17 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>
-                        <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>
-                    </th>
+{{--                    <th>--}}
+{{--                        <span><label class="checkbox checkbox-single checkbox-all"><input type="checkbox">&nbsp;<span></span></label></span>--}}
+{{--                    </th>--}}
                     <th class=""><span>Tên danh mục</span></th>
                     <th><span>Hành động</span></th>
                 </tr>
                 </thead>
                 <tbody>
                     @foreach($list_category as $category)
-                    <tr>
-                        <td><span><label class="checkbox checkbox-single"><input type="checkbox" value="1">&nbsp;<span></span></label></span></td>
+                    <tr class="row-category">
+{{--                        <td><span><label class="checkbox checkbox-single"><input type="checkbox" value="1">&nbsp;<span></span></label></span></td>--}}
                         <td>
                             <span>{{$category->title}}</span>
                         </td>
@@ -32,15 +32,15 @@
                             <a href="{{route('admin.category.edit', $category->id)}}" class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
                                 <i class="fas fa-pen-alt"></i>
                             </a>
-                            <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
-                               onclick="confirmDelete('#delete-category-{{$category->id}}');return false;">
+                            <a class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                               onclick="deleteCategory(this,{{ $category->id }})">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
-                            <form method="POST" id="delete-category-{{$category->id}}"
-                                  action="{{route('admin.category.delete', $category->id)}}"
-                                  style="display: none;">
-                                @csrf
-                            </form>
+{{--                            <form method="POST" id="delete-category-{{$category->id}}"--}}
+{{--                                  action="{{route('admin.category.delete', $category->id)}}"--}}
+{{--                                  style="display: none;">--}}
+{{--                                @csrf--}}
+{{--                            </form>--}}
                         </td>
                     </tr>
                     @endforeach

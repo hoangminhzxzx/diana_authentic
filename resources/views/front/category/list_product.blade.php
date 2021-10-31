@@ -5,7 +5,7 @@
 @section('content')
     <div class="small-container wp-list-product">
         <div class="row row-2" style="padding-left: 10px;">
-            <h2>Áo của Diana Authentic</h2>
+            <h2>{{ $category_title }} của Diana Authentic</h2>
             <form action="{{ route('client.category.list.product', ['slug' => $slug]) }}" id="formFilterProduct">
 {{--                @csrf--}}
                 <select name="orderBy" style="border: 1px solid #ccc;" onchange="orderProduct(this)" data-category-slug="{{ $slug }}">

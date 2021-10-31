@@ -14,7 +14,7 @@
                     <div class="hot-position" data-productId="{{ $product->id }}" onclick="changePosition(this)"><span>{{ $product->position }}</span></div>
                 @endif
                 <button class="btn-select-diana btn btn-sm @if($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')) btn-warning @else btn-success @endif" data-productId="{{ $product->id }}" onclick="configProductSelect(this)">@if($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')) Select @else Selected @endif</button>
-                <img src="{{ asset($product->thumbnail) }}" alt="" class="" height="100">
+                <img src="{{ asset($product->thumbnail) }}" alt="" class="img-thumbnail">
                 <p>{{ $product->title }}</p>
 {{--                <button class="btn btn-warning" onclick="configProductSelect(this)">Select</button>--}}
             </div>

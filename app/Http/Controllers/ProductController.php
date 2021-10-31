@@ -19,6 +19,7 @@ class ProductController extends Controller
         $title = $request->query('filter_keyword');
         $filer_status = $request->query('filter_status');
         $filter_category = intval($request->query('filter_category'));
+        $sort_view = $request->query('sort_view');
 
         $list_category = [];
         if ($filter_category) {
@@ -44,6 +45,9 @@ class ProductController extends Controller
             ->when($filter_category, function (Builder $query) use ($list_category) {
                 return $query->whereIn('category_id', $list_category);
             })
+            ->when($sort_view, function (Builder $query, $sort_view) {
+                return $query->orderBy('total_view', $sort_view);
+            })
 //            ->orderBy('created_at', 'desc')
             ->paginate(20);
         $categories = Category::all();
@@ -54,6 +58,7 @@ class ProductController extends Controller
                 'filter_status' => $filer_status,
                 'filter_category' => $filter_category,
                 'categories' => $categories,
+                'sort_view' => $sort_view
             ]
         );
     }

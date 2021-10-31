@@ -13,7 +13,7 @@
                     <div class="hot-position" data-productId="<?php echo e($product->id); ?>" onclick="changePosition(this)"><span><?php echo e($product->position); ?></span></div>
                 <?php endif; ?>
                 <button class="btn-select-diana btn btn-sm <?php if($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')): ?> btn-warning <?php else: ?> btn-success <?php endif; ?>" data-productId="<?php echo e($product->id); ?>" onclick="configProductSelect(this)"><?php if($product->is_hot != config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER')): ?> Select <?php else: ?> Selected <?php endif; ?></button>
-                <img src="<?php echo e(asset($product->thumbnail)); ?>" alt="" class="" height="100">
+                <img src="<?php echo e(asset($product->thumbnail)); ?>" alt="" class="img-thumbnail">
                 <p><?php echo e($product->title); ?></p>
 
             </div>

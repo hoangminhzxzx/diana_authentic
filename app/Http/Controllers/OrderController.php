@@ -23,7 +23,8 @@ class OrderController extends Controller
                     ->where('id', '=', $filter_keyword)
                     ->orWhere('customer_name', 'like', '%'.$filter_keyword.'%')
                     ->orWhere('email', 'like', '%'.$filter_keyword.'%')
-                    ->orWhere('customer_phone', 'like', '%'.$filter_keyword.'%');
+                    ->orWhere('customer_phone', 'like', '%'.$filter_keyword.'%')
+                    ->orWhere('order_code', 'like', '%'.$filter_keyword.'%');
             })
             ->when($filter_status, function (Builder $query, $filter_status) {
                 return $query->where('status', '=', $filter_status);

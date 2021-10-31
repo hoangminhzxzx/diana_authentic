@@ -5,7 +5,7 @@
 <?php $__env->startSection('content'); ?>
     <div class="small-container wp-list-product">
         <div class="row row-2" style="padding-left: 10px;">
-            <h2>Áo của Diana Authentic</h2>
+            <h2><?php echo e($category_title); ?> của Diana Authentic</h2>
             <form action="<?php echo e(route('client.category.list.product', ['slug' => $slug])); ?>" id="formFilterProduct">
 
                 <select name="orderBy" style="border: 1px solid #ccc;" onchange="orderProduct(this)" data-category-slug="<?php echo e($slug); ?>">

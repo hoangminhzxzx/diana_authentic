@@ -71,16 +71,26 @@ class CategoryController extends Controller
         return redirect()->route('category-tree-view');
     }
 
-    public function delete($id)
+    public function delete(Request $request)
     {
+        $res = ['success' => false];
+        $id = intval($request->input('category_id'));
         $category = Category::query()->find($id);
         if ($category) {
             if ($category->parent_id == 0) {
-                return back()->with('status-delete-error', 'Delete Error');
+                $res['mess_error'] = 'Delete Error';
+//                return back()->with('status-delete-error', 'Delete Error');
             } else {
-                $category->delete();
-                return back()->with('status-delete', 'Delete Complete');
+                if ($category->products->count() == 0) {
+                    $category->delete();
+                    $res['success'] = true;
+                } else {
+                    $res['mess_error'] = 'Danh mục này đang có sản phẩm, đại ca không nên xóa danh mục này !!!';
+                }
+//                return back()->with('status-delete', 'Delete Complete');
             }
         }
+
+        return response()->json($res);
     }
 }

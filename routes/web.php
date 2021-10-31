@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/category-list', 'CategoryController@list')->name('admin.category.list');
         Route::get('/category-edit/{id}', 'CategoryController@edit')->name('admin.category.edit');
         Route::post('/category-update/{id}', 'CategoryController@update')->name('admin.category.update');
-        Route::post('/category-delete/{id}', 'CategoryController@delete')->name('admin.category.delete');
+        Route::post('/category-delete', 'CategoryController@delete')->name('admin.category.delete');
 
         Route::get('/product/list', 'ProductController@index')->name('admin.product.list');
         Route::get('/product/add', 'ProductController@add')->name('admin.product.add');
@@ -72,6 +72,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/config-product', 'ProductController@configProduct')->name('admin.product.config.product');
         Route::post('/config-product-update', 'ProductController@configProductStore')->name('admin.product.config.product.store');
         Route::post('/config-change-position', 'ProductController@configChangePosition')->name('admin.product.config.change.position');
+
+        //----Timeline-----
+        Route::get('/stock', 'StockController@index')->name('admin.stock.index');
+        Route::post('/stock/store', 'StockController@store')->name('admin.stock.store');
+        Route::post('/stock/upload-images-dz', 'StockController@uploadImageDZ')->name('admin.stock.upload.images.dz');
+        Route::post('/remove-image-single-stock', 'StockController@removeImageSingle')->name('admin.remove.image.single.stock');
+        Route::get('/stock/edit/{id}', 'StockController@edit')->name('admin.stock.edit');
+        Route::post('/stock/update/{id}', 'StockController@update')->name('admin.stock.update');
+        Route::post('/stock/delete/{id}', 'StockController@delete')->name('admin.stock.delete');
     });
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();

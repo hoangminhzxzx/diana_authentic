@@ -1,9 +1,15 @@
 const url_source = 'http://localhost/diana_authentic/admin';
 
 function confirmDelete(form_id) {
-    if (confirm('Are you sure?')) {
-        $(form_id).submit();
-    }
+    Swal.fire({
+        title: "Bạn có muốn xóa ?",
+        icon: "warning",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $(form_id).submit();
+        }
+    });
 }
 
 function imagePreview(input) {
@@ -555,5 +561,133 @@ function setPublishProduct(e, product_id) {
                 })
             }
         },
+    });
+}
+
+function saveRecordStock(e) {
+    let form_data = $("#stockForm").serialize();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source + '/stock/store',
+        type: 'POST',
+        data: form_data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                Swal.fire({
+                    text: 'Thêm thành công, hãy upload thêm ảnh vào',
+                    position: 'top-end',
+                    icon: 'success',
+                })
+
+                $("#stock_id").val(res.stock_id);
+                $("#form_upload_image").removeClass('d-none');
+
+                $(e).remove();
+
+                $('#dataTableStock tbody').append(res.html);
+            } else {
+                Swal.fire({
+                    text: 'Lỗi',
+                    position: 'top-end',
+                    icon: 'danger',
+                })
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status == 422) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Điền đầy đủ thông tin : số lượng hàng và tổng tiền lấy hàng',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }
+    });
+}
+
+
+function deleteImageSingleStock(e) {
+    let ele = $(e);
+    let path = ele.attr('data-path'),
+        stock_id = $("input[name='stock_id']").val();
+
+    let data = {
+        path: path,
+        stock_id: stock_id,
+    };
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url_source + '/remove-image-single-stock',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                let item_parent = ele.closest('.item-image-single');
+                item_parent.remove();
+
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    text: 'Đã xóa',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
+                let div_images = $("#div_images_" + res.stock_id);
+                let tag_image_remove = div_images.find('img[src$="'+ res.src_image +'"]');
+                tag_image_remove.remove();
+            }
+        },
+    });
+}
+
+function deleteCategory(e, category_id) {
+    Swal.fire({
+        title: "Bạn có muốn xóa ?",
+        icon: "warning",
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let data = {
+                category_id: category_id
+            };
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url_source + '/category-delete',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        $(e).closest('.row-category').remove();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            text: 'Đã xóa',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    } else {
+                        if (res.mess_error) {
+                            Swal.fire({
+                                text: res.mess_error,
+                                icon: "warning",
+                            })
+                        }
+                    }
+                },
+            });
+        }
     });
 }
