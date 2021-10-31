@@ -14,9 +14,18 @@
         <a href="<?php echo e(route('admin.stock.edit', $stock->id)); ?>" class="btn btn-icon btn-light btn-hover-primary btn-sm mr-3">
             <i class="fas fa-pen-alt"></i>
         </a>
-        <a class="btn btn-icon btn-light btn-hover-danger btn-sm" onclick="deleteStock(this,<?php echo e($stock->id); ?>)">
+
+
+
+        <a href="#" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+           onclick="confirmDelete('#delete-stock-<?php echo e($stock->id); ?>');return false;">
             <i class="fas fa-trash-alt"></i>
         </a>
+        <form method="POST" id="delete-stock-<?php echo e($stock->id); ?>"
+              action="<?php echo e(route('admin.stock.delete', $stock->id)); ?>"
+              style="display: none;">
+            <?php echo csrf_field(); ?>
+        </form>
     </td>
 </tr>
 <?php /**PATH E:\xamp\htdocs\diana_authentic\resources\views/admin/stock/row_stock_ajax.blade.php ENDPATH**/ ?>

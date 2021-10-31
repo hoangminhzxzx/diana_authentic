@@ -5,8 +5,8 @@
     <?php if(session('status')): ?>
         <div class="alert alert-success mt-3" role="alert"><?php echo e(session('status')); ?></div>
     <?php endif; ?>
-    <div class="row">
-        <div class="card mx-4 col-4" id="form_add_stock">
+    <div class="row mb-5 mx-4">
+        <div class="card col-4" id="form_add_stock">
             <div class="card-header">
                 <h6 class="m-0 font-weight-bold text-primary">Thêm bản ghi</h6>
             </div>

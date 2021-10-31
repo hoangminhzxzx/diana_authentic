@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-    <div class="row">
+    <div class="row mx-4">
         <div class="col-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">

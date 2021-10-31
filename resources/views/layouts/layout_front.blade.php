@@ -9,6 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url('/public/plugins/custom/sweetalert2/dist/sweetalert2.css') }}">
+
+    <link rel="stylesheet" href="{{ url('/public/plugins/custom/splide/dist/css/splide.min.css') }}">
+    <link rel="stylesheet" href="{{ url('/public/plugins/custom/splide/dist/css/themes/splide-default.min.css') }}">
+    <link rel="stylesheet" href="{{ url('/public/plugins/custom/splide/dist/css/splide-core.min.css') }}">
 </head>
 <body>
 @php
@@ -100,6 +104,7 @@
 
 {{--<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
 <script src="{{ url('/public/plugins/custom/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+<script src="{{ url('/public/plugins/custom/splide/dist/js/splide.js') }}"></script>
 @yield('scripts')
 </body>
 </html>

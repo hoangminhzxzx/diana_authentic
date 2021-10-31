@@ -674,3 +674,6 @@ form a{
     width: 33%;
 }
 
+.splide {
+    width: 100% !important;
+}

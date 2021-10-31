@@ -6,59 +6,20 @@
     <link rel="stylesheet" href="<?php echo e(url('/public/plugins/custom/dropzone/dist/min/dropzone.min.css')); ?>">
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('scripts'); ?>
-    <script>
-        var editor_config = {
-            path_absolute : "http://localhost/diana_authentic/",
-            selector: "textarea",
-            plugins: [
-                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars code fullscreen",
-                "insertdatetime media nonbreaking save table contextmenu directionality",
-                "emoticons template paste textcolor colorpicker textpattern"
-            ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
-            relative_urls: false,
-            file_browser_callback : function(field_name, url, type, win) {
-                var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
-                var y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
-
-                var cmsURL = editor_config.path_absolute + 'laravel-filemanager?field_name=' + field_name;
-                if (type == 'image') {
-                    cmsURL = cmsURL + "&type=Images";
-                } else {
-                    cmsURL = cmsURL + "&type=Files";
-                }
-
-                tinyMCE.activeEditor.windowManager.open({
-                    file : cmsURL,
-                    title : 'Filemanager',
-                    width : x * 0.8,
-                    height : y * 0.8,
-                    resizable : "yes",
-                    close_previous : "no"
-                });
-            }
-        };
-
-        tinymce.init(editor_config);
-    </script>
-<?php $__env->stopSection(); ?>
-
 <?php $__env->startSection('content'); ?>
-    <div class="row">
+    <?php if(session('success_product')): ?>
+        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('success_product')); ?></div>
+    <?php endif; ?>
+    <?php if(session('status_update_variant')): ?>
+        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('status_update_variant')); ?></div>
+    <?php endif; ?>
+    <?php if(session('status_delete_variant')): ?>
+        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('status_delete_variant')); ?></div>
+    <?php endif; ?>
+    <div class="row mb-5">
         <div class="col-md-6">
             <div class="card mx-4">
                 <div class="card-header">
-                    <?php if(session('success_product')): ?>
-                        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('success_product')); ?></div>
-                    <?php endif; ?>
-                    <?php if(session('status_update_variant')): ?>
-                        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('status_update_variant')); ?></div>
-                    <?php endif; ?>
-                    <?php if(session('status_delete_variant')): ?>
-                        <div class="alert alert-success mt-3" role="alert"><?php echo e(session('status_delete_variant')); ?></div>
-                    <?php endif; ?>
                     <h3>Chỉnh sửa sản phẩm</h3>
                 </div>
                 
@@ -483,7 +444,6 @@ unset($__errorArgs, $__bag); ?>
         document.querySelector(".cancel").onclick = function () {
             myDropzone.removeAllFiles(true);
         };
-
     </script>
 <?php $__env->stopSection(); ?>
 
