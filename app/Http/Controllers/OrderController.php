@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Model\Front\AccountClient;
 use App\Model\Front\OrderDetail;
 use App\Model\Front\OrderMaster;
 use App\Model\Product;
@@ -108,6 +109,15 @@ class OrderController extends Controller
                     $total_price_order = OrderDetail::query()->where('order_id', '=', $order_id)->sum('price');
                     $statistic->total_sales = $statistic->total_sales + $total_price_order;
                     $statistic->save();
+
+                    if ($order_master->from_member) {
+                        //Cộng số tiền member đã bỏ ra từ đó đến giờ để order hàng trên Diana Authentic
+                        $member = AccountClient::query()->where('id', '=', $order_master->from_member)->first();
+                        if ($member) {
+                            $member->total_pay = $member->total_pay + $total_price_order;
+                            $member->save();
+                        }
+                    }
                 }
                 return true;
             }

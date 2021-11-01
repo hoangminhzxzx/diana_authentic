@@ -45,6 +45,15 @@ class OrderController extends Controller
             $total_price = intval(str_replace('.', '', Cart::total()));
             $order_master->total_price = $total_price;
 
+            //check xem có phải member Diana Authentic order hàng không
+            if ($request->session()->has('client_login')) {
+                //đã login
+                $order_master->is_member = 1;
+
+                $info_account = $request->session()->get('client_login');
+                $order_master->from_member = $info_account['id'];
+            }
+
             $order_master->save();
 
             $data_items = Cart::content();

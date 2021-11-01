@@ -687,6 +687,7 @@ class ComposerStaticInit9bda30dc54f08ba0e8e96e266324cbe4
         'App\\Http\\Controllers\\Front\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/ProductController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\MailController' => __DIR__ . '/../..' . '/app/Http/Controllers/MailController.php',
+        'App\\Http\\Controllers\\MemberController' => __DIR__ . '/../..' . '/app/Http/Controllers/MemberController.php',
         'App\\Http\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderController.php',
         'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',
         'App\\Http\\Controllers\\ProductVariantController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductVariantController.php',

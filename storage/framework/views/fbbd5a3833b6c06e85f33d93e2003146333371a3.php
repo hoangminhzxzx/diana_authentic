@@ -54,7 +54,7 @@
 
                             <!-- Modal -->
                             <div class="modal fade" id="modalDetail-<?php echo e($member->id); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog" role="document" style="max-width: 700px !important;;">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel"><?php echo e($member->name ? $member->name : 'member name'); ?></h5>
@@ -83,6 +83,10 @@
                                                 <div class="row">
                                                     <div class="col-md-3">Địa chỉ : </div>
                                                     <div class="col-md-9"><?php echo e($member->address); ?></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3 text-success">Tổng Pay : </div>
+                                                    <div class="col-md-9 text-success"><?php echo e(number_format($member->total_pay, 0,'.','.')); ?> VNĐ</div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-3">Rank : </div>
