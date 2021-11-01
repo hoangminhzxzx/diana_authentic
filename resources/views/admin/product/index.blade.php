@@ -10,7 +10,7 @@
                             <div class="col-3">
                                 <input type="text" name="filter_keyword" value="{{ $filter_keyword ? $filter_keyword : '' }}" class="form-control" placeholder="Tìm kiếm sản phẩm">
                             </div>
-                            <div class="col-1">
+                            <div class="col-2">
                                 <select name="filter_status" id="" class="form-control">
                                     <option value="">Trạng thái</option>
                                     <option value="on" @if ($filter_status == 'on') selected @endif>Kích hoạt</option>
@@ -25,7 +25,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-1">
+                            <div class="col-2">
                                 <select name="sort_view" id="" class="form-control">
                                     <option value="">Lượt view</option>
                                     <option value="asc" @if(isset($sort_view) && $sort_view == 'asc') selected @endif>Tăng dần</option>

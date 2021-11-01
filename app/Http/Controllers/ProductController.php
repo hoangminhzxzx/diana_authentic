@@ -360,6 +360,16 @@ class ProductController extends Controller
             } else {
                 //hiển thị select
                 $product->is_hot = config('constant.PRODUCT_IS_HOT.HOT_PRODUCT');
+                $product->position = 0;
+
+                if ($product_hot_banners->count() == 2) {
+                    $product_hot_banner_rest = Product::query()->where('id', '!=', $product->id)->where('is_hot', '=', config('constant.PRODUCT_IS_HOT.HOT_PRODUCT_BANNER'))->first();
+                    if ($product_hot_banner_rest) {
+                        $product_hot_banner_rest->position = 1;
+                        $product_hot_banner_rest->save();
+                        $res['product_hot_banner_rest'] = $product_hot_banner_rest;
+                    }
+                }
                 $res['text'] = 'Select';
             }
 

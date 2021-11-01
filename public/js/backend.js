@@ -407,6 +407,17 @@ function configProductSelect(e) {
                 } else {
                     $(e).addClass('btn-warning');
                     $(e).removeClass('btn-success');
+
+                    //xóa position
+                    $(e).parent().children().first().remove();
+
+                    //chuyển position về 1 vì đang có 2 hot banner
+                    // $('.hot-position').hasAttribute()
+                    if (res.product_hot_banner_rest) {
+                        let elePositionRest = $('div[data-productid="'+ res.product_hot_banner_rest.id +'"]');
+                        console.log(elePositionRest);
+                        elePositionRest.children().first().text(res.product_hot_banner_rest.position);
+                    }
                 }
 
                 //chuyển product hot về như bình thg
