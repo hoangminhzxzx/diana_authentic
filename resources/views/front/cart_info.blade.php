@@ -22,6 +22,7 @@
                             <p>{{ $item->name }} <span class="" style="font-size: .7rem;">(size {{ $item->options->size }}, màu {{ $item->options->color }})</span></p>
                             <small>Giá: {{ number_format($item->price, 0, '.', '.') }}</small>
                             <a href="#" onclick="removeItemCart(this)" data-rowId="{{ $item->rowId }}">Xóa</a>
+                            <p><span class="" style="font-size: .7rem;">Trong kho còn : {{ $item->options->qty_in_stock }}</span></p>
                         </div>
                     </div>
                 </td>

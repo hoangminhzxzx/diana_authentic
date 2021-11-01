@@ -21,6 +21,7 @@
                             <p><?php echo e($item->name); ?> <span class="" style="font-size: .7rem;">(size <?php echo e($item->options->size); ?>, màu <?php echo e($item->options->color); ?>)</span></p>
                             <small>Giá: <?php echo e(number_format($item->price, 0, '.', '.')); ?></small>
                             <a href="#" onclick="removeItemCart(this)" data-rowId="<?php echo e($item->rowId); ?>">Xóa</a>
+                            <p><span class="" style="font-size: .7rem;">Trong kho còn : <?php echo e($item->options->qty_in_stock); ?></span></p>
                         </div>
                     </div>
                 </td>

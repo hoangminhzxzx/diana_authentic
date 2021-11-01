@@ -119,7 +119,7 @@ class ProductController extends Controller
                 'thumbnail' => $product->thumbnail,
                 'slug' => $product->slug,
                 'product_variant_id' => $variantProduct->id,
-                'qty_in_stock' => $variantProduct->qty
+                'qty_in_stock' => $variantProduct->qty,
             ];
 
             $qty_atc = $data['qty'];
@@ -142,6 +142,7 @@ class ProductController extends Controller
     }
 
     public function renderCartInfo() {
+//        dd(Cart::content());
         return view('front.cart_info');
     }
 

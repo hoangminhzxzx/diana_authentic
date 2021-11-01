@@ -30,11 +30,11 @@
                         
                         
                         
-
+                        <?php if(count(json_decode($product->images)) > 0): ?>
                         <div class="splide">
                             <div class="splide__track">
                                 <ul class="splide__list">
-                                    
+
                                     <li class="splide__slide">
                                         <img src="<?php echo e(url($product->thumbnail)); ?>" width="100%" class="small-img">
                                     </li>
@@ -43,10 +43,11 @@
                                             <img src="<?php echo e(url($image)); ?>" class="small-img">
                                         </li>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    
+
                                 </ul>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
             </div>

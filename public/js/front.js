@@ -209,7 +209,7 @@ function addToCart(e) {
         if (!size_id || !color_id || !qty) {
             // alert('Vui lòng kiểm tra lại size, màu, số lượng');
             Swal.fire({
-                text: 'Vui lòng kiểm tra lại size, màu, số lượng',
+                text: 'Vui lòng kiểm tra lại size, màu !!!',
                 icon: "warning",
             })
             checkRequired = false;

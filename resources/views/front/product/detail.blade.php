@@ -31,11 +31,11 @@
                         {{--                            </div>--}}
                         {{--                        @endforeach--}}
                         {{--                    @endif--}}
-
+                        @if(count(json_decode($product->images)) > 0)
                         <div class="splide">
                             <div class="splide__track">
                                 <ul class="splide__list">
-                                    {{--                                @if($product->images)--}}
+{{--                                    @if(count(json_decode($product->images)) > 0)--}}
                                     <li class="splide__slide">
                                         <img src="{{ url($product->thumbnail) }}" width="100%" class="small-img">
                                     </li>
@@ -44,10 +44,11 @@
                                             <img src="{{ url($image) }}" class="small-img">
                                         </li>
                                     @endforeach
-                                    {{--                                @endif--}}
+{{--                                    @endif--}}
                                 </ul>
                             </div>
                         </div>
+                        @endif
                     </div>
                 @endif
             </div>
