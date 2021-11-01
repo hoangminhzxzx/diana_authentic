@@ -130,18 +130,23 @@
 {{--            @endif--}}
         </div>
     </div>
-    <div class="cart shadow mb-4">
+    <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Chi tiết đơn hàng</h6>
         </div>
         <div class="cart-body py-3">
+            <div class="pl-4">
+                <p>Tên khách hàng : {{ $order_master->customer_name }}</p>
+                <p>Phone : {{ $order_master->customer_phone }}</p>
+                <p>Email : {{ $order_master->email }}</p>
+            </div>
             <table class="table" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Têm khách hàng</th>
-                    <th>Phone</th>
-                    <th>Email</th>
+{{--                    <th>Têm khách hàng</th>--}}
+{{--                    <th>Phone</th>--}}
+{{--                    <th>Email</th>--}}
                     <th>Tên sản phẩm</th>
                     <th>Option</th>
                     <th>Ảnh sản phẩm</th>
@@ -152,9 +157,9 @@
                     @foreach($order_details as $k=>$item)
                     <tr>
                         <td>{{ $k+1 }}</td>
-                        <td>{{ $order_master->customer_name }}</td>
-                        <td>{{ $order_master->customer_phone }}</td>
-                        <td>{{ $order_master->email }}</td>
+{{--                        <td>{{ $order_master->customer_name }}</td>--}}
+{{--                        <td>{{ $order_master->customer_phone }}</td>--}}
+{{--                        <td>{{ $order_master->email }}</td>--}}
                         <td><a href="{{ route('admin.product.edit', ['id' => $item->product_id]) }}" target="_blank"><b>{{ $item->product_title ? $item->product_title : '' }}</b></a></td>
                         <td>{{ $item->color }} - {{ $item->size }}</td>
                         <td><img src="{{ $item->product_thumbnail ? url($item->product_thumbnail) : '' }}" alt="" class="img-thumbnail" width="120"></td>
