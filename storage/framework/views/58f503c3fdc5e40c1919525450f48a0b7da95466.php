@@ -100,7 +100,7 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Interface
+            System
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
@@ -194,10 +194,16 @@
         <hr class="sidebar-divider">
 
         <!-- Heading -->
+        <div class="sidebar-heading">
+            Client
+        </div>
 
-
-
-
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="<?php echo e(route('admin.member.index')); ?>">
+                <i class="fas fa-warehouse"></i>
+                <span>Hội viên DA</span>
+            </a>
+        </li>
 
 
 

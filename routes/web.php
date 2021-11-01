@@ -81,6 +81,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/stock/edit/{id}', 'StockController@edit')->name('admin.stock.edit');
         Route::post('/stock/update/{id}', 'StockController@update')->name('admin.stock.update');
         Route::post('/stock/delete/{id}', 'StockController@delete')->name('admin.stock.delete');
+
+        //--- member Diana Authentic -----
+        Route::get('/member/index', 'MemberController@index')->name('admin.member.index');
+//        Route::get('/member/detail/{id}', 'MemberController@detail')->name('admin.member.detail');
     });
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();

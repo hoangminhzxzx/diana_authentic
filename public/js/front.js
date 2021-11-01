@@ -439,6 +439,14 @@ $("#btnRegister").click(function () {
                     text: 'Bạn đã đăng ký thành công',
                     icon: "success",
                 })
+                window.location.href = url_source + '/';
+            } else {
+                if (res.mess_dup) {
+                    Swal.fire({
+                        text: res.mess_dup,
+                        icon: "warning",
+                    })
+                }
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

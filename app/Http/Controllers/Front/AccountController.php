@@ -36,12 +36,17 @@ class AccountController extends Controller
             $res['errors'] = $validated['errors'];
         } else {
 //            dd('success');
-            $account_client = new AccountClient();
-            $account_client->username = $data['username'];
-            $account_client->password = md5($data['password']);
-            $account_client->email = $data['email'];
-            $account_client->save();
-            $res['success'] = true;
+            $account_client = AccountClient::query()->where('email', '=', $data['email'])->first();
+            if (!$account_client) {
+                $account_client = new AccountClient();
+                $account_client->username = $data['username'];
+                $account_client->password = md5($data['password']);
+                $account_client->email = $data['email'];
+                $account_client->save();
+                $res['success'] = true;
+            } else {
+                $res['mess_dup'] = 'Email đã được đăng ký trên hệ thống Diana Authentic !!!';
+            }
         }
         return response()->json($res);
     }
