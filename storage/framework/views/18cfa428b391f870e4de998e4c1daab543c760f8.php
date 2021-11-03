@@ -1,15 +1,15 @@
 <tr>
-    <td>
-        <span>
-            <label class="checkbox checkbox-single">
-                <input type="checkbox" value="1">&nbsp;
-            </label>
-        </span>
-    </td>
+
+
+
+
+
+
+
     <td><span><?php echo e(($item->color)?$item->color->value:""); ?></span></td>
     <td><span><?php echo e(($item->color)?$item->color->name:""); ?></span></td>
     <td><span><?php echo e(($item->size)?$item->size->value:""); ?></span></td>
-    <td><span><?php echo e($item->price?$item->price:""); ?></span></td>
+    <td><span><?php echo e(($item->qty)?$item->qty:""); ?></span></td>
     <td>
         <a href="<?php echo e(route('admin.product.variant.edit', ['id'=>$item->id])); ?>"
            class="btn btn-icon btn-light btn-hover-primary btn-sm mr-1">
